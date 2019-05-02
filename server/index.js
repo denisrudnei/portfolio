@@ -2,10 +2,21 @@ const express = require('express')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
+const apiRouter = express.Router()
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+const fileUploader = require('express-fileupload')
+const compression = require('compression')
+const session = require('express-session')
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = !(process.env.NODE_ENV === 'production')
+
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost/test',
+  { useNewUrlParser: true }
+)
 
 async function start() {
   // Init Nuxt.js
@@ -23,6 +34,33 @@ async function start() {
   } else {
     await nuxt.ready()
   }
+
+  app.use(compression())
+
+  app.use(bodyParser.json())
+
+  app.use(
+    session({
+      secret: 'portfolio_secret',
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: 60000
+      }
+    })
+  )
+
+  app.use(
+    fileUploader({
+      limits: {
+        fileSize: 10 * 1024 * 1024
+      }
+    })
+  )
+  require('./controllers/AuthController')(apiRouter)
+  require('./controllers/ProjectController')(apiRouter)
+  require('./controllers/UserController')(apiRouter)
+  app.use('/api', apiRouter)
 
   // Give nuxt middleware to express
   app.use(nuxt.render)

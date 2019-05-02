@@ -1,60 +1,51 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-tile
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="item.title" />
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
     <v-toolbar
-      :clipped-left="clipped"
+      :clipped-left="true"
       fixed
       app
+      class="primary white--text"
     >
-      <v-toolbar-side-icon @click="drawer = !drawer" />
       <v-btn
+        class="primary white--text"
+        to="/"
         icon
-        @click.stop="miniVariant = !miniVariant"
+        title="Home"
       >
-        <v-icon>{{ `chevron_${miniVariant ? 'right' : 'left'}` }}</v-icon>
+        <v-icon>
+          home
+        </v-icon>
       </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>web</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="fixed = !fixed"
-      >
-        <v-icon>remove</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
       <v-spacer />
       <v-btn
+        v-if="!logged"
+        class="primary white--text"
+        to="/auth/login"
         icon
-        @click.stop="rightDrawer = !rightDrawer"
+        title="Login"
       >
-        <v-icon>menu</v-icon>
+        <v-icon>
+          person
+        </v-icon>
+      </v-btn>
+      <v-btn
+        v-if="logged"
+        class="primary white--text"
+        to="/config"
+        icon
+        title="Configurações"
+      >
+        <v-icon>settings</v-icon>
+      </v-btn>
+      <v-btn
+        v-if="logged"
+        to="/auth/logout"
+        icon
+        class="white--text"
+      >
+        <v-icon>
+          exit_to_app
+        </v-icon>
       </v-btn>
     </v-toolbar>
     <v-content>
@@ -62,23 +53,6 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-tile @click.native="right = !right">
-          <v-list-tile-action>
-            <v-icon light>
-              compare_arrows
-            </v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
     <v-footer
       :fixed="fixed"
       app
@@ -89,29 +63,38 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'bubble_chart',
-          title: 'Inspire',
-          to: '/inspire'
-        }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
+      fixed: true,
+      title: 'Portfolio'
     }
-  }
+  },
+  computed: mapGetters({
+    logged: 'auth/getLogged'
+  })
 }
 </script>
+
+<style>
+body {
+  background: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-492194.jpg')
+    fixed !important;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.application {
+  background: transparent !important;
+}
+
+.v-navigation-drawer {
+  background: rgba(10%, 10%, 10%, 0.5) !important;
+}
+
+.v-list > * {
+  color: white;
+}
+</style>
