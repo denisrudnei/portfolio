@@ -12,6 +12,11 @@
         <v-text-field
           placeholder="Email"
           solo
+          v-model="user.name"
+        />
+        <v-text-field
+          placeholder="Email"
+          solo
           v-model="user.username"
         />
         <v-text-field
@@ -43,6 +48,7 @@ export default {
     return {
       user: {
         username: '',
+        name: '',
         password: ''
       }
     }

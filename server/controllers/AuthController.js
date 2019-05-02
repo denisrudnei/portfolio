@@ -26,6 +26,7 @@ module.exports = app => {
   app.post('/auth/register', (req, res) => {
     const user = {
       email: req.body.username,
+      name: req.body.name,
       password: req.body.password
     }
     if (User.find({}).size() >= 1) return res.sendStatus(400)
