@@ -13,7 +13,7 @@
             {{ user.name }}
           </div>
         </v-card-title>
-        <v-card-content v-html="user.description" />
+        <v-card-text v-html="user.description" />
       </v-card>
     </v-flex>
     <v-flex
