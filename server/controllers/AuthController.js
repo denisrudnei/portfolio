@@ -1,15 +1,17 @@
-const User = require('../models/User')
 const mongoose = require('mongoose')
+const User = require('../models/User')
 
 module.exports = app => {
-  app.post('/auth/login', async (req, res) => {
-    const user = await User.findOne({
-      username: req.body.username
-    })
-    user.verifyPassword(req.body.password, (err, result) => {
-      if (err || !result) return res.sendStatus(400)
-      req.session.authUser = user
-      return res.json(user)
+  app.post('/auth/login', (req, res) => {
+    User.findOne({
+      email: req.body.username
+    }).exec((err, user) => {
+      if (err || user === null) return res.sendStatus(400)
+      user.verifyPassword(req.body.password, (err, result) => {
+        if (err || !result) return res.sendStatus(400)
+        req.session.authUser = user
+        return res.json(user)
+      })
     })
   })
 
