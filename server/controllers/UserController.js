@@ -40,7 +40,7 @@ module.exports = app => {
 
   app.get('/about/image', (req, res) => {
     User.find().exec((err, users) => {
-      if (err) return res.redirect('/user.svg')
+      if (err || users.length <= 0) return res.redirect('/user.svg')
       const id = users[0]._id
       S3.getObject(
         {
