@@ -10,7 +10,7 @@
     >
       <v-form>
         <v-text-field
-          placeholder="Email"
+          placeholder="Nome de exibição"
           solo
           v-model="user.name"
         />
