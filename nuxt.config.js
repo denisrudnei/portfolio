@@ -8,7 +8,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title: 'Portfolio',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -37,7 +37,15 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@/plugins/vuetify'],
+  plugins: [
+    {
+      src: '@/plugins/vuetify'
+    },
+    {
+      src: '@/plugins/CKEditor',
+      ssr: false
+    }
+  ],
 
   /*
   ** Nuxt.js modules
@@ -47,7 +55,8 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
-    '@nuxtjs/toast'
+    '@nuxtjs/toast',
+    '@nuxtjs/google-analytics'
   ],
   /*
   ** Axios module configuration
@@ -86,6 +95,10 @@ module.exports = {
         }
       }
     }
+  },
+
+  googleAnalytics: {
+    id: 'UA-38858408-4'
   },
 
   /*

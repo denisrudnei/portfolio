@@ -17,12 +17,14 @@
       xs12
       pa-2
     >
-      <editor v-model="user.description" />
+      <no-ssr>
+        <ckeditor v-model="user.description" :editor="editor" />
+      </no-ssr>
     </v-flex>
-    <FileChooser v-model="files"/>
+    <FileChooser v-model="files" />
     <v-btn
-      @click="save()"
       class="primary white--text"
+      @click="save()"
     >
       <v-icon>
         attach_file
@@ -34,17 +36,19 @@
 
 <script>
 import FileChooser from '@/components/FileChooser'
-import Editor from '@tinymce/tinymce-vue'
 export default {
   components: {
-    FileChooser,
-    Editor
+    FileChooser
   },
   data() {
     return {
+      editor: null,
       files: null,
       user: {}
     }
+  },
+  mounted() {
+    this.editor = require('@ckeditor/ckeditor5-build-classic')
   },
   created() {
     this.$axios.get('/about').then(response => {

@@ -15,11 +15,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^12.1.0",
+    "@ckeditor/ckeditor5-vue": "^1.0.0-beta.2",
     "@nuxtjs/auth": "^4.5.3",
     "@nuxtjs/axios": "^5.4.1",
+    "@nuxtjs/google-analytics": "^2.2.0",
     "@nuxtjs/pwa": "^2.6.0",
     "@nuxtjs/toast": "^3.1.0",
-    "@tinymce/tinymce-vue": "^2.0.0",
     "aws-sdk": "^2.422.0",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",

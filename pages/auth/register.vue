@@ -10,24 +10,24 @@
     >
       <v-form>
         <v-text-field
+          v-model="user.name"
           placeholder="Nome de exibição"
           solo
-          v-model="user.name"
         />
         <v-text-field
+          v-model="user.username"
           placeholder="Email"
           solo
-          v-model="user.username"
         />
         <v-text-field
+          v-model="user.password"
           placeholder="Senha"
           solo
           type="password"
-          v-model="user.password"
         />
         <v-btn
-          @click="register()"
           class="primary white--text"
+          @click="register()"
         >
           Cadastrar
           <v-icon

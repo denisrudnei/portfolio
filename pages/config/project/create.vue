@@ -12,7 +12,7 @@
           placeholder="Nome"
           solo
         />
-        <editor v-model="project.description" />
+        <ckeditor v-model="project.description" :editor="editor" />
         <FileChooser v-model="files" />
         <v-btn
           class="primary white--text"
@@ -27,21 +27,23 @@
 
 <script>
 import FileChooser from '@/components/FileChooser'
-import Editor from '@tinymce/tinymce-vue'
 
 export default {
   components: {
-    FileChooser,
-    Editor
+    FileChooser
   },
   data() {
     return {
+      editor: null,
       files: null,
       project: {
         name: '',
         description: ''
       }
     }
+  },
+  created() {
+    this.editor = require('@ckeditor/ckeditor5-build-classic')
   },
   methods: {
     save() {

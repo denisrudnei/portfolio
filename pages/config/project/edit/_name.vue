@@ -22,7 +22,7 @@
           xs12
           pa-2
         >
-          <editor v-model="project.description" />
+          <ckeditor v-model="project.description" :editor="editor" />
         </v-flex>
         <v-flex
           xs12
@@ -58,17 +58,16 @@
 </template>
 
 <script>
-import Editor from '@tinymce/tinymce-vue'
 import ProjectCard from '@/components/ProjectCard'
 import FileChooser from '@/components/FileChooser'
 export default {
   components: {
-    Editor,
     ProjectCard,
     FileChooser
   },
   data() {
     return {
+      editor: null,
       files: null,
       image: null,
       project: {
@@ -78,6 +77,7 @@ export default {
     }
   },
   created() {
+    this.editor = require('@ckeditor/ckeditor5-build-classic')
     const name = this.$router.currentRoute.params.name
     this.$axios.get(`/project/${name}`).then(response => {
       this.project = response.data
