@@ -79,7 +79,7 @@ export default {
 
 <style>
 body {
-  background: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-492194.jpg')
+  background: url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80')
     fixed !important;
   background-position: center;
   background-size: cover;
