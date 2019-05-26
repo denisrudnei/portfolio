@@ -6,7 +6,7 @@
     <Navigation />
     <h1
       v-if="projects.length === 0"
-      class="white--text"
+      class="primary--text"
     >
       Não há projetos cadastrados
     </h1>

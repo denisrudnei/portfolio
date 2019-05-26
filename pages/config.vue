@@ -11,7 +11,7 @@
       <v-list>
         <v-list-tile to="/config/project/create">
           <v-list-tile-action>
-            <v-icon class="white--text">
+            <v-icon class="primary--text">
               settings
             </v-icon>
           </v-list-tile-action>
@@ -19,7 +19,7 @@
         </v-list-tile>
         <v-list-tile to="/config/project/list">
           <v-list-tile-action>
-            <v-icon class="white--text">
+            <v-icon class="primary--text">
               view_list
             </v-icon>
           </v-list-tile-action>
@@ -28,7 +28,7 @@
         <v-list-tile to="/config/about">
           <v-list-tile-action>
             <v-icon
-              class="white--text"
+              class="primary--text"
             >
               info
             </v-icon>

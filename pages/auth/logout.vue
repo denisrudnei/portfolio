@@ -6,9 +6,7 @@
     <v-flex
       xs12
     >
-      <h2
-        class="white--text"
-      >
+      <h2>
         Deslogar?
       </h2>
     </v-flex>
