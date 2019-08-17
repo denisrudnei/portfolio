@@ -17,7 +17,8 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    select: 0
   },
   image: {
     type: String,
@@ -43,4 +44,4 @@ UserSchema.methods.verifyPassword = function(password, next) {
   })
 }
 
-module.exports = new mongoose.model('User', UserSchema)
+module.exports = mongoose.model('User', UserSchema)

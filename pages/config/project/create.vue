@@ -6,32 +6,33 @@
     <v-flex
       xs12
     >
-      <v-form>
-        <v-text-field
-          v-model="project.name"
-          placeholder="Nome"
-          solo
-        />
+      <v-text-field
+        v-model="project.name"
+        placeholder="Nome"
+        filled
+      />
+    </v-flex>
+    <v-flex xs12>
+      <no-ssr>
         <ckeditor v-model="project.description" :editor="editor" />
-        <FileChooser v-model="files" />
-        <v-btn
-          class="primary white--text"
-          @click="save()"
-        >
-          Salvar
-        </v-btn>
-      </v-form>
+      </no-ssr>
+    </v-flex>
+    <v-flex xs12 pa-2>
+      <v-file-input v-model="files" filled label="Selecione uma imagem" />
+    </v-flex>
+    <v-flex xs12>
+      <v-btn
+        class="primary white--text"
+        @click="save()"
+      >
+        Salvar
+      </v-btn>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import FileChooser from '@/components/FileChooser'
-
 export default {
-  components: {
-    FileChooser
-  },
   data() {
     return {
       editor: null,
@@ -42,7 +43,7 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
     this.editor = require('@ckeditor/ckeditor5-build-classic')
   },
   methods: {

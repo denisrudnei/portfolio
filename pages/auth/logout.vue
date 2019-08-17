@@ -16,11 +16,13 @@
     >
       <v-btn
         class="primary white--text"
+        large
         @click="confirm()"
       >
         Sim
       </v-btn>
       <v-btn
+        large
         class="primary white--text"
         @click="back()"
       >

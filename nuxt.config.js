@@ -1,4 +1,4 @@
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
+const colors = require('vuetify/es5/util/colors').default
 const pkg = require('./package')
 
 module.exports = {
@@ -32,15 +32,12 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: ['~/assets/style/app.styl'],
+  css: [],
 
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    {
-      src: '@/plugins/vuetify'
-    },
     {
       src: '@/plugins/CKEditor',
       ssr: false
@@ -53,11 +50,16 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
     '@nuxtjs/auth',
     '@nuxtjs/toast',
     '@nuxtjs/google-analytics'
   ],
+  devModules: [
+    // Doc: https://github.com/nuxt-community/eslint-module
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/vuetify'
+  ],
+
   /*
   ** Axios module configuration
   */
@@ -96,7 +98,31 @@ module.exports = {
       }
     }
   },
-
+  vuetify: {
+    customVariables: ['~/assets/variables.scss'],
+    theme: {
+      themes: {
+        light: {
+          primary: '#0097A7',
+          accent: colors.grey.darken3,
+          secondary: colors.amber.darken3,
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3
+        },
+        dark: {
+          primary: colors.blue.darken2,
+          accent: colors.grey.darken3,
+          secondary: colors.amber.darken3,
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3
+        }
+      }
+    }
+  },
   googleAnalytics: {
     id: 'UA-38858408-4'
   },
@@ -105,27 +131,9 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    transpile: ['vuetify/lib'],
-    plugins: [new VuetifyLoaderPlugin()],
-    loaders: {
-      stylus: {
-        import: ['~assets/style/variables.styl']
-      }
-    },
-
     /*
     ** You can extend webpack config here
     */
-    extend(config, ctx) {
-      // Run ESLint on save
-      if (ctx.isDev && ctx.isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
-      }
-    }
+    extend(config, ctx) {}
   }
 }

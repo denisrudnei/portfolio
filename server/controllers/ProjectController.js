@@ -1,99 +1,72 @@
-const mongoose = require('mongoose')
-const Project = require('../models/Project')
-const S3 = require('../../plugins/S3')
-
+const ProjectService = require('../services/ProjectService')
 module.exports = app => {
   app.get('/project', (req, res) => {
-    Project.find({}, (err, posts) => {
-      if (err) return res.status(500).json(err)
-      return res.status(200).json(posts)
-    })
+    ProjectService.getAll()
+      .then(projects => {
+        return res.status(200).json(projects)
+      })
+      .catch(e => {
+        return res.status(500).json(e)
+      })
   })
 
   app.get('/project/:name', (req, res) => {
-    Project.findOne(
-      {
-        name: req.params.name
-      },
-      (err, result) => {
-        if (err) return res.status(500).json(err)
-        return res.status(200).json(result)
-      }
-    )
+    ProjectService.getOne(req.params.name)
+      .then(project => {
+        return res.status(200).json(project)
+      })
+      .catch(e => {
+        return res.status(500).json(e)
+      })
   })
 
   app.post('/project', (req, res) => {
-    const project = {
-      _id: new mongoose.Types.ObjectId(),
-      ...req.body
-    }
-    Project.create(project, err => {
-      if (err) return res.status(500).json(err)
-      return res.status(201).json(project)
-    })
+    ProjectService.create(req.body)
+      .then(project => {
+        return res.status(201).json(project)
+      })
+      .catch(e => {
+        return res.status(500).json(e)
+      })
   })
 
   app.get('/project/:id/file', (req, res) => {
-    S3.getObject(
-      {
-        Bucket: process.env.BUCKET,
-        Key: req.params.id
-      },
-      (err, result) => {
-        if (err) return res.redirect('/project.jpg')
-        return res.end(result.Body)
-      }
-    )
+    ProjectService.getFile(req.params.id)
+      .then(data => {
+        return res.end(data)
+      })
+      .catch(() => {
+        return res.redirect('/project.jpg')
+      })
   })
 
   app.post('/project/:id/file', (req, res) => {
-    S3.createBucket(() => {
-      const params = {
-        Bucket: process.env.BUCKET,
-        Key: req.params.id,
-        Body: req.files.file.data
-      }
-
-      S3.upload(params, (err, data) => {
-        if (err) return res.status(500).json(err)
-        return res.sendStatus(200)
+    ProjectService.createFile(req.params.id, req.files.file)
+      .then(() => {
+        return res.sendStatus(201)
       })
-    })
+      .catch(e => {
+        return res.sendStatus(500)
+      })
   })
 
   app.put('/project/:id', (req, res) => {
-    Project.findOneAndUpdate(
-      {
-        _id: req.params.id
-      },
-      {
-        $set: {
-          name: req.body.name,
-          description: req.body.description
-        }
-      }
-    ).exec(err => {
-      if (err) return res.status(500).json(err)
-      return res.sendStatus(201)
-    })
+    ProjectService.edit(req.params.id, req.body)
+      .then(() => {
+        return res.sendStatus(202)
+      })
+      .catch(e => {
+        return res.sendStatus(500)
+      })
   })
 
   app.delete('/project/:id', (req, res) => {
-    const id = req.params.id
-    Project.deleteOne({
-      _id: id
-    }).exec(err => {
-      if (err) return res.status(500).json(err)
-      S3.deleteObject(
-        {
-          Bucket: process.env.BUCKET,
-          Key: id
-        },
-        (err, data) => {
-          if (err) return res.status(500).json(err)
-          return res.sendStatus(200)
-        }
-      )
-    })
+    ProjectService.remove(req.params.id)
+      .then(() => {
+        return res.sendStatus(202)
+      })
+      .catch(e => {
+        return res.sendStatus(500)
+      })
   })
 }

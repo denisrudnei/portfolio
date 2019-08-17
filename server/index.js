@@ -41,7 +41,7 @@ async function start() {
 
   app.use(
     session({
-      secret: 'portfolio_secret',
+      secret: process.env.SESSION_KEY,
       resave: false,
       saveUninitialized: false,
       cookie: {
@@ -60,6 +60,7 @@ async function start() {
   require('./controllers/AuthController')(apiRouter)
   require('./controllers/ProjectController')(apiRouter)
   require('./controllers/UserController')(apiRouter)
+  require('./controllers/PostController')(apiRouter)
   app.use('/api', apiRouter)
 
   // Give nuxt middleware to express

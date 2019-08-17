@@ -11,12 +11,12 @@
         <v-text-field
           v-model="username"
           placeholder="Email"
-          solo
+          filled
         />
         <v-text-field
           v-model="password"
           placeholder="Senha"
-          solo
+          filled
           type="password"
         />
         <v-btn

@@ -3,44 +3,41 @@
     row
     wrap
   >
-    <v-navigation-drawer
-      app
-      permanent
-      :clipped="true"
-    >
+    <v-navigation-drawer app clipped>
       <v-list>
-        <v-list-tile to="/config/project/create">
-          <v-list-tile-action>
+        <v-list-item to="/config/project/">
+          <v-list-item-action>
             <v-icon class="primary--text">
               settings
             </v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>Criar projeto</v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile to="/config/project/list">
-          <v-list-tile-action>
+          </v-list-item-action>
+          <v-list-item-content>Projetos</v-list-item-content>
+        </v-list-item>
+        <v-list-item to="/config/blog/post/">
+          <v-list-item-action>
             <v-icon class="primary--text">
-              view_list
+              library_books
             </v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>Listar projetos</v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile to="/config/about">
-          <v-list-tile-action>
+          </v-list-item-action>
+          <v-list-item-content>Blog</v-list-item-content>
+        </v-list-item>
+        <v-list-item to="/config/about">
+          <v-list-item-action>
             <v-icon
               class="primary--text"
             >
               info
             </v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
+          </v-list-item-action>
+          <v-list-item-content>
             Informações
-          </v-list-tile-content>
-        </v-list-tile>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-flex
       xs12
+      pl-5
     >
       <nuxt />
     </v-flex>

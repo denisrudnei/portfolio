@@ -9,10 +9,10 @@
       pa-2
     >
       <template v-if="error.statusCode === 404">
-        <h1 class="white--text">
+        <h1>
           Página não encontrada
         </h1>
-        <h3 class="white--text">
+        <h3>
           Caminho acessado: {{ error.path }}, clique <nuxt-link to="/">
             aqui
           </nuxt-link> para voltar

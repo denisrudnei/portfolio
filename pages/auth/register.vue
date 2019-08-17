@@ -12,17 +12,17 @@
         <v-text-field
           v-model="user.name"
           placeholder="Nome de exibição"
-          solo
+          filled
         />
         <v-text-field
           v-model="user.username"
           placeholder="Email"
-          solo
+          filled
         />
         <v-text-field
           v-model="user.password"
           placeholder="Senha"
-          solo
+          filled
           type="password"
         />
         <v-btn

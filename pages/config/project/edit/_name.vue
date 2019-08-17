@@ -14,7 +14,7 @@
         >
           <v-text-field
             v-model="project.name"
-            solo
+            filled
             placeholder="Nome do projeto"
           />
         </v-flex>
@@ -28,7 +28,7 @@
           xs12
           pa-2
         >
-          <FileChooser v-model="files" @input="changeFile()" />
+          <v-file-input v-model="files" label="Incluir imagem" @input="changeFile()" />
         </v-flex>
         <v-flex
           xs12
@@ -59,11 +59,9 @@
 
 <script>
 import ProjectCard from '@/components/ProjectCard'
-import FileChooser from '@/components/FileChooser'
 export default {
   components: {
-    ProjectCard,
-    FileChooser
+    ProjectCard
   },
   data() {
     return {
@@ -76,6 +74,18 @@ export default {
       }
     }
   },
+  watch: {
+    files: {
+      deep: true,
+      handler(value) {
+        const fileReader = new FileReader()
+        fileReader.addEventListener('loadend', () => {
+          this.image = fileReader.result
+        })
+        fileReader.readAsDataURL(value)
+      }
+    }
+  },
   created() {
     this.editor = require('@ckeditor/ckeditor5-build-classic')
     const name = this.$router.currentRoute.params.name
@@ -84,15 +94,6 @@ export default {
     })
   },
   methods: {
-    changeFile() {
-      if (this.files.length > 0) {
-        const fileReader = new FileReader()
-        fileReader.addEventListener('loadend', () => {
-          this.image = fileReader.result
-        })
-        fileReader.readAsDataURL(this.files[0])
-      }
-    },
     update() {
       const id = this.project._id
       this.$axios.put(`/project/${id}`, this.project).then(
@@ -100,13 +101,13 @@ export default {
           this.$toast.show('Projeto atualizado', {
             duration: 1000
           })
-          if (this.files !== null && this.files.length > 0) {
+          if (this.files !== null) {
             this.$toast.show('Iniciando processo de upload de imagem', {
               icon: 'hourglass_empty',
               duration: 1000
             })
             const formData = new FormData()
-            formData.append('file', this.files[0])
+            formData.append('file', this.files)
             this.$axios.post(`/project/${id}/file`, formData).then(
               () => {
                 this.$toast.show('Imagem atualizada com sucesso', {
@@ -118,7 +119,7 @@ export default {
               }
             )
           }
-          this.$router.push(`/config/project/edit/${this.project.name}`)
+          this.$router.push(`/config/project/list`)
         },
         () => {
           this.$toast.error('Falha ao salvar projeto')

@@ -10,28 +10,28 @@
         :items="items"
         :headers="headers"
       >
-        <template slot="items" slot-scope="data">
-          <td>{{ data.item.name }}</td>
-          <td>
-            <v-btn
-              icon
-              :to="`/config/project/edit/${data.item.name}`"
+        <template v-slot:items="{ item }">
+          <td>{{ item.name }}</td>
+        </template>
+        <template v-slot:item.actions="{item}">
+          <v-btn
+            icon
+            :to="`/config/project/edit/${item.name}`"
+          >
+            <v-icon>
+              edit
+            </v-icon>
+          </v-btn>
+          <v-btn
+            icon
+            @click="removeProject(item)"
+          >
+            <v-icon
+              class="red--text"
             >
-              <v-icon>
-                edit
-              </v-icon>
-            </v-btn>
-            <v-btn
-              icon
-              @click="removeProject(data.item)"
-            >
-              <v-icon
-                class="red--text"
-              >
-                delete
-              </v-icon>
-            </v-btn>
-          </td>
+              delete
+            </v-icon>
+          </v-btn>
         </template>
       </v-data-table>
     </v-flex>

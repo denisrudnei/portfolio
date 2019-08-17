@@ -30,14 +30,11 @@
 <script>
 export default {
   auth: false,
-  data() {
-    return {
-      user: ''
-    }
-  },
-  created() {
-    this.$axios.get('/about').then(response => {
-      this.user = response.data
+  asyncData({ $axios }) {
+    return $axios.get('/about').then(response => {
+      return {
+        user: response.data
+      }
     })
   }
 }

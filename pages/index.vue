@@ -3,7 +3,6 @@
     row
     wrap
   >
-    <Navigation />
     <h1
       v-if="projects.length === 0"
       class="primary--text"
@@ -15,9 +14,8 @@
       :key="project.name"
       xs12
       md4
-      pa-2
+      pa-3
     >
-      <nuxt-child />
       <ProjectCard
         :listing="true"
         :project="project"
@@ -27,25 +25,17 @@
 </template>
 
 <script>
-import Navigation from '@/components/Navigation'
 import ProjectCard from '@/components/ProjectCard'
-import { mapGetters } from 'vuex'
-
 export default {
   auth: false,
   components: {
-    Navigation,
     ProjectCard
   },
-  data() {
-    return {}
-  },
-  computed: mapGetters({
-    projects: 'project/getProjects'
-  }),
-  async created() {
-    await this.$axios.get('/project').then(response => {
-      this.$store.commit('project/setProjects', response.data)
+  asyncData({ $axios }) {
+    return $axios.get('/project').then(response => {
+      return {
+        projects: response.data
+      }
     })
   }
 }

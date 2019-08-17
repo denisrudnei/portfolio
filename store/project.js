@@ -23,7 +23,7 @@ export const mutations = {
 }
 
 export const actions = {
-  getProjects: function({ commit }) {
+  getProjects({ commit }) {
     this.$axios.get('/project/').then(response => {
       commit('setProjects', response.data)
     })
