@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 const fileUploader = require('express-fileupload')
 const compression = require('compression')
 const session = require('express-session')
+const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
@@ -34,6 +35,8 @@ async function start() {
   } else {
     await nuxt.ready()
   }
+
+  app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301))
 
   app.use(compression())
 
