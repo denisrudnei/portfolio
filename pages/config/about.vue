@@ -17,9 +17,9 @@
       xs12
       pa-2
     >
-      <no-ssr>
+      <client-only>
         <ckeditor v-model="user.description" :editor="editor" />
-      </no-ssr>
+      </client-only>
     </v-flex>
     <v-flex xs12 pa-2>
       <v-file-input v-model="files" label="Selecione a imagem" />
