@@ -33,10 +33,9 @@ async function start() {
     const builder = new Builder(nuxt)
     await builder.build()
   } else {
+    app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301))
     await nuxt.ready()
   }
-
-  app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301))
 
   app.use(compression())
 
