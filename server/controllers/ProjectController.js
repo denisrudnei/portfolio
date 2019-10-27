@@ -30,8 +30,9 @@ module.exports = app => {
       })
   })
 
-  app.get('/project/:id/file', (req, res) => {
-    ProjectService.getFile(req.params.id)
+  app.get('/project/:id/:name/file', (req, res) => {
+    const key = `${req.params.id}/${req.params.name}`
+    ProjectService.getFile(key)
       .then(data => {
         return res.end(data)
       })

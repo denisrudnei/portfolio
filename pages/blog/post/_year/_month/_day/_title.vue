@@ -1,5 +1,5 @@
 <template>
-  <v-row row wrap>
+  <v-row>
     <v-col cols="12" pa-2>
       <Post :post="post" />
     </v-col>

@@ -1,5 +1,5 @@
 <template>
-  <v-row row wrap>
+  <v-row>
     <v-col cols="10" offset-xs1 pa-5>
       <nuxt-child />
     </v-col>

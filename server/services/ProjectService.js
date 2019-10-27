@@ -58,7 +58,7 @@ const PostService = {
       S3.createBucket(() => {
         const params = {
           Bucket: process.env.BUCKET,
-          Key: id,
+          Key: `${id}/${file.name}`,
           Body: file.data
         }
 
@@ -91,20 +91,32 @@ const PostService = {
 
   remove(projectId) {
     return new Promise((resolve, reject) => {
-      Project.deleteOne({
+      const project = Project.findOne({
         _id: projectId
-      }).exec(err => {
-        if (err) return reject(err)
-        S3.deleteObject(
-          {
-            Bucket: process.env.BUCKET,
-            Key: projectId
-          },
-          (err, data) => {
+      }).exec()
+      project.then(result => {
+        const deleteImages = result.images.map(image => {
+          return new Promise((resolve, reject) => {
+            S3.deleteObject(
+              {
+                Bucket: process.env.BUCKET,
+                Key: `${projectId}/${image}`
+              },
+              (err, data) => {
+                if (err) return reject(err)
+                return resolve(data)
+              }
+            )
+          })
+        })
+        Promise.all(deleteImages).then(() => {
+          Project.deleteOne({
+            _id: projectId
+          }).exec(err => {
             if (err) return reject(err)
-            return resolve(data)
-          }
-        )
+            resolve()
+          })
+        })
       })
     })
   }

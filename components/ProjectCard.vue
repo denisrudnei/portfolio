@@ -1,17 +1,12 @@
 <template>
-  <v-row
-    row
-    wrap
-  >
+  <v-row>
     <v-col
       cols="12"
       pa-2
     >
       <v-card>
         <nuxt-link :to="`/project/${projectComputed.name}`">
-          <v-img
-            :src="getImage"
-          />
+          <v-img :aspect-ratio="21/9" :src="getImage(projectComputed.images[0])" />
         </nuxt-link>
         <v-card-title>{{ projectComputed.name }}</v-card-title>
         <v-card-text v-html="projectComputed.description" />
@@ -57,10 +52,15 @@ export default {
     projectComputed() {
       return Object.assign(this.projectData, this.project)
     },
-    getImage() {
-      return this.image !== null
-        ? this.image
-        : `/api/project/${this.projectComputed._id}/file`
+    getImages() {
+      return this.projectComputed.images.map(name => {
+        return this.getImage(name)
+      })
+    }
+  },
+  methods: {
+    getImage(name) {
+      return `/api/project/${this.projectComputed._id}/${name}/file`
     }
   }
 }

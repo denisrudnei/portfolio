@@ -1,5 +1,5 @@
 <template>
-  <v-row row wrap>
+  <v-row>
     <v-col cols="12">
       <v-data-table :items="posts" :headers="headers">
         <template v-slot:item.title="{ item }">

@@ -1,5 +1,5 @@
 <template>
-  <v-row row wrap>
+  <v-row>
     <v-col cols="12">
       <v-tabs>
         <v-tab to="/config/project/create">

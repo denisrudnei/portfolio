@@ -1,8 +1,5 @@
 <template>
-  <v-row
-    row
-    wrap
-  >
+  <v-row>
     <v-col
       xs10
       offset-xs1

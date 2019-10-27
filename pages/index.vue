@@ -1,8 +1,5 @@
 <template>
-  <v-row
-    row
-    wrap
-  >
+  <v-row>
     <h1
       v-if="projects.length === 0"
       class="primary--text"
@@ -13,7 +10,7 @@
       v-for="project in projects"
       :key="project.name"
       cols="12"
-      md4
+      md="4"
       pa-3
     >
       <ProjectCard

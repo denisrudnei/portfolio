@@ -1,26 +1,33 @@
 <template>
-  <v-row
-    row
-    wrap
-  >
+  <v-row>
     <v-col
-      cols="12"
-      offset-xs1
+      cols="7"
     >
-      <ProjectCard 
-        :project="project"
-      />
+      <v-row>
+        <v-col v-for="img in project.images" :key="img" cols="3" @mouseenter="setActual(img)">
+          <v-img :aspect-ratio="1" :src="getImage(img)" />
+        </v-col>
+      </v-row>
+    </v-col>
+    <v-col cols="5">
+      <v-card>
+        <v-img v-if="actual !== ''" :src="getImage(actual)" />
+        <v-card-title>
+          {{ project.name }}
+        </v-card-title>
+        <v-card-text v-html="project.description" />
+      </v-card>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import ProjectCard from '@/components/ProjectCard'
-
 export default {
   auth: false,
-  components: {
-    ProjectCard
+  data() {
+    return {
+      actual: ''
+    }
   },
   asyncData({ $axios, params }) {
     const name = params.name
@@ -29,6 +36,14 @@ export default {
         project: response.data
       }
     })
+  },
+  methods: {
+    getImage(name) {
+      return `/api/project/${this.project._id}/${name}/file`
+    },
+    setActual(name) {
+      this.actual = name
+    }
   }
 }
 </script>

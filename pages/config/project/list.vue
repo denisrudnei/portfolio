@@ -1,8 +1,5 @@
 <template>
-  <v-row
-    row
-    wrap
-  >
+  <v-row>
     <v-col
       cols="12"
     >

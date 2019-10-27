@@ -1,8 +1,5 @@
 <template>
-  <v-row
-    row
-    wrap
-  >
+  <v-row>
     <v-col
       cols="12"
     >
@@ -18,7 +15,7 @@
       </client-only>
     </v-col>
     <v-col cols="12" pa-2>
-      <v-file-input v-model="files" filled label="Selecione uma imagem" />
+      <v-file-input v-model="files" filled multiple label="Selecione uma imagem" />
     </v-col>
     <v-col cols="12">
       <v-btn
@@ -48,6 +45,12 @@ export default {
   },
   methods: {
     save() {
+      /* eslint-disable */
+      console.log(this.files)
+      this.project.images = this.files.map(file => {
+        return file.name
+      })
+      console.log(this.project)
       this.$axios.post('/project', this.project).then(
         response => {
           this.$toast.show('Projeto criado', {
@@ -62,18 +65,21 @@ export default {
               }
             )
             const id = response.data._id
-            const formData = new FormData()
-            formData.append('file', this.files[0])
-            this.$axios.post(`/project/${id}/file`, formData).then(
-              () => {
-                this.$toast.show('Imagem enviada com sucesso', {
-                  duration: 1000
-                })
-              },
-              () => {
-                this.$toast.error('Falha ao processar imagem')
-              }
-            )
+            for (const index in this.files) {
+              const file = this.files[index]
+              const formData = new FormData()
+              formData.append('file', file)
+              this.$axios.post(`/project/${id}/file`, formData).then(
+                () => {
+                  this.$toast.show('Imagem enviada com sucesso', {
+                    duration: 1000
+                  })
+                },
+                () => {
+                  this.$toast.error('Falha ao processar imagem')
+                }
+              )
+            }
           }
           this.$router.push('/config/project/list')
         },

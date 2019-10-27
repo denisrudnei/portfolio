@@ -1,8 +1,5 @@
 <template>
-  <v-row
-    row
-    wrap
-  >
+  <v-row>
     <v-navigation-drawer app clipped>
       <v-list>
         <v-list-item to="/config/project/">

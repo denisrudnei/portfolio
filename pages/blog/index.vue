@@ -1,5 +1,5 @@
 <template>
-  <v-row row wrap>
+  <v-row>
     <v-col v-for="post in posts" :key="post._id" cols="12" pa-2>
       <Post :post="post" resume />
     </v-col>
