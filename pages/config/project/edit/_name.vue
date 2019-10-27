@@ -1,15 +1,15 @@
 <template>
-  <v-layout
+  <v-row
     row
     wrap
   >
-    <v-flex
-      xs8
+    <v-col
+      cols="8"
       pa-2
     >
       <v-form>
-        <v-flex
-          xs12
+        <v-col
+          cols="12"
           pa-2
         >
           <v-text-field
@@ -17,21 +17,21 @@
             filled
             placeholder="Nome do projeto"
           />
-        </v-flex>
-        <v-flex
-          xs12
+        </v-col>
+        <v-col
+          cols="12"
           pa-2
         >
           <ckeditor v-model="project.description" :editor="editor" />
-        </v-flex>
-        <v-flex
-          xs12
+        </v-col>
+        <v-col
+          cols="12"
           pa-2
         >
           <v-file-input v-model="files" label="Incluir imagem" @input="changeFile()" />
-        </v-flex>
-        <v-flex
-          xs12
+        </v-col>
+        <v-col
+          cols="12"
           pa-2
         >
           <v-btn
@@ -45,16 +45,16 @@
               attach_file
             </v-icon>
           </v-btn>
-        </v-flex>
+        </v-col>
       </v-form>
-    </v-flex>
-    <v-flex
-      xs4
+    </v-col>
+    <v-col
+      cols="4"
       pa-2
     >
       <ProjectCard ref="card" :project="project" :image="image" />
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

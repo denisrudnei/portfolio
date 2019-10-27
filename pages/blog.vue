@@ -1,10 +1,10 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs10 offset-xs1 pa-5>
+  <v-row row wrap>
+    <v-col cols="10" offset-xs1 pa-5>
       <nuxt-child />
-    </v-flex>
+    </v-col>
     <Navigation />
-  </v-layout>
+  </v-row>
 </template>
 
 <script>

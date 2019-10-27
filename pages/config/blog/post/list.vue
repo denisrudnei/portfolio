@@ -1,6 +1,6 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs12>
+  <v-row row wrap>
+    <v-col cols="12">
       <v-data-table :items="posts" :headers="headers">
         <template v-slot:item.title="{ item }">
           <td>{{ item.title }}</td>
@@ -13,8 +13,8 @@
           </td>
         </template>
       </v-data-table>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

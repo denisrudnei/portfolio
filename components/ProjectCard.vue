@@ -1,10 +1,10 @@
 <template>
-  <v-layout
+  <v-row
     row
     wrap
   >
-    <v-flex
-      xs12
+    <v-col
+      cols="12"
       pa-2
     >
       <v-card>
@@ -25,8 +25,8 @@
           </v-btn>
         </v-card-actions>
       </v-card>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

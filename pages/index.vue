@@ -1,5 +1,5 @@
 <template>
-  <v-layout
+  <v-row
     row
     wrap
   >
@@ -9,10 +9,10 @@
     >
       Não há projetos cadastrados
     </h1>
-    <v-flex
+    <v-col
       v-for="project in projects"
       :key="project.name"
-      xs12
+      cols="12"
       md4
       pa-3
     >
@@ -20,8 +20,8 @@
         :listing="true"
         :project="project"
       />
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

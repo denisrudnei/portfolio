@@ -1,10 +1,10 @@
 <template>
-  <v-layout
+  <v-row
     row
     wrap
   >
-    <v-flex
-      xs10
+    <v-col
+      cols="10"
       offset-xs1
       pa-2
     >
@@ -18,8 +18,8 @@
           </nuxt-link> para voltar
         </h3>
       </template>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

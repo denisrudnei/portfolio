@@ -1,12 +1,12 @@
 <template>
-  <v-layout row wrap>
-    <v-flex v-for="post in posts" :key="post._id" xs12 pa-2>
+  <v-row row wrap>
+    <v-col v-for="post in posts" :key="post._id" cols="12" pa-2>
       <Post :post="post" resume />
-    </v-flex>
+    </v-col>
     <template v-if="posts.length === 0">
       <h2>Sem postagens</h2>
     </template>
-  </v-layout>
+  </v-row>
 </template>
 
 <script>

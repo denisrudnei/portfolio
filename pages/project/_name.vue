@@ -1,17 +1,17 @@
 <template>
-  <v-layout
+  <v-row
     row
     wrap
   >
-    <v-flex
-      xs10
+    <v-col
+      cols="12"
       offset-xs1
     >
       <ProjectCard 
         :project="project"
       />
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

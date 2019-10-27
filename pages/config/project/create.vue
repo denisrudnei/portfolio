@@ -1,34 +1,34 @@
 <template>
-  <v-layout
+  <v-row
     row
     wrap
   >
-    <v-flex
-      xs12
+    <v-col
+      cols="12"
     >
       <v-text-field
         v-model="project.name"
         placeholder="Nome"
         filled
       />
-    </v-flex>
-    <v-flex xs12>
+    </v-col>
+    <v-col cols="12">
       <client-only>
         <ckeditor v-model="project.description" :editor="editor" />
       </client-only>
-    </v-flex>
-    <v-flex xs12 pa-2>
+    </v-col>
+    <v-col cols="12" pa-2>
       <v-file-input v-model="files" filled label="Selecione uma imagem" />
-    </v-flex>
-    <v-flex xs12>
+    </v-col>
+    <v-col cols="12">
       <v-btn
         class="primary white--text"
         @click="save()"
       >
         Salvar
       </v-btn>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

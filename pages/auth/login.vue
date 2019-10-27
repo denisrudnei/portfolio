@@ -1,9 +1,9 @@
 <template>
-  <v-layout
+  <v-row
     row
     wrap
   >
-    <v-flex
+    <v-col
       xs10
       offset-xs1
     >
@@ -26,8 +26,8 @@
           Logar
         </v-btn>
       </v-form>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

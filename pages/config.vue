@@ -1,5 +1,5 @@
 <template>
-  <v-layout
+  <v-row
     row
     wrap
   >
@@ -35,13 +35,13 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-flex
-      xs12
+    <v-col
+      cols="12"
       pl-5
     >
       <nuxt />
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

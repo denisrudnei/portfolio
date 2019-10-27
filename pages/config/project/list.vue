@@ -1,10 +1,10 @@
 <template>
-  <v-layout
+  <v-row
     row
     wrap
   >
-    <v-flex
-      xs12
+    <v-col
+      cols="12"
     >
       <v-data-table
         :items="items"
@@ -34,8 +34,8 @@
           </v-btn>
         </template>
       </v-data-table>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

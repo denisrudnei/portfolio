@@ -1,10 +1,10 @@
 <template>
-  <v-layout
+  <v-row
     row
     wrap
   >
-    <v-flex
-      xs8
+    <v-col
+      cols="8"
       pa-2
     >
       <v-card>
@@ -15,16 +15,16 @@
         </v-card-title>
         <v-card-text v-html="user.description" />
       </v-card>
-    </v-flex>
-    <v-flex
-      xs4
+    </v-col>
+    <v-col
+      cols="4"
       pa-2
     >
       <v-img
         :src="`/api/about/image`"
       />
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

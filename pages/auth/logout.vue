@@ -1,17 +1,17 @@
 <template>
-  <v-layout
+  <v-row
     row
     wrap
   >
-    <v-flex
-      xs12
+    <v-col
+      cols="12"
     >
       <h2>
         Deslogar?
       </h2>
-    </v-flex>
-    <v-flex
-      xs12
+    </v-col>
+    <v-col
+      cols="12"
       pa-2
     >
       <v-btn
@@ -28,8 +28,8 @@
       >
         Não
       </v-btn>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

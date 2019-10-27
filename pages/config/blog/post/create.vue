@@ -1,24 +1,24 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs12 pa-2>
+  <v-row row wrap>
+    <v-col cols="12" pa-2>
       <v-text-field
         v-model="post.title"
         filled
         label="Titulo"
       />
-    </v-flex>
-    <v-flex xs12 pa-2>
+    </v-col>
+    <v-col cols="12" pa-2>
       <ckeditor v-model="post.content" :editor="editor" />
-    </v-flex>
-    <v-flex xs12 pa-2>
+    </v-col>
+    <v-col cols="12" pa-2>
       <v-btn class="primary white--text" @click="save()">
         <v-icon left>
           save
         </v-icon>
         Salvar
       </v-btn>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
