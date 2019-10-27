@@ -35,7 +35,7 @@ const UserService = {
   },
   edit(user) {
     return new Promise((resolve, reject) => {
-      User.findOneAndUpdate(
+      User.updateOne(
         {},
         {
           $set: {

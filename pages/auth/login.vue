@@ -12,12 +12,14 @@
           v-model="username"
           placeholder="Email"
           filled
+          autocomplete="username"
         />
         <v-text-field
           v-model="password"
           placeholder="Senha"
           filled
           type="password"
+          autocomplete="current-password"
         />
         <v-btn
           class="primary white--text"

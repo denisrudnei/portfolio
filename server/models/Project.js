@@ -11,6 +11,11 @@ const ProjectSchema = new Schema({
     type: String,
     required: true
   },
+  images: [
+    {
+      type: String
+    }
+  ],
   link: {
     type: String
   }
