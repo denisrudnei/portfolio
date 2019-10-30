@@ -5,13 +5,19 @@
     >
       <v-row>
         <v-col v-for="img in project.images" :key="img" cols="3" @mouseenter="setActual(img)">
-          <v-img :aspect-ratio="1" :src="getImage(img)" />
+          <v-img :aspect-ratio="1" :src="getImage(img)" @click="dialog = true">
+            <template v-slot:placeholder>
+              <v-row align="center" justify="center" class="fill-height ma-0">
+                <v-progress-circular indeterminate />
+              </v-row>
+            </template>
+          </v-img>
         </v-col>
       </v-row>
     </v-col>
     <v-col cols="5">
       <v-card>
-        <v-img v-if="actual !== ''" :src="getImage(actual)" />
+        <v-img v-if="actual !== ''" :src="getImage(actual)" @click="dialog = true" />
         <v-card-title>
           {{ project.name }}
         </v-card-title>

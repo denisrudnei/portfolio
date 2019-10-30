@@ -25,7 +25,7 @@
           cols="12"
           pa-2
         >
-          <v-file-input v-model="files" label="Incluir imagem" @input="changeFile()" />
+          <v-file-input v-model="files" label="Incluir imagem" multiple @input="changeFile()" />
         </v-col>
         <v-col
           cols="12"
@@ -49,7 +49,7 @@
       cols="4"
       pa-2
     >
-      <ProjectCard ref="card" :project="project" :image="image" />
+      <ProjectCard ref="card" :project="project" />
     </v-col>
   </v-row>
 </template>
@@ -64,7 +64,7 @@ export default {
     return {
       editor: null,
       files: null,
-      image: null,
+      image: '',
       project: {
         name: '',
         description: ''
@@ -83,12 +83,15 @@ export default {
       }
     }
   },
+  asyncData({ $axios, params }) {
+    return $axios.get(`/project/${params.name}`).then(response => {
+      return {
+        project: response.data
+      }
+    })
+  },
   created() {
     this.editor = require('@ckeditor/ckeditor5-build-classic')
-    const name = this.$router.currentRoute.params.name
-    this.$axios.get(`/project/${name}`).then(response => {
-      this.project = response.data
-    })
   },
   methods: {
     update() {

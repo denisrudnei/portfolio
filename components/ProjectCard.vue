@@ -6,7 +6,13 @@
     >
       <v-card>
         <nuxt-link :to="`/project/${projectComputed.name}`">
-          <v-img :aspect-ratio="21/9" :src="getImage(projectComputed.images[0])" />
+          <v-img :aspect-ratio="21/9" :src="getImage(projectComputed.images[0])">
+            <template v-slot:placeholder>
+              <v-row align="center" justify="center" class="fill-height ma-0">
+                <v-progress-circular indeterminate />
+              </v-row>
+            </template>
+          </v-img>
         </nuxt-link>
         <v-card-title>{{ projectComputed.name }}</v-card-title>
         <v-card-text v-html="projectComputed.description" />
