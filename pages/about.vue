@@ -25,8 +25,10 @@
 </template>
 
 <script>
+import removeHtml from '@/mixins/removeHtml'
 export default {
   auth: false,
+  mixins: [removeHtml],
   head() {
     return {
       title: this.user.name,
@@ -34,7 +36,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: this.user.description
+          content: this.removeHtml(this.user.description)
         }
       ]
     }
