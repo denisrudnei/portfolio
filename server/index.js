@@ -31,7 +31,7 @@ async function start() {
     port = process.env.PORT || 3000
   } = nuxt.options.server
 
-  // Build only in dev mode
+  // // Build only in dev mode
   if (config.dev) {
     const builder = new Builder(nuxt)
     await builder.build()
@@ -67,6 +67,7 @@ async function start() {
   require('./controllers/UserController')(apiRouter)
   require('./controllers/PostController')(apiRouter)
   app.use('/api', apiRouter)
+  require('./controllers/SitemapController')(app)
 
   // Give nuxt middleware to express
   app.use(nuxt.render)

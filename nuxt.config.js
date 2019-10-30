@@ -52,13 +52,8 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/toast',
-    '@nuxtjs/google-analytics',
-    '@nuxtjs/sitemap'
+    '@nuxtjs/google-analytics'
   ],
-  sitemap: {
-    gzip: true,
-    exclude: ['/auth/**', '/config/**', '/config']
-  },
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
