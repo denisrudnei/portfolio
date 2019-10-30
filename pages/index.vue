@@ -28,12 +28,32 @@ export default {
   components: {
     ProjectCard
   },
-  asyncData({ $axios }) {
-    return $axios.get('/project').then(response => {
-      return {
-        projects: response.data
-      }
-    })
+  data() {
+    return {
+      title: '',
+      description: ''
+    }
+  },
+  head() {
+    return {
+      title: this.title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.description
+        }
+      ]
+    }
+  },
+  async asyncData({ $axios }) {
+    const { data: projects } = await $axios.get('/project')
+    const { data: about } = await $axios.get('/about')
+    return {
+      projects,
+      description: about.description,
+      title: about.name
+    }
   }
 }
 </script>

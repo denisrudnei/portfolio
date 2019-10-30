@@ -27,6 +27,18 @@
 <script>
 export default {
   auth: false,
+  head() {
+    return {
+      title: this.user.name,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.user.description
+        }
+      ]
+    }
+  },
   asyncData({ $axios }) {
     return $axios.get('/about').then(response => {
       return {

@@ -61,7 +61,7 @@ export default {
   auth: false,
   data() {
     return {
-      actual: '',
+      actual: null,
       dialog: false
     }
   },
@@ -72,6 +72,38 @@ export default {
         project: response.data
       }
     })
+  },
+  head() {
+    return {
+      title: this.project.name,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.project.description
+        },
+        {
+          hid: 'og:title',
+          name: 'gg:title',
+          content: this.project.name
+        },
+        {
+          hid: 'og:image',
+          name: 'og:image',
+          content: this.getImage(this.actual || '')
+        },
+        {
+          hid: 'og:description',
+          name: 'og:description',
+          content: this.project.description
+        }
+      ]
+    }
+  },
+  created() {
+    if (!this.actual) {
+      this.actual = this.project.images[0]
+    }
   },
   methods: {
     getImage(name) {
