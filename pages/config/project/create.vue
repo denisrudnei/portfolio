@@ -45,12 +45,9 @@ export default {
   },
   methods: {
     save() {
-      /* eslint-disable */
-      console.log(this.files)
       this.project.images = this.files.map(file => {
         return file.name
       })
-      console.log(this.project)
       this.$axios.post('/project', this.project).then(
         response => {
           this.$toast.show('Projeto criado', {

@@ -65,11 +65,15 @@ export default {
       dialog: false
     }
   },
-  asyncData({ $axios, params }) {
+  asyncData({ $axios, params, req }) {
     const name = params.name
     return $axios.get(`/project/${name}`).then(response => {
+      const base = process.client
+        ? `${window.location.protocol}//${window.location.host}`
+        : req.headers.host
       return {
-        project: response.data
+        project: response.data,
+        base
       }
     })
   },
@@ -90,7 +94,7 @@ export default {
         {
           hid: 'og:image',
           name: 'og:image',
-          content: this.getImage(this.actual || '')
+          content: this.getOgImage(this.actual || '')
         },
         {
           hid: 'og:description',
@@ -108,6 +112,9 @@ export default {
   methods: {
     getImage(name) {
       return `/api/project/${this.project._id}/${name}/file`
+    },
+    getOgImage(name) {
+      return `${this.base}${this.getImage(name)}`
     },
     setActual(name) {
       this.actual = name
