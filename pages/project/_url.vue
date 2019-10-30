@@ -68,7 +68,7 @@ export default {
     }
   },
   asyncData({ $axios, params, req }) {
-    const name = params.name
+    const name = params.url
     return $axios.get(`/project/${name}`).then(response => {
       const base = process.client
         ? `${window.location.protocol}//${window.location.host}`

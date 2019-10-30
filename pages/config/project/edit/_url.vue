@@ -84,7 +84,7 @@ export default {
     }
   },
   asyncData({ $axios, params }) {
-    return $axios.get(`/project/${params.name}`).then(response => {
+    return $axios.get(`/project/${params.url}`).then(response => {
       return {
         project: response.data
       }

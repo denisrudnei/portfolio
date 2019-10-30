@@ -13,7 +13,7 @@
         <template v-slot:item.actions="{item}">
           <v-btn
             icon
-            :to="`/config/project/edit/${item.name}`"
+            :to="`/config/project/edit/${item.url}`"
           >
             <v-icon>
               edit

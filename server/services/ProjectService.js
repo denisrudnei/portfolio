@@ -10,12 +10,11 @@ const PostService = {
       })
     })
   },
-
-  getOne(projectName) {
+  getOne(url) {
     return new Promise((resolve, reject) => {
       Project.findOne(
         {
-          name: projectName
+          url
         },
         (err, result) => {
           if (err) return reject(err)
