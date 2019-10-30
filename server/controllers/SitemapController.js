@@ -4,7 +4,7 @@ module.exports = app => {
   app.get('/sitemap.xml', (req, res) => {
     res.set('Content-type', 'application/xml')
     const sitemap = new SitemapStream({
-      hostname: `${req.protocol}://${req.host}`
+      hostname: `${req.protocol}://${req.hostname}`
     })
     sitemapGen().then(response => {
       response.forEach(item => {
