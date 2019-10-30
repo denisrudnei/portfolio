@@ -22,12 +22,14 @@
 </template>
 
 <script>
+import removeHtml from '@/mixins/removeHtml'
 import ProjectCard from '@/components/ProjectCard'
 export default {
   auth: false,
   components: {
     ProjectCard
   },
+  mixins: [removeHtml],
   data() {
     return {
       title: '',
@@ -41,7 +43,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: this.description
+          content: this.removeHtml(this.description)
         }
       ]
     }
