@@ -1,10 +1,11 @@
 <template>
   <v-row>
     <v-col
-      cols="7"
+      cols="12"
+      md="7"
     >
       <v-row>
-        <v-col v-for="img in project.images" :key="img" cols="3" @mouseenter="setActual(img)">
+        <v-col v-for="img in project.images" :key="img" cols="12" md="3" @mouseenter="setActual(img)">
           <v-img :aspect-ratio="1" :src="getImage(img)" @click="dialog = true">
             <template v-slot:placeholder>
               <v-row align="center" justify="center" class="fill-height ma-0">
@@ -15,7 +16,7 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-col cols="5">
+    <v-col cols="12" md="5">
       <v-card>
         <v-img v-if="actual !== ''" :src="getImage(actual)" @click="dialog = true" />
         <v-card-title>

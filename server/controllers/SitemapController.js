@@ -8,11 +8,7 @@ module.exports = app => {
     })
     sitemapGen().then(response => {
       response.forEach(item => {
-        sitemap.write({
-          url: `${req.host}${item.url}`,
-          changefreq: item.changefreq,
-          priority: item.priority
-        })
+        sitemap.write(item)
       })
       sitemap.end()
       streamToPromise(sitemap).then(response => {
