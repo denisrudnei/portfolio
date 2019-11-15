@@ -20,7 +20,7 @@
           <v-btn
             v-if="listing"
             class="primary white--text"
-            :to="`/project/${projectComputed.name}`"
+            :to="`/project/${projectComputed.url}`"
           >
             Detalhes
           </v-btn>

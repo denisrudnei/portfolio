@@ -91,17 +91,17 @@ export default {
         },
         {
           hid: 'og:title',
-          name: 'gg:title',
+          property: 'gg:title',
           content: this.project.name
         },
         {
           hid: 'og:image',
-          name: 'og:image',
+          property: 'og:image',
           content: this.getOgImage(this.actual || '')
         },
         {
           hid: 'og:description',
-          name: 'og:description',
+          property: 'og:description',
           content: this.removeHtml(this.project.description)
         }
       ]
