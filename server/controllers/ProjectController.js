@@ -10,6 +10,17 @@ module.exports = app => {
       })
   })
 
+  app.get('/project/file/:id/:name', (req, res) => {
+    const key = `${req.params.id}/${req.params.name}`
+    ProjectService.getFile(key)
+      .then(data => {
+        return res.end(data)
+      })
+      .catch(() => {
+        return res.redirect('/project.jpg')
+      })
+  })
+
   app.get('/project/:name', (req, res) => {
     ProjectService.getOne(req.params.name)
       .then(project => {
@@ -27,17 +38,6 @@ module.exports = app => {
       })
       .catch(e => {
         return res.status(500).json(e)
-      })
-  })
-
-  app.get('/project/:id/:name/file', (req, res) => {
-    const key = `${req.params.id}/${req.params.name}`
-    ProjectService.getFile(key)
-      .then(data => {
-        return res.end(data)
-      })
-      .catch(() => {
-        return res.redirect('/project.jpg')
       })
   })
 

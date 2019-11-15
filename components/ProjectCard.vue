@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     getImage(name) {
-      return `/api/project/${this.projectComputed._id}/${name}/file`
+      return `/api/project/file/${this.projectComputed._id}/${name}`
     }
   }
 }

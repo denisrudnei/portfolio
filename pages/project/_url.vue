@@ -114,7 +114,7 @@ export default {
   },
   methods: {
     getImage(name) {
-      return `/api/project/${this.project._id}/${name}/file`
+      return `/api/project/file/${this.project._id}/${name}`
     },
     getOgImage(name) {
       return `${this.base}${this.getImage(name)}`
