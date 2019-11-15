@@ -73,7 +73,7 @@ export default {
     return $axios.get(`/project/${name}`).then(response => {
       const base = process.client
         ? `${window.location.protocol}//${window.location.host}`
-        : req.headers.host
+        : `${req.protocol}://${req.headers.host}`
       return {
         project: response.data,
         base
