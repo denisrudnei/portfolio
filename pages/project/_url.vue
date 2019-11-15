@@ -91,7 +91,7 @@ export default {
         },
         {
           hid: 'og:title',
-          property: 'gg:title',
+          property: 'og:title',
           content: this.project.name
         },
         {
