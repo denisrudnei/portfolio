@@ -14,6 +14,7 @@ module.exports = app => {
     const key = `${req.params.id}/${req.params.name}`
     ProjectService.getFile(key)
       .then(data => {
+        res.set('Cache-Control', 'public, max-age=31557600, s-maxage=31557600')  
         return res.end(data)
       })
       .catch(() => {
