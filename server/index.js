@@ -36,7 +36,9 @@ async function start() {
     const builder = new Builder(nuxt)
     await builder.build()
   } else {
-    app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301))
+    if (process.env.SECURE_HTTP_CONNECTION) {
+        app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301))
+    }
     await nuxt.ready()
   }
 
