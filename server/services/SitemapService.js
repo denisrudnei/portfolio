@@ -1,5 +1,5 @@
 const ProjectService = require('./ProjectService')
-async function getPaths() {
+async function getPaths () {
   const projects = await ProjectService.getAll()
   return projects.map(project => ({
     url: `/project/${project.url}/`,

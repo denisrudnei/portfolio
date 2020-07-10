@@ -26,7 +26,7 @@ const ProjectSchema = new Schema({
   }
 })
 
-ProjectSchema.pre('save', function() {
+ProjectSchema.pre('save', function () {
   this.url = slugify(this.name, {
     replacement: '-',
     lower: true

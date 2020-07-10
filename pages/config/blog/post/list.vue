@@ -19,7 +19,14 @@
 
 <script>
 export default {
-  data() {
+  asyncData ({ $axios }) {
+    return $axios.get('/blog/post').then((response) => {
+      return {
+        posts: response.data
+      }
+    })
+  },
+  data () {
     return {
       headers: [
         {
@@ -32,13 +39,6 @@ export default {
         }
       ]
     }
-  },
-  asyncData({ $axios }) {
-    return $axios.get('/blog/post').then(response => {
-      return {
-        posts: response.data
-      }
-    })
   }
 }
 </script>

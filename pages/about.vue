@@ -29,7 +29,14 @@ import removeHtml from '@/mixins/removeHtml'
 export default {
   auth: false,
   mixins: [removeHtml],
-  head() {
+  asyncData ({ $axios }) {
+    return $axios.get('/about').then((response) => {
+      return {
+        user: response.data
+      }
+    })
+  },
+  head () {
     return {
       title: this.user.name,
       meta: [
@@ -40,13 +47,6 @@ export default {
         }
       ]
     }
-  },
-  asyncData({ $axios }) {
-    return $axios.get('/about').then(response => {
-      return {
-        user: response.data
-      }
-    })
   }
 }
 </script>

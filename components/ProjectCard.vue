@@ -46,7 +46,7 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       projectData: {
         name: '',
@@ -55,17 +55,17 @@ export default {
     }
   },
   computed: {
-    projectComputed() {
+    projectComputed () {
       return Object.assign(this.projectData, this.project)
     },
-    getImages() {
-      return this.projectComputed.images.map(name => {
+    getImages () {
+      return this.projectComputed.images.map((name) => {
         return this.getImage(name)
       })
     }
   },
   methods: {
-    getImage(name) {
+    getImage (name) {
       return `/api/project/file/${this.projectComputed._id}/${name}`
     }
   }

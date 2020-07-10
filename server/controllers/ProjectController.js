@@ -1,11 +1,11 @@
 const ProjectService = require('../services/ProjectService')
-module.exports = app => {
+module.exports = (app) => {
   app.get('/project', (req, res) => {
     ProjectService.getAll()
-      .then(projects => {
+      .then((projects) => {
         return res.status(200).json(projects)
       })
-      .catch(e => {
+      .catch((e) => {
         return res.status(500).json(e)
       })
   })
@@ -13,7 +13,7 @@ module.exports = app => {
   app.get('/project/file/:id/:name', (req, res) => {
     const key = `${req.params.id}/${req.params.name}`
     ProjectService.getFile(key)
-      .then(data => {
+      .then((data) => {
         res.set('Content-Type', 'image/*')
         res.set('Cache-Control', 'public, max-age=31557600, s-maxage=31557600')
         return res.end(data)
@@ -25,20 +25,20 @@ module.exports = app => {
 
   app.get('/project/:name', (req, res) => {
     ProjectService.getOne(req.params.name)
-      .then(project => {
+      .then((project) => {
         return res.status(200).json(project)
       })
-      .catch(e => {
+      .catch((e) => {
         return res.status(500).json(e)
       })
   })
 
   app.post('/project', (req, res) => {
     ProjectService.create(req.body)
-      .then(project => {
+      .then((project) => {
         return res.status(201).json(project)
       })
-      .catch(e => {
+      .catch((e) => {
         return res.status(500).json(e)
       })
   })
@@ -48,7 +48,7 @@ module.exports = app => {
       .then(() => {
         return res.sendStatus(201)
       })
-      .catch(e => {
+      .catch((e) => {
         return res.sendStatus(500)
       })
   })
@@ -58,7 +58,7 @@ module.exports = app => {
       .then(() => {
         return res.sendStatus(202)
       })
-      .catch(e => {
+      .catch((e) => {
         return res.sendStatus(500)
       })
   })
@@ -68,7 +68,7 @@ module.exports = app => {
       .then(() => {
         return res.sendStatus(202)
       })
-      .catch(e => {
+      .catch((e) => {
         return res.sendStatus(500)
       })
   })

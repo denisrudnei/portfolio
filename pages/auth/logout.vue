@@ -32,10 +32,10 @@
 <script>
 export default {
   methods: {
-    confirm() {
+    confirm () {
       this.$auth.logout()
     },
-    back() {
+    back () {
       this.$router.back()
     }
   }

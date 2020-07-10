@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Post = require('../models/Post')
 
 const PostService = {
-  getAll() {
+  getAll () {
     return new Promise((resolve, reject) => {
       Post.find({}).exec((err, posts) => {
         if (err) return reject(err)
@@ -11,7 +11,7 @@ const PostService = {
     })
   },
 
-  getOne(url) {
+  getOne (url) {
     return new Promise((resolve, reject) => {
       Post.findOne({
         url: decodeURIComponent(url)
@@ -22,7 +22,7 @@ const PostService = {
     })
   },
 
-  create(post) {
+  create (post) {
     return new Promise((resolve, reject) => {
       Post.create(
         {
@@ -30,7 +30,7 @@ const PostService = {
           title: post.title,
           content: post.content
         },
-        err => {
+        (err) => {
           if (err) return reject(err)
           return resolve()
         }
@@ -38,11 +38,11 @@ const PostService = {
     })
   },
 
-  remove(postId) {
+  remove (postId) {
     return new Promise((resolve, reject) => {
       Post.deleteOne({
         _id: postId
-      }).exec(err => {
+      }).exec((err) => {
         if (err) return reject(err)
         return resolve()
       })

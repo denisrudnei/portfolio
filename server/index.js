@@ -14,15 +14,12 @@ const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
 const config = require('../nuxt.config.js')
 config.dev = !(process.env.NODE_ENV === 'production')
 
-mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost/test',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-)
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/test', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
 
-async function start() {
+async function start () {
   // Init Nuxt.js
   const nuxt = new Nuxt(config)
 

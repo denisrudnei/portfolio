@@ -32,7 +32,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
       username: '',
       password: ''
@@ -43,7 +43,7 @@ export default {
     user: 'auth/getUser'
   }),
   methods: {
-    login() {
+    login () {
       this.$auth
         .loginWith('local', {
           data: {

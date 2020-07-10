@@ -60,7 +60,14 @@ export default {
   components: {
     ProjectCard
   },
-  data() {
+  asyncData ({ $axios, params }) {
+    return $axios.get(`/project/${params.url}`).then((response) => {
+      return {
+        project: response.data
+      }
+    })
+  },
+  data () {
     return {
       editor: null,
       files: null,
@@ -74,7 +81,7 @@ export default {
   watch: {
     files: {
       deep: true,
-      handler(value) {
+      handler (value) {
         const fileReader = new FileReader()
         fileReader.addEventListener('loadend', () => {
           this.image = fileReader.result
@@ -83,18 +90,11 @@ export default {
       }
     }
   },
-  asyncData({ $axios, params }) {
-    return $axios.get(`/project/${params.url}`).then(response => {
-      return {
-        project: response.data
-      }
-    })
-  },
-  created() {
+  created () {
     this.editor = require('@ckeditor/ckeditor5-build-classic')
   },
   methods: {
-    update() {
+    update () {
       const id = this.project._id
       this.$axios.put(`/project/${id}`, this.project).then(
         () => {
@@ -119,7 +119,7 @@ export default {
               }
             )
           }
-          this.$router.push(`/config/project/list`)
+          this.$router.push('/config/project/list')
         },
         () => {
           this.$toast.error('Falha ao salvar projeto')

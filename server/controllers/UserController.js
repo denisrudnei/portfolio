@@ -1,12 +1,12 @@
 const UserService = require('../services/UserService')
 
-module.exports = app => {
+module.exports = (app) => {
   app.get('/about', (req, res) => {
     UserService.get()
-      .then(user => {
+      .then((user) => {
         return res.status(200).json(user)
       })
-      .catch(e => {
+      .catch((e) => {
         return res.status(500).json(e)
       })
   })
@@ -16,7 +16,7 @@ module.exports = app => {
       .then(() => {
         return res.sendStatus(201)
       })
-      .catch(e => {
+      .catch((e) => {
         return res.status(500).json(e)
       })
   })
@@ -26,17 +26,17 @@ module.exports = app => {
       .then(() => {
         return res.sendStatus(202)
       })
-      .catch(e => {
+      .catch((e) => {
         return res.status(500).json(e)
       })
   })
 
   app.get('/about/image', (req, res) => {
     UserService.getImage()
-      .then(image => {
+      .then((image) => {
         return res.end(image)
       })
-      .catch(e => {
+      .catch((e) => {
         return res.redirect('/user.svg')
       })
   })

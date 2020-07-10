@@ -24,7 +24,7 @@ const PostSchema = new Schema({
   }
 })
 
-function getUrl() {
+function getUrl () {
   const title = slugify(this.title, {
     replacement: '-'
   })

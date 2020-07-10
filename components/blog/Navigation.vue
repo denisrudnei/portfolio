@@ -14,13 +14,13 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       posts: null
     }
   },
-  created() {
-    this.$axios.get('/blog/post').then(response => {
+  created () {
+    this.$axios.get('/blog/post').then((response) => {
       this.posts = response.data
     })
   }

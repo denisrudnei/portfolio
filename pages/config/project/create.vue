@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       editor: null,
       files: null,
@@ -40,16 +40,16 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted () {
     this.editor = require('@ckeditor/ckeditor5-build-classic')
   },
   methods: {
-    save() {
-      this.project.images = this.files.map(file => {
+    save () {
+      this.project.images = this.files.map((file) => {
         return file.name
       })
       this.$axios.post('/project', this.project).then(
-        response => {
+        (response) => {
           this.$toast.show('Projeto criado', {
             duration: 1000
           })

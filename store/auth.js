@@ -3,10 +3,10 @@ export const stata = () => ({
 })
 
 export const getters = {
-  getLogged: state => {
+  getLogged: (state) => {
     return state.loggedIn
   },
-  getUser: state => {
+  getUser: (state) => {
     return state.authUser
   }
 }

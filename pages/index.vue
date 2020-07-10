@@ -30,13 +30,22 @@ export default {
     ProjectCard
   },
   mixins: [removeHtml],
-  data() {
+  async asyncData ({ $axios }) {
+    const { data: projects } = await $axios.get('/project')
+    const { data: about } = await $axios.get('/about')
+    return {
+      projects,
+      description: about.description,
+      title: about.name
+    }
+  },
+  data () {
     return {
       title: '',
       description: ''
     }
   },
-  head() {
+  head () {
     return {
       title: this.title,
       meta: [
@@ -46,15 +55,6 @@ export default {
           content: this.removeHtml(this.description)
         }
       ]
-    }
-  },
-  async asyncData({ $axios }) {
-    const { data: projects } = await $axios.get('/project')
-    const { data: about } = await $axios.get('/about')
-    return {
-      projects,
-      description: about.description,
-      title: about.name
     }
   }
 }

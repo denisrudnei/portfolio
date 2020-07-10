@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col v-for="post in posts" :key="post._id" cols="12" pa-2>
+    <v-col v-for="post in posts" :key="post._id" cols="12" class="pa-2">
       <Post :post="post" resume />
     </v-col>
     <template v-if="posts.length === 0">
@@ -18,8 +18,8 @@ export default {
   components: {
     Post
   },
-  asyncData({ $axios }) {
-    return $axios.get('/blog/post').then(response => {
+  asyncData ({ $axios }) {
+    return $axios.get('/blog/post').then((response) => {
       return {
         posts: response.data
       }

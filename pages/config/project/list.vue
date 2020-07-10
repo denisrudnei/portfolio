@@ -38,7 +38,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
       headers: [
         {
@@ -55,11 +55,11 @@ export default {
   computed: mapGetters({
     items: 'project/getProjects'
   }),
-  mounted() {
+  mounted () {
     this.$store.dispatch('project/getProjects')
   },
   methods: {
-    removeProject(item) {
+    removeProject (item) {
       this.$axios.delete(`/project/${item._id}`).then(() => {
         this.$store.commit('project/removeProject', item)
         this.$toast.show('Apagado com sucesso', {

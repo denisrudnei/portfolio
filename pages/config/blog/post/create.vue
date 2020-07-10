@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       editor: null,
       post: {
@@ -32,13 +32,13 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     if (process.browser) {
       this.editor = require('@ckeditor/ckeditor5-build-classic')
     }
   },
   methods: {
-    save() {
+    save () {
       this.$axios.post('/blog/post', this.post).then(() => {
         this.$toast.show('Cadastrado com sucesso', {
           duration: 5000,

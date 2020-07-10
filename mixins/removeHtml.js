@@ -1,6 +1,6 @@
 export default {
   methods: {
-    removeHtml(html = '') {
+    removeHtml (html = '') {
       return '' // html.replace(/<[^>]*>?/gm, '')
     }
   }

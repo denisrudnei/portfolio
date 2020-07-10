@@ -10,7 +10,7 @@
               {{ item.icon }}
             </v-icon>
           </v-list-item-icon>
-        
+
           <v-list-item-content>
             {{ item.title }}
           </v-list-item-content>
@@ -21,7 +21,7 @@
               settings
             </v-icon>
           </v-list-item-icon>
-        
+
           <v-list-item-content>
             Configurações
           </v-list-item-content>
@@ -45,7 +45,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
       user: {
         name: ''
@@ -80,8 +80,8 @@ export default {
   computed: mapGetters({
     logged: 'auth/getLogged'
   }),
-  created() {
-    this.$axios.get('/about').then(response => {
+  created () {
+    this.$axios.get('/about').then((response) => {
       this.user = response.data
     })
   }

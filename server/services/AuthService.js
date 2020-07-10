@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const User = require('../models/User')
 const AuthService = {
-  login(email, password) {
+  login (email, password) {
     return new Promise((resolve, reject) => {
       User.findOne({
         email
@@ -17,7 +17,7 @@ const AuthService = {
     })
   },
 
-  create(toRegister) {
+  create (toRegister) {
     return new Promise((resolve, reject) => {
       const user = {
         _id: new mongoose.Types.ObjectId(),
@@ -25,9 +25,8 @@ const AuthService = {
         name: toRegister.name,
         password: toRegister.password
       }
-      if (User.find({}).size() >= 1)
-        return reject(new Error('primary user already registered'))
-      User.create(user, err => {
+      if (User.find({}).size() >= 1) { return reject(new Error('primary user already registered')) }
+      User.create(user, (err) => {
         if (err) return reject(err)
         return resolve()
       })

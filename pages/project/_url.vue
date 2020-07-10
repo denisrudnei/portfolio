@@ -52,7 +52,7 @@
             </v-col>
           </v-row>
         </v-card-text>
-      </v-card>  
+      </v-card>
     </v-dialog>
   </v-row>
 </template>
@@ -62,15 +62,9 @@ import removeHtml from '@/mixins/removeHtml'
 export default {
   auth: false,
   mixins: [removeHtml],
-  data() {
-    return {
-      actual: null,
-      dialog: false
-    }
-  },
-  asyncData({ $axios, params, req }) {
+  asyncData ({ $axios, params, req }) {
     const name = params.url
-    return $axios.get(`/project/${name}`).then(response => {
+    return $axios.get(`/project/${name}`).then((response) => {
       const base = process.client
         ? `${window.location.protocol}//${window.location.host}`
         : `${req.protocol}://${req.headers.host}`
@@ -80,7 +74,55 @@ export default {
       }
     })
   },
-  head() {
+  data () {
+    return {
+      actual: null,
+      dialog: false
+    }
+  },
+  created () {
+    if (!this.actual) {
+      this.actual = this.project.images[0]
+    }
+  },
+  methods: {
+    getImage (name) {
+      return `/api/project/file/${this.project._id}/${name}`
+    },
+    getOgImage (name) {
+      return `${this.base}${this.getImage(name)}`
+    },
+    setActual (name) {
+      this.actual = name
+    },
+    hasPrev () {
+      const index = this.project.images.findIndex((img) => {
+        return this.actual === img
+      })
+      if (this.project.images[index - 1]) return true
+      return false
+    },
+    hasNext () {
+      const index = this.project.images.findIndex((img) => {
+        return this.actual === img
+      })
+      if (this.project.images[index + 1]) return true
+      return false
+    },
+    prev () {
+      const index = this.project.images.findIndex((img) => {
+        return img === this.actual
+      })
+      this.actual = this.project.images[index - 1]
+    },
+    next () {
+      const index = this.project.images.findIndex((img) => {
+        return img === this.actual
+      })
+      this.actual = this.project.images[index + 1]
+    }
+  },
+  head () {
     return {
       title: this.project.name,
       meta: [
@@ -105,48 +147,6 @@ export default {
           content: this.removeHtml(this.project.description)
         }
       ]
-    }
-  },
-  created() {
-    if (!this.actual) {
-      this.actual = this.project.images[0]
-    }
-  },
-  methods: {
-    getImage(name) {
-      return `/api/project/file/${this.project._id}/${name}`
-    },
-    getOgImage(name) {
-      return `${this.base}${this.getImage(name)}`
-    },
-    setActual(name) {
-      this.actual = name
-    },
-    hasPrev() {
-      const index = this.project.images.findIndex(img => {
-        return this.actual === img
-      })
-      if (this.project.images[index - 1]) return true
-      return false
-    },
-    hasNext() {
-      const index = this.project.images.findIndex(img => {
-        return this.actual === img
-      })
-      if (this.project.images[index + 1]) return true
-      return false
-    },
-    prev() {
-      const index = this.project.images.findIndex(img => {
-        return img === this.actual
-      })
-      this.actual = this.project.images[index - 1]
-    },
-    next() {
-      const index = this.project.images.findIndex(img => {
-        return img === this.actual
-      })
-      this.actual = this.project.images[index + 1]
     }
   }
 }

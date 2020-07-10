@@ -41,7 +41,7 @@
 <script>
 export default {
   auth: false,
-  data() {
+  data () {
     return {
       user: {
         username: '',
@@ -51,7 +51,7 @@ export default {
     }
   },
   methods: {
-    register() {
+    register () {
       this.$axios.post('/auth/register', this.user).then(
         () => {
           this.$toast.show('Cadastro efetuado com sucesso')

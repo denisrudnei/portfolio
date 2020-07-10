@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Project = require('../models/Project')
 const S3 = require('../../plugins/S3')
 const PostService = {
-  getAll() {
+  getAll () {
     return new Promise((resolve, reject) => {
       Project.find({}, (err, projects) => {
         if (err) return reject(err)
@@ -10,7 +10,7 @@ const PostService = {
       })
     })
   },
-  getOne(url) {
+  getOne (url) {
     return new Promise((resolve, reject) => {
       Project.findOne(
         {
@@ -24,20 +24,20 @@ const PostService = {
     })
   },
 
-  create(toCreate) {
+  create (toCreate) {
     return new Promise((resolve, reject) => {
       const project = {
         _id: new mongoose.Types.ObjectId(),
         ...toCreate
       }
-      Project.create(project, err => {
+      Project.create(project, (err) => {
         if (err) return reject(err)
         return resolve(project)
       })
     })
   },
 
-  getFile(id) {
+  getFile (id) {
     return new Promise((resolve, reject) => {
       S3.getObject(
         {
@@ -52,7 +52,7 @@ const PostService = {
     })
   },
 
-  createFile(id, file) {
+  createFile (id, file) {
     return new Promise((resolve, reject) => {
       S3.createBucket(() => {
         const params = {
@@ -69,7 +69,7 @@ const PostService = {
     })
   },
 
-  edit(projectId, project) {
+  edit (projectId, project) {
     return new Promise((resolve, reject) => {
       Project.updateOne(
         {
@@ -81,20 +81,20 @@ const PostService = {
             description: project.description
           }
         }
-      ).exec(err => {
+      ).exec((err) => {
         if (err) return reject(err)
         return resolve()
       })
     })
   },
 
-  remove(projectId) {
+  remove (projectId) {
     return new Promise((resolve, reject) => {
       const project = Project.findOne({
         _id: projectId
       }).exec()
-      project.then(result => {
-        const deleteImages = result.images.map(image => {
+      project.then((result) => {
+        const deleteImages = result.images.map((image) => {
           return new Promise((resolve, reject) => {
             S3.deleteObject(
               {
@@ -111,7 +111,7 @@ const PostService = {
         Promise.all(deleteImages).then(() => {
           Project.deleteOne({
             _id: projectId
-          }).exec(err => {
+          }).exec((err) => {
             if (err) return reject(err)
             resolve()
           })

@@ -37,24 +37,24 @@
 
 <script>
 export default {
-  data() {
-    return {
-      editor: null,
-      files: null
-    }
-  },
-  asyncData({ $axios }) {
-    return $axios.get('/about').then(response => {
+  asyncData ({ $axios }) {
+    return $axios.get('/about').then((response) => {
       return {
         user: response.data
       }
     })
   },
-  mounted() {
+  data () {
+    return {
+      editor: null,
+      files: null
+    }
+  },
+  mounted () {
     this.editor = require('@ckeditor/ckeditor5-build-classic')
   },
   methods: {
-    save() {
+    save () {
       this.$axios.put('/about', this.user).then(() => {
         this.$toast.show('Usuário atualizado', {
           duration: 1000

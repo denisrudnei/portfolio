@@ -1,8 +1,8 @@
 const AuthService = require('../services/AuthService')
-module.exports = app => {
+module.exports = (app) => {
   app.post('/auth/login', (req, res) => {
     AuthService.login(req.body.username, req.body.password)
-      .then(user => {
+      .then((user) => {
         req.session.authUser = user
         return res.status(201).json(user)
       })
@@ -27,7 +27,7 @@ module.exports = app => {
       .then(() => {
         return res.sendStatus(201)
       })
-      .catch(e => {
+      .catch((e) => {
         return res.status(400).json(e)
       })
   })

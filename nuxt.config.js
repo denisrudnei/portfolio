@@ -4,9 +4,10 @@ const pkg = require('./package')
 module.exports = {
   mode: 'universal',
 
+  telemetry: false,
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
     title: 'Portfolio',
     meta: [
@@ -25,18 +26,18 @@ module.exports = {
   },
 
   /*
-  ** Customize the progress-bar color
-  */
+   ** Customize the progress-bar color
+   */
   loading: { color: '#fff' },
 
   /*
-  ** Global CSS
-  */
+   ** Global CSS
+   */
   css: [],
 
   /*
-  ** Plugins to load before mounting the App
-  */
+   ** Plugins to load before mounting the App
+   */
   plugins: [
     {
       src: '@/plugins/CKEditor',
@@ -45,8 +46,8 @@ module.exports = {
   ],
 
   /*
-  ** Nuxt.js modules
-  */
+   ** Nuxt.js modules
+   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
@@ -61,8 +62,8 @@ module.exports = {
   ],
 
   /*
-  ** Axios module configuration
-  */
+   ** Axios module configuration
+   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     prefix: '/api',
@@ -81,7 +82,7 @@ module.exports = {
       local: {
         endpoints: {
           login: {
-            url: `auth/login/`,
+            url: 'auth/login/',
             method: 'post',
             propertyName: 'user'
           },
@@ -128,12 +129,12 @@ module.exports = {
   },
 
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     /*
-    ** You can extend webpack config here
-    */
-    extend(config, ctx) {}
+     ** You can extend webpack config here
+     */
+    extend(config, ctx) { }
   }
 }
