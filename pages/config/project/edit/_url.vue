@@ -82,8 +82,6 @@ export default {
     files: {
       deep: true,
       handler (value) {
-        /* eslint-disable */
-        console.log(value)
         const fileReader = new FileReader()
         fileReader.addEventListener('loadend', () => {
           this.image = fileReader.result
