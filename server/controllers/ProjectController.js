@@ -15,6 +15,7 @@ module.exports = app => {
     ProjectService.getFile(key)
       .then(data => {
         res.set('Content-Type', 'image/*')
+        res.set('Cache-Control', 'public, max-age=31557600, s-maxage=31557600')
         return res.end(data)
       })
       .catch(() => {
