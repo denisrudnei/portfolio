@@ -2,7 +2,7 @@
   <v-app>
     <v-navigation-drawer app clipped>
       <v-list>
-        <v-list-item>
+        <v-list-item to="/about">
           <v-list-item-avatar>
             <v-avatar>
               <v-img src="/api/about/image" :aspect-ratio="16/9" />
