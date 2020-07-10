@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-navigation-drawer app clipped>
+    <v-navigation-drawer app clipped right>
       <v-list>
         <v-list-item to="/config/project/">
           <v-list-item-action>

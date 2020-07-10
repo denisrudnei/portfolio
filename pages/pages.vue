@@ -1,7 +1,9 @@
 <template>
   <v-row>
-    <v-col pa-4>
-      <h2>Ainda não há nada aqui</h2>
+    <v-col>
+      <h1 class="primary--text">
+        Ainda não há nada aqui
+      </h1>
     </v-col>
   </v-row>
 </template>

@@ -14,6 +14,7 @@ module.exports = app => {
     const key = `${req.params.id}/${req.params.name}`
     ProjectService.getFile(key)
       .then(data => {
+        res.set('Content-Type', 'image/*')
         return res.end(data)
       })
       .catch(() => {

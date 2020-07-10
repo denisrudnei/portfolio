@@ -4,7 +4,9 @@
       <Post :post="post" resume />
     </v-col>
     <template v-if="posts.length === 0">
-      <h2>Sem postagens</h2>
+      <h1 class="primary--text">
+        Sem postagens
+      </h1>
     </template>
   </v-row>
 </template>

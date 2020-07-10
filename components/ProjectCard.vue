@@ -4,7 +4,7 @@
       cols="12"
       pa-2
     >
-      <v-card>
+      <v-card tile>
         <nuxt-link :to="`/project/${projectComputed.url}`">
           <v-img :aspect-ratio="21/9" :src="getImage(projectComputed.images[0])">
             <template v-slot:placeholder>

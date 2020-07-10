@@ -1,48 +1,35 @@
 <template>
   <v-app>
-    <v-app-bar
-      fixed
-      app
-      class="primary"
-      clipped-left
-      clipped-right
-    >
-      <v-toolbar-title>Portfolio</v-toolbar-title>
-      <v-toolbar-items>
-        <v-btn v-for="(item, i) in items" :key="i" text class="primary white--text" :to="item.to">
-          {{ item.title }}
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-btn>
-        <v-btn
-          v-if="logged"
-          text 
-          class="primary white--text"
-          to="/config"
-        >
-          Configurações
-          <v-icon>settings</v-icon>
-        </v-btn>
-        <v-btn
-          v-if="!logged"
-          text 
-          class="primary white--text"
-          to="/auth/login"
-        >
-          Login
-          <v-icon>person</v-icon>
-        </v-btn>
-        <v-btn
-          v-if="logged"
-          text
-          class="primary white--text"
-          to="/auth/logout"
-        >
-          <v-icon>exit_to_app</v-icon>
-        </v-btn>
-      </v-toolbar-items>
-    </v-app-bar>
+    <v-navigation-drawer app clipped>
+      <v-img src="http://0.0.0.0:3000/api/about/image" :aspect-ratio="16/9" />
+      <h1>{{ user.name }}</h1>
+      <v-list>
+        <v-list-item v-for="item in items" :key="item.title" :to="item.to">
+          <v-list-item-icon>
+            <v-icon>
+              {{ item.icon }}
+            </v-icon>
+          </v-list-item-icon>
+        
+          <v-list-item-content>
+            {{ item.title }}
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="logged" to="/config">
+          <v-list-item-icon>
+            <v-icon>
+              settings
+            </v-icon>
+          </v-list-item-icon>
+        
+          <v-list-item-content>
+            Configurações
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
     <v-content>
-      <v-container>
+      <v-container fluid>
         <nuxt />
       </v-container>
     </v-content>
@@ -60,6 +47,9 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      user: {
+        name: ''
+      },
       fixed: true,
       title: 'Portfolio',
       items: [
@@ -86,9 +76,15 @@ export default {
       ]
     }
   },
+
   computed: mapGetters({
     logged: 'auth/getLogged'
-  })
+  }),
+  created() {
+    this.$axios.get('/about').then(response => {
+      this.user = response.data
+    })
+  }
 }
 </script>
 
