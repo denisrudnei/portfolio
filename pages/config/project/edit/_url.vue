@@ -25,7 +25,7 @@
           cols="12"
           pa-2
         >
-          <v-file-input v-model="files" label="Incluir imagem" multiple @input="changeFile()" />
+          <v-file-input v-model="files" label="Incluir imagem" @input="changeFile()" />
         </v-col>
         <v-col
           cols="12"
@@ -82,6 +82,8 @@ export default {
     files: {
       deep: true,
       handler (value) {
+        /* eslint-disable */
+        console.log(value)
         const fileReader = new FileReader()
         fileReader.addEventListener('loadend', () => {
           this.image = fileReader.result
