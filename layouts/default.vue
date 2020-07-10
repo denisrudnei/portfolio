@@ -1,9 +1,17 @@
 <template>
   <v-app>
     <v-navigation-drawer app clipped>
-      <v-img src="http://0.0.0.0:3000/api/about/image" :aspect-ratio="16/9" />
-      <h1>{{ user.name }}</h1>
       <v-list>
+        <v-list-item>
+          <v-list-item-avatar>
+            <v-avatar>
+              <v-img src="/api/about/image" :aspect-ratio="16/9" />
+            </v-avatar>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <h1>{{ user.name }}</h1>
+          </v-list-item-content>
+        </v-list-item>
         <v-list-item v-for="item in items" :key="item.title" :to="item.to">
           <v-list-item-icon>
             <v-icon>
