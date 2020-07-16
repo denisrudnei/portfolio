@@ -24,11 +24,11 @@ const PostSchema = new Schema({
   }
 })
 
-function getUrl () {
+function getUrl() {
   const title = slugify(this.title, {
     replacement: '-'
   })
-  return `${format(this.created, 'YYYY/MM/D')}/${title}`
+  return `${format(this.created, 'yyyy/MM/dd')}/${title}`
 }
 
 PostSchema.set('toObject', {
