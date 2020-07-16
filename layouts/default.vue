@@ -18,7 +18,6 @@
               {{ item.icon }}
             </v-icon>
           </v-list-item-icon>
-
           <v-list-item-content>
             {{ item.title }}
           </v-list-item-content>
@@ -70,6 +69,11 @@ export default {
           icon: 'library_books',
           title: 'Blog',
           to: '/blog'
+        },
+        {
+          icon: 'developer_board',
+          title: 'StackOverflow',
+          to: '/stackoverflow'
         },
         {
           icon: 'pages',

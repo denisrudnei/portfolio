@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/test', {
   useUnifiedTopology: true
 })
 
-async function start () {
+async function start() {
   // Init Nuxt.js
   const nuxt = new Nuxt(config)
 
@@ -65,6 +65,7 @@ async function start () {
   require('./controllers/ProjectController')(apiRouter)
   require('./controllers/UserController')(apiRouter)
   require('./controllers/PostController')(apiRouter)
+  require('./controllers/StackOverflowController')(apiRouter)
   app.use('/api', apiRouter)
   require('./controllers/SitemapController')(app)
 

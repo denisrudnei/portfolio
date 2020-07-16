@@ -18,6 +18,14 @@
           </v-list-item-action>
           <v-list-item-content>Blog</v-list-item-content>
         </v-list-item>
+        <v-list-item to="/config/stack/">
+          <v-list-item-action>
+            <v-icon class="primary--text">
+              developer_board
+            </v-icon>
+          </v-list-item-action>
+          <v-list-item-content>StackOverflow</v-list-item-content>
+        </v-list-item>
         <v-list-item to="/config/about">
           <v-list-item-action>
             <v-icon
