@@ -10,6 +10,9 @@
             <v-btn icon :to="`/config/blog/post/edit/${item._id}`">
               <v-icon>edit</v-icon>
             </v-btn>
+            <v-btn icon @click="remove(item.id)">
+              <v-icon>delete</v-icon>
+            </v-btn>
           </td>
         </template>
       </v-data-table>
@@ -38,6 +41,18 @@ export default {
           value: 'actions'
         }
       ]
+    }
+  },
+  methods: {
+    remove (id) {
+      this.$axios.delete(`/blog/post/${id}`).then(() => {
+        this.posts = this.posts.filter((post) => {
+          return post.id !== id
+        })
+        this.$toast.show('Deletado', {
+          duration: 5000
+        })
+      })
     }
   }
 }
