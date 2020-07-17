@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="10" offset-xs1 pa-5>
+    <v-col cols="10" offset-xs1 class="ma-5">
       <nuxt-child />
     </v-col>
     <Navigation />
