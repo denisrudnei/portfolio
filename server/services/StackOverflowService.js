@@ -1,5 +1,7 @@
 const axios = require('axios')
+const { differenceInDays } = require('date-fns')
 const StackOverflowInfo = require('../models/StackOverflowInfo')
+const StackOverflowCache = require('../models/StackOverflowCache')
 
 class StackOverflowService {
   create(info) {
@@ -37,7 +39,39 @@ class StackOverflowService {
     })
   }
 
-  async getQuestions() {
+  getQuestions() {
+    return new Promise((resolve, reject) => {
+      StackOverflowCache.findOne({}, async (err, cache) => {
+        if (err) return reject(err)
+        if (!cache) {
+          const items = await this.downloadFromSite()
+          StackOverflowCache.create({
+            items
+          }, (err, result) => {
+            if (err) return reject(err)
+            return resolve(result.items)
+          })
+        } else if (differenceInDays(cache.lastModifiedDate, Date.now()) > 14) {
+          const items = await this.downloadFromSite()
+          StackOverflowCache.updateOne({
+            _id: cache._id
+          }, {
+            $set: {
+              lastModifiedDate: Date.now(),
+              items
+            }
+          }).exec((err) => {
+            if (err) return reject(err)
+            return resolve(items)
+          })
+        } else {
+          return resolve(cache.items)
+        }
+      })
+    })
+  }
+
+  async downloadFromSite() {
     const info = await this.getInfo()
     if (!info) return []
     const { userId, siteUrl } = info

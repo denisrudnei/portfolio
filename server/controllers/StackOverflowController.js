@@ -1,4 +1,3 @@
-const { response } = require('express')
 const StackOverflowService = require('../services/StackOverflowService')
 
 module.exports = (app) => {
