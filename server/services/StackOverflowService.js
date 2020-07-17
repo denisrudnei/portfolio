@@ -11,6 +11,7 @@ class StackOverflowService {
         if (!stackInfo) {
           StackOverflowInfo.create(info, (err, result) => {
             if (err) return reject(err)
+            this.forceCacheUpdate()
             return resolve(result)
           })
         } else {
@@ -23,6 +24,7 @@ class StackOverflowService {
             }
           }).exec((err) => {
             if (err) return reject(err)
+            this.forceCacheUpdate()
             return resolve()
           })
         }
@@ -66,6 +68,36 @@ class StackOverflowService {
           })
         } else {
           return resolve(cache.items)
+        }
+      })
+    })
+  }
+
+  forceCacheUpdate() {
+    return new Promise((resolve, reject) => {
+      StackOverflowCache.findOne({}, async (err, cache) => {
+        if (err) return reject(err)
+        if (!cache) {
+          const items = await this.downloadFromSite()
+          StackOverflowCache.create({
+            items
+          }, (err) => {
+            if (err) return reject(err)
+            return resolve()
+          })
+        } else {
+          const items = await this.downloadFromSite()
+          StackOverflowCache.updateOne({
+            _id: cache._id
+          }, {
+            $set: {
+              lastModifiedDate: Date.now(),
+              items
+            }
+          }).exec((err) => {
+            if (err) return reject(err)
+            return resolve()
+          })
         }
       })
     })
