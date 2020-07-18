@@ -12,7 +12,7 @@
           filled
         />
         <v-text-field
-          v-model="user.username"
+          v-model="user.email"
           placeholder="Email"
           filled
         />
@@ -41,29 +41,29 @@
 <script>
 export default {
   auth: false,
-  data () {
+  data() {
     return {
       user: {
-        username: '',
+        email: '',
         name: '',
-        password: ''
-      }
-    }
+        password: '',
+      },
+    };
   },
   methods: {
-    register () {
+    register() {
       this.$axios.post('/auth/register', this.user).then(
         () => {
-          this.$toast.show('Cadastro efetuado com sucesso')
-          this.$router.push('/auth/login')
+          this.$toast.show('Cadastro efetuado com sucesso');
+          this.$router.push('/auth/login');
         },
         () => {
-          this.$toast.error('Erro ao realizar cadastro')
-        }
-      )
-    }
-  }
-}
+          this.$toast.error('Erro ao realizar cadastro');
+        },
+      );
+    },
+  },
+};
 </script>
 
 <style>

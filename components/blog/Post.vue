@@ -17,34 +17,32 @@
 <script>
 export default {
   filters: {
-    date (value) {
-      return new Date(value).toLocaleString()
-    }
+    date(value) {
+      return new Date(value).toLocaleString();
+    },
   },
   props: {
     resume: {
       type: Boolean,
-      default: false
+      default: false,
     },
     post: {
       type: Object,
-      default: () => {
-        return {
-          title: '',
-          content: ''
-        }
-      }
-    }
+      default: () => ({
+        title: '',
+        content: '',
+      }),
+    },
   },
   computed: {
-    resumeContent () {
+    resumeContent() {
       if (this.resume) {
-        return this.post.content.substring(0, 200) + '...'
+        return `${this.post.content.substring(0, 200)}...`;
       }
-      return this.post.content
-    }
-  }
-}
+      return this.post.content;
+    },
+  },
+};
 </script>
 
 <style>

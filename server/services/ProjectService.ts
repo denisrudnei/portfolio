@@ -1,124 +1,90 @@
-const mongoose = require('mongoose')
-const Project = require('../models/Project')
-const S3 = require('../../plugins/S3')
-const PostService = {
-  getAll () {
-    return new Promise((resolve, reject) => {
-      Project.find({}, (err, projects) => {
-        if (err) return reject(err)
-        return resolve(projects)
-      })
-    })
-  },
-  getOne (url) {
-    return new Promise((resolve, reject) => {
-      Project.findOne(
-        {
-          url
+import { UploadedFile } from 'express-fileupload';
+import Project from '../models/Project';
+import S3 from '../../plugins/S3';
+
+class ProjectService {
+  public static getAll(): Promise<Project[]> {
+    return Project.find({});
+  }
+
+  public static getOne(url: string) {
+    return Project.findOne(
+      {
+        where: {
+          url,
         },
-        (err, result) => {
-          if (err) return reject(err)
-          resolve(result)
-        }
-      )
-    })
-  },
+      },
+    );
+  }
 
-  create (toCreate) {
-    return new Promise((resolve, reject) => {
-      const project = {
-        _id: new mongoose.Types.ObjectId(),
-        ...toCreate
-      }
-      Project.create(project, (err) => {
-        if (err) return reject(err)
-        return resolve(project)
-      })
-    })
-  },
+  public static create(project: Project) {
+    const newProject = Project.create(project);
+    return newProject.save();
+  }
 
-  getFile (id) {
+  public static getFile(id: string) {
     return new Promise((resolve, reject) => {
       S3.getObject(
         {
-          Bucket: process.env.BUCKET,
-          Key: id
+          Bucket: process.env.BUCKET!,
+          Key: id,
         },
-        (err, result) => {
-          if (err) return reject(err)
-          return resolve(result.Body)
-        }
-      )
-    })
-  },
+        (err: Error, result: AWS.S3.Types.GetObjectOutput) => {
+          if (err) return reject(err);
+          return resolve(result.Body);
+        },
+      );
+    });
+  }
 
-  createFile (id, file) {
+  public static createFile(id: Project['id'], file: UploadedFile) {
     return new Promise((resolve, reject) => {
       S3.createBucket(() => {
         const params = {
-          Bucket: process.env.BUCKET,
+          Bucket: process.env.BUCKET as string,
           Key: `${id}/${file.name}`,
-          Body: file.data
-        }
+          Body: file.data,
+        };
 
-        S3.upload(params, (err, data) => {
-          if (err) return reject(err)
-          return resolve(data)
-        })
-      })
-    })
-  },
+        S3.upload(params, (err: Error, data: AWS.S3.Types.UploadPartOutput) => {
+          if (err) return reject(err);
+          return resolve(data);
+        });
+      });
+    });
+  }
 
-  edit (projectId, project) {
-    return new Promise((resolve, reject) => {
-      Project.updateOne(
+  public static async edit(projectId: Project['id'], project: Project): Promise<Project> {
+    const projectIdDb = await Project.findOne(projectId);
+    projectIdDb!.name = project.name;
+    projectIdDb!.description = project.description;
+    return projectIdDb!.save();
+  }
+
+  public static async remove(projectId: Project['id']) {
+    const project = await Project.findOne({
+      id: projectId,
+    });
+
+    const deleteImages = project!.images.map((image) => new Promise((resolve, reject) => {
+      S3.deleteObject(
         {
-          _id: projectId
+          Bucket: process.env.BUCKET as string,
+          Key: `${projectId}/${image}`,
         },
-        {
-          $set: {
-            name: project.name,
-            description: project.description
-          }
-        }
-      ).exec((err) => {
-        if (err) return reject(err)
-        return resolve()
-      })
-    })
-  },
-
-  remove (projectId) {
-    return new Promise((resolve, reject) => {
-      const project = Project.findOne({
-        _id: projectId
-      }).exec()
-      project.then((result) => {
-        const deleteImages = result.images.map((image) => {
-          return new Promise((resolve, reject) => {
-            S3.deleteObject(
-              {
-                Bucket: process.env.BUCKET,
-                Key: `${projectId}/${image}`
-              },
-              (err, data) => {
-                if (err) return reject(err)
-                return resolve(data)
-              }
-            )
-          })
-        })
-        Promise.all(deleteImages).then(() => {
-          Project.deleteOne({
-            _id: projectId
-          }).exec((err) => {
-            if (err) return reject(err)
-            resolve()
-          })
-        })
-      })
-    })
+        (err: Error, data) => {
+          if (err) return reject(err);
+          return resolve(data);
+        },
+      );
+    }));
+    Promise.all(deleteImages).then(() => {
+      Project.delete({
+        id: projectId,
+      }).then(() => {
+      });
+    });
   }
 }
 
-module.exports = PostService
+export default ProjectService;

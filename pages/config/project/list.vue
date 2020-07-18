@@ -36,40 +36,41 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
+
 export default {
-  data () {
+  data() {
     return {
       headers: [
         {
           text: 'Nome',
-          value: 'name'
+          value: 'name',
         },
         {
           text: 'Ações',
-          value: 'actions'
-        }
-      ]
-    }
+          value: 'actions',
+        },
+      ],
+    };
   },
   computed: mapGetters({
-    items: 'project/getProjects'
+    items: 'project/getProjects',
   }),
-  mounted () {
-    this.$store.dispatch('project/getProjects')
+  mounted() {
+    this.$store.dispatch('project/getProjects');
   },
   methods: {
-    removeProject (item) {
-      this.$axios.delete(`/project/${item._id}`).then(() => {
-        this.$store.commit('project/removeProject', item)
+    removeProject(item) {
+      this.$axios.delete(`/project/${item.id}`).then(() => {
+        this.$store.commit('project/removeProject', item);
         this.$toast.show('Apagado com sucesso', {
           duration: 1000,
-          icon: 'delete'
-        })
-      })
-    }
-  }
-}
+          icon: 'delete',
+        });
+      });
+    },
+  },
+};
 </script>
 
 <style>

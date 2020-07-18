@@ -5,7 +5,13 @@
       md="7"
     >
       <v-row>
-        <v-col v-for="img in project.images" :key="img" cols="12" md="3" @mouseenter="setActual(img)">
+        <v-col
+          v-for="img in project.images"
+          :key="img"
+          cols="12"
+          md="3"
+          @mouseenter="setActual(img)"
+        >
           <v-img :aspect-ratio="1" :src="getImage(img)" @click="dialog = true">
             <template v-slot:placeholder>
               <v-row align="center" justify="center" class="fill-height ma-0">
@@ -58,98 +64,92 @@
 </template>
 
 <script>
-import removeHtml from '@/mixins/removeHtml'
+import removeHtml from '@/mixins/removeHtml';
+
 export default {
   auth: false,
   mixins: [removeHtml],
-  asyncData ({ $axios, params, req }) {
-    const name = params.url
+  asyncData({ $axios, params, req }) {
+    const name = params.url;
     return $axios.get(`/project/${name}`).then((response) => {
       const base = process.client
         ? `${window.location.protocol}//${window.location.host}`
-        : `${req.protocol}://${req.headers.host}`
+        : `${req.protocol}://${req.headers.host}`;
       return {
         project: response.data,
-        base
-      }
-    })
+        base,
+      };
+    });
   },
-  data () {
+  data() {
     return {
       actual: null,
-      dialog: false
-    }
+      dialog: false,
+    };
   },
-  created () {
+  created() {
     if (!this.actual) {
-      this.actual = this.project.images[0]
+      const [actual] = this.project.images;
+      this.actual = actual;
     }
   },
   methods: {
-    getImage (name) {
-      return `/api/project/file/${this.project._id}/${name}`
+    getImage(name) {
+      return `/api/project/file/${this.project.id}/${name}`;
     },
-    getOgImage (name) {
-      return `${this.base}${this.getImage(name)}`
+    getOgImage(name) {
+      return `${this.base}${this.getImage(name)}`;
     },
-    setActual (name) {
-      this.actual = name
+    setActual(name) {
+      this.actual = name;
     },
-    hasPrev () {
-      const index = this.project.images.findIndex((img) => {
-        return this.actual === img
-      })
-      if (this.project.images[index - 1]) return true
-      return false
+    hasPrev() {
+      const index = this.project.images.findIndex((img) => this.actual === img);
+      if (this.project.images[index - 1]) return true;
+      return false;
     },
-    hasNext () {
-      const index = this.project.images.findIndex((img) => {
-        return this.actual === img
-      })
-      if (this.project.images[index + 1]) return true
-      return false
+    hasNext() {
+      const index = this.project.images.findIndex((img) => this.actual === img);
+      if (this.project.images[index + 1]) return true;
+      return false;
     },
-    prev () {
-      const index = this.project.images.findIndex((img) => {
-        return img === this.actual
-      })
-      this.actual = this.project.images[index - 1]
+    prev() {
+      const index = this.project.images.findIndex((img) => img === this.actual);
+      this.actual = this.project.images[index - 1];
     },
-    next () {
-      const index = this.project.images.findIndex((img) => {
-        return img === this.actual
-      })
-      this.actual = this.project.images[index + 1]
-    }
+    next() {
+      const index = this.project.images.findIndex((img) => img === this.actual);
+      this.actual = this.project.images[index + 1];
+    },
   },
-  head () {
+  head() {
     return {
       title: this.project.name,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.removeHtml(this.project.description)
+          content: this.removeHtml(this.project.description),
         },
         {
           hid: 'og:title',
           property: 'og:title',
-          content: this.project.name
+          content: this.project.name,
         },
         {
           hid: 'og:image',
           property: 'og:image',
-          content: this.getOgImage(this.actual || '')
+          content: this.getOgImage(this.actual || ''),
         },
         {
           hid: 'og:description',
           property: 'og:description',
-          content: this.removeHtml(this.project.description)
-        }
-      ]
-    }
-  }
-}
+          content: this.removeHtml(this.project.description),
+        },
+      ],
+    };
+  },
+};
 </script>
 <style>
 </style>

@@ -16,31 +16,31 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       userInfo: {
         userId: '',
-        siteUrl: ''
-      }
-    }
+        siteUrl: '',
+      },
+    };
   },
-  created () {
+  created() {
     this.$axios.get('/stackinfo').then((response) => {
       if (response.data) {
-        this.userInfo = response.data
+        this.userInfo = response.data;
       }
-    })
+    });
   },
   methods: {
-    save () {
+    save() {
       this.$axios.post('/stackInfo', this.userInfo).then(() => {
         this.$toast.show('Salvo com sucesso', {
-          duration: 5000
-        })
-      })
-    }
-  }
-}
+          duration: 5000,
+        });
+      });
+    },
+  },
+};
 </script>
 
 <style>

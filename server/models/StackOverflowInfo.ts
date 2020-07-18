@@ -1,15 +1,17 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+import {
+  BaseEntity, Entity, Column, PrimaryGeneratedColumn,
+} from 'typeorm';
 
-const StackOverFlowInfoSchema = new Schema({
-  userId: {
-    type: Schema.Types.String,
-    required: true
-  },
-  siteUrl: {
-    type: Schema.Types.String,
-    required: true
-  }
-})
+@Entity()
+class StackOverflowInfo extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  public id!: number
 
-module.exports = mongoose.model('StackOverflowInfo', StackOverFlowInfoSchema)
+  @Column()
+  public userId!: string
+
+  @Column()
+  public siteUrl!: string
+}
+
+export default StackOverflowInfo;

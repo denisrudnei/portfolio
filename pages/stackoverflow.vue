@@ -54,7 +54,12 @@
                           <v-avatar class="mx-1">
                             <v-img :src="answer.owner.profile_image" />
                           </v-avatar>
-                          <a target="black" :href="answer.owner.link">{{ answer.owner.display_name }}</a>
+                          <a
+                            target="black"
+                            :href="answer.owner.link"
+                          >
+                            {{ answer.owner.display_name }}
+                          </a>
                         </v-toolbar>
                         <v-card-text>
                           <div v-html="answer.body" />
@@ -93,20 +98,17 @@
 <script>
 export default {
   auth: false,
-  asyncData ({ $axios }) {
-    return $axios.get('/questions').then((response) => {
-      return {
-        items: response.data
-      }
-    })
+  asyncData({ $axios }) {
+    return $axios.get('/questions').then((response) => ({
+      items: response.data,
+    }));
   },
-  data () {
+  data() {
     return {
-      activeAnswer: ''
-    }
-  }
-
-}
+      activeAnswer: '',
+    };
+  },
+};
 </script>
 
 <style>

@@ -1,53 +1,36 @@
-const mongoose = require('mongoose')
-const Post = require('../models/Post')
+import Post from '../models/Post';
 
-const PostService = {
-  getAll () {
+class PostService {
+  public static getAll() {
     return new Promise((resolve, reject) => {
-      Post.find({}).exec((err, posts) => {
-        if (err) return reject(err)
-        return resolve(posts)
-      })
-    })
-  },
+      Post.find({}).then((posts) => resolve(posts)).catch((err) => {
+        reject(err);
+      });
+    });
+  }
 
-  getOne (url) {
+  public static getOne(url: string) {
     return new Promise((resolve, reject) => {
       Post.findOne({
-        url: decodeURIComponent(url)
-      }).exec((err, post) => {
-        if (err) return reject(err)
-        return resolve(post)
-      })
-    })
-  },
+        url: decodeURIComponent(url),
+      }).then((post) => resolve(post)).catch((err) => reject(err));
+    });
+  }
 
-  create (post) {
-    return new Promise((resolve, reject) => {
-      Post.create(
-        {
-          _id: new mongoose.Types.ObjectId(),
-          title: post.title,
-          content: post.content
-        },
-        (err) => {
-          if (err) return reject(err)
-          return resolve()
-        }
-      )
-    })
-  },
+  public static create(post: Post) {
+    const newPost = Post.create();
 
-  remove (postId) {
-    return new Promise((resolve, reject) => {
-      Post.deleteOne({
-        _id: postId
-      }).exec((err) => {
-        if (err) return reject(err)
-        return resolve()
-      })
-    })
+    newPost.title = post.title;
+    newPost.content = post.content;
+
+    return Post.save(newPost);
+  }
+
+  public static remove(postId: Post['id']) {
+    return Post.delete({
+      id: postId,
+    });
   }
 }
 
-module.exports = PostService
+export default PostService;

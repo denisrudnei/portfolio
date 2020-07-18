@@ -24,12 +24,10 @@ export default {
   props: {
     error: {
       type: Object,
-      default: () => {
-        return {}
-      }
-    }
-  }
-}
+      default: () => ({}),
+    },
+  },
+};
 </script>
 
 <style>

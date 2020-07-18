@@ -1,36 +1,33 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-const slugify = require('slugify')
+import {
+  BaseEntity, Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate,
+} from 'typeorm';
+import slugify from 'slugify';
 
-const ProjectSchema = new Schema({
-  _id: Schema.Types.ObjectId,
-  name: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  url: {
-    type: String,
-    default: ''
-  },
-  images: [
-    {
-      type: String
-    }
-  ],
-  link: {
-    type: String
+@Entity()
+class Project extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  public id!: number
+
+  @Column()
+  public name!: string
+
+  @Column()
+  public description!: string
+
+  @Column({ nullable: true })
+  public url!: string
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  public setUrl() {
+    this.url = slugify(this.name, {
+      replacement: '-',
+      lower: true,
+    });
   }
-})
 
-ProjectSchema.pre('save', function () {
-  this.url = slugify(this.name, {
-    replacement: '-',
-    lower: true
-  })
-})
+  @Column('text', { array: true })
+  public images!: string[]
+}
 
-module.exports = mongoose.model('Project', ProjectSchema)
+export default Project;

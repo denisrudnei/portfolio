@@ -1,37 +1,32 @@
-const mongoose = require('mongoose')
-const User = require('../models/User')
-const AuthService = {
-  login (email, password) {
+import User from '../models/User';
+
+class AuthService {
+  public static login(email: string, password: string): Promise<User> {
     return new Promise((resolve, reject) => {
       User.findOne({
-        email
+        email,
       })
-        .select('+password')
-        .exec((err, user) => {
-          if (err || user === null) return reject(err)
-          user.verifyPassword(password, (err, result) => {
-            if (err || !result) return reject(err)
-            return resolve(user)
-          })
-        })
-    })
-  },
+        .then((user) => {
+          user!.verifyPassword(password).then(() => resolve(user));
+        }).catch((err) => {
+          reject(err);
+        });
+    });
+  }
 
-  create (toRegister) {
+  public static create(toRegister: User): Promise<User> {
     return new Promise((resolve, reject) => {
-      const user = {
-        _id: new mongoose.Types.ObjectId(),
-        email: toRegister.username,
-        name: toRegister.name,
-        password: toRegister.password
-      }
-      if (User.find({}).size() >= 1) { return reject(new Error('primary user already registered')) }
-      User.create(user, (err) => {
-        if (err) return reject(err)
-        return resolve()
-      })
-    })
+      const user = new User();
+
+      user.email = toRegister.email;
+      user.name = toRegister.name;
+      user.password = toRegister.password;
+      User.findOne().then((inDb) => {
+        if (inDb) { return reject(new Error('primary user already registered')); }
+        return resolve(User.save(user));
+      });
+    });
   }
 }
 
-module.exports = AuthService
+export default AuthService;

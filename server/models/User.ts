@@ -1,47 +1,46 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-const bcrypt = require('bcrypt')
+import {
+  Entity, BaseEntity, Column, BeforeInsert, PrimaryGeneratedColumn,
+} from 'typeorm';
+import bcrypt from 'bcrypt';
 
-const UserSchema = new Schema({
-  _id: Schema.Types.ObjectId,
-  email: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true,
-    select: 0
-  },
-  image: {
-    type: String,
-    required: false
+@Entity()
+class User extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  public id!: number
+
+  @Column()
+  public email!: string
+
+  @Column({ nullable: true })
+  public description!: string
+
+  @Column()
+  public name!: string
+
+  @Column()
+  public password!: string
+
+  @Column({ nullable: true })
+  public image!: string
+
+  public verifyPassword(password: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      bcrypt.compare(password, this.password, (err, result) => {
+        if (err) return reject(err);
+        return resolve(result);
+      });
+    });
   }
-})
 
-UserSchema.pre('save', function (next) {
-  const user = this
-  if (!user.isModified('password')) return next()
-  const salt = bcrypt.genSaltSync(12)
-  bcrypt.hash(user.password, salt, function (err, hash) {
-    if (err) return next(err)
-    user.password = hash
-    next()
-  })
-})
-
-UserSchema.methods.verifyPassword = function (password, next) {
-  bcrypt.compare(password, this.password, (err, result) => {
-    if (err) return next(err)
-    return next(null, result)
-  })
+  @BeforeInsert()
+  private hashPassword() {
+    const user = this;
+    const salt = bcrypt.genSaltSync(12);
+    bcrypt.hash(user.password, salt, (err, hash) => {
+      if (err) throw err;
+      user.password = hash;
+    });
+  }
 }
 
-module.exports = mongoose.model('User', UserSchema)
+export default User;

@@ -7,7 +7,7 @@
         </template>
         <template v-slot:item.actions="{ item }">
           <td>
-            <v-btn icon :to="`/config/blog/post/edit/${item._id}`">
+            <v-btn icon :to="`/config/blog/post/edit/${item.id}`">
               <v-icon>edit</v-icon>
             </v-btn>
             <v-btn icon @click="remove(item.id)">
@@ -22,40 +22,36 @@
 
 <script>
 export default {
-  asyncData ({ $axios }) {
-    return $axios.get('/blog/post').then((response) => {
-      return {
-        posts: response.data
-      }
-    })
+  asyncData({ $axios }) {
+    return $axios.get('/blog/post').then((response) => ({
+      posts: response.data,
+    }));
   },
-  data () {
+  data() {
     return {
       headers: [
         {
           value: 'title',
-          text: 'Titulo'
+          text: 'Titulo',
         },
         {
           text: 'Ações',
-          value: 'actions'
-        }
-      ]
-    }
+          value: 'actions',
+        },
+      ],
+    };
   },
   methods: {
-    remove (id) {
+    remove(id) {
       this.$axios.delete(`/blog/post/${id}`).then(() => {
-        this.posts = this.posts.filter((post) => {
-          return post.id !== id
-        })
+        this.posts = this.posts.filter((post) => post.id !== id);
         this.$toast.show('Deletado', {
-          duration: 5000
-        })
-      })
-    }
-  }
-}
+          duration: 5000,
+        });
+      });
+    },
+  },
+};
 </script>
 
 <style>
