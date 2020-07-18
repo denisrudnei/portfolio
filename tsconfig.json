@@ -2,9 +2,10 @@
   "compilerOptions": {
     "target": "esnext",
     "baseUrl": ".",
+    "rootDir": ".",
     "moduleResolution": "node",
     "allowJs": true,
-    "outDir": "dist",
+    "outDir": "dist/",
     "strict": true,
     "sourceMap": true,
     "paths": {
@@ -22,8 +23,7 @@
       "@nuxt/types"
     ],
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+   
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },

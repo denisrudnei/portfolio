@@ -5,4 +5,5 @@ const S3 = new AWS.S3({
   secretAccessKey: process.env.S3_SECRET,
   Bucket: process.env.BUCKET,
 });
+
 module.exports = S3;

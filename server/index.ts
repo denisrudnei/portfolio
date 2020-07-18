@@ -15,7 +15,7 @@ const { Nuxt, Builder } = require('nuxt');
 const app = express();
 const apiRouter = express.Router();
 
-const config = require('../nuxt.config.js');
+const config = require('~/nuxt.config.js');
 
 config.dev = !(process.env.NODE_ENV === 'production');
 
