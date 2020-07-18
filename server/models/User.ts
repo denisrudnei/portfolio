@@ -27,19 +27,18 @@ class User extends BaseEntity {
     return new Promise((resolve, reject) => {
       bcrypt.compare(password, this.password, (err, result) => {
         if (err) return reject(err);
+        if (!result) {
+          return reject(new Error('bad credentials'));
+        }
         return resolve(result);
       });
     });
   }
 
   @BeforeInsert()
-  private hashPassword() {
-    const user = this;
+  hashPassword() {
     const salt = bcrypt.genSaltSync(12);
-    bcrypt.hash(user.password, salt, (err, hash) => {
-      if (err) throw err;
-      user.password = hash;
-    });
+    this.password = bcrypt.hashSync(this.password, salt);
   }
 }
 
