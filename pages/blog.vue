@@ -8,13 +8,14 @@
 </template>
 
 <script>
-import Navigation from '@/components/blog/Navigation'
+import Navigation from '@/components/blog/Navigation';
+
 export default {
   auth: false,
   components: {
-    Navigation
-  }
-}
+    Navigation,
+  },
+};
 </script>
 
 <style>

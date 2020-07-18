@@ -1,5 +1,5 @@
-const colors = require('vuetify/es5/util/colors').default
-const pkg = require('./package')
+const colors = require('vuetify/es5/util/colors').default;
+const pkg = require('./package');
 
 module.exports = {
   mode: 'universal',
@@ -13,16 +13,16 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: pkg.description },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'
-      }
-    ]
+          'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons',
+      },
+    ],
   },
 
   /*
@@ -41,8 +41,8 @@ module.exports = {
   plugins: [
     {
       src: '@/plugins/CKEditor',
-      ssr: false
-    }
+      ssr: false,
+    },
   ],
 
   /*
@@ -53,12 +53,12 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/toast',
-    '@nuxtjs/google-analytics'
+    '@nuxtjs/google-analytics',
   ],
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
   ],
 
   /*
@@ -67,16 +67,16 @@ module.exports = {
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     prefix: '/api',
-    proxy: true
+    proxy: true,
   },
 
   router: {
-    middleware: ['auth']
+    middleware: ['auth'],
   },
 
   auth: {
     redirect: {
-      login: '/auth/login'
+      login: '/auth/login',
     },
     strategies: {
       local: {
@@ -84,20 +84,20 @@ module.exports = {
           login: {
             url: 'auth/login/',
             method: 'post',
-            propertyName: 'user'
+            propertyName: 'user',
           },
           user: {
             url: 'auth/user',
             method: 'post',
-            propertyName: 'user'
+            propertyName: 'user',
           },
           logout: {
             url: 'auth/logout',
-            method: 'post'
-          }
-        }
-      }
-    }
+            method: 'post',
+          },
+        },
+      },
+    },
   },
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
@@ -110,7 +110,7 @@ module.exports = {
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3
+          success: colors.green.accent3,
         },
         dark: {
           primary: colors.blue.darken2,
@@ -119,13 +119,13 @@ module.exports = {
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3
-        }
-      }
-    }
+          success: colors.green.accent3,
+        },
+      },
+    },
   },
   googleAnalytics: {
-    id: 'UA-38858408-4'
+    id: 'UA-38858408-4',
   },
 
   /*
@@ -135,6 +135,6 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) { }
-  }
-}
+    extend(config, ctx) { },
+  },
+};

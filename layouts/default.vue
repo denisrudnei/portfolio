@@ -22,7 +22,7 @@
             {{ item.title }}
           </v-list-item-content>
         </v-list-item>
-        <v-list-item v-if="logged" to="/config">
+        <v-list-item v-if="logged" to="/config/project/create">
           <v-list-item-icon>
             <v-icon>
               settings
@@ -50,12 +50,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
+
 export default {
-  data () {
+  data() {
     return {
       user: {
-        name: ''
+        name: '',
       },
       fixed: true,
       title: 'Portfolio',
@@ -63,41 +64,41 @@ export default {
         {
           icon: 'apps',
           title: 'Projetos',
-          to: '/'
+          to: '/',
         },
         {
           icon: 'library_books',
           title: 'Blog',
-          to: '/blog'
+          to: '/blog',
         },
         {
           icon: 'developer_board',
           title: 'StackOverflow',
-          to: '/stackoverflow'
+          to: '/stackoverflow',
         },
         {
           icon: 'pages',
           title: 'Páginas',
-          to: '/pages'
+          to: '/pages',
         },
         {
           icon: 'info',
           title: 'Sobre',
-          to: '/about'
-        }
-      ]
-    }
+          to: '/about',
+        },
+      ],
+    };
   },
 
   computed: mapGetters({
-    logged: 'auth/getLogged'
+    logged: 'auth/getLogged',
   }),
-  created () {
+  created() {
     this.$axios.get('/about').then((response) => {
-      this.user = response.data
-    })
-  }
-}
+      this.user = response.data;
+    });
+  },
+};
 </script>
 
 <style>

@@ -1,21 +1,24 @@
 module.exports = {
   env: {
     browser: true,
-    es2020: true,
-    node: true
+    node: true,
   },
   extends: [
-    '@nuxtjs',
     'plugin:vue/essential',
-    'standard'
+    'airbnb-base',
   ],
   parserOptions: {
-    ecmaVersion: 11,
-    sourceType: 'module'
+    parser: '@typescript-eslint/parser',
   },
   plugins: [
-    'vue'
+    'vuetify',
+    '@typescript-eslint/eslint-plugin',
   ],
   rules: {
-  }
-}
+    'import/extensions': 'off',
+    'import/no-unresolved': 'off',
+    'no-unused-vars': 'off',
+    'import/no-extraneous-dependencies': 'off',
+    'global-require': 'off',
+  },
+};

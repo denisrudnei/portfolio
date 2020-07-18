@@ -35,41 +35,39 @@ export default {
   props: {
     image: {
       default: null,
-      type: String
+      type: String,
     },
     project: {
       type: Object,
-      default: null
+      default: null,
     },
     listing: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
       projectData: {
         name: '',
-        description: ''
-      }
-    }
+        description: '',
+      },
+    };
   },
   computed: {
-    projectComputed () {
-      return Object.assign(this.projectData, this.project)
+    projectComputed() {
+      return Object.assign(this.projectData, this.project);
     },
-    getImages () {
-      return this.projectComputed.images.map((name) => {
-        return this.getImage(name)
-      })
-    }
+    getImages() {
+      return this.projectComputed.images.map((name) => this.getImage(name));
+    },
   },
   methods: {
-    getImage (name) {
-      return `/api/project/file/${this.projectComputed._id}/${name}`
-    }
-  }
-}
+    getImage(name) {
+      return `/api/project/file/${this.projectComputed.id}/${name}`;
+    },
+  },
+};
 </script>
 
 <style>

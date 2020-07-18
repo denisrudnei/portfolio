@@ -25,30 +25,29 @@
 </template>
 
 <script>
-import removeHtml from '@/mixins/removeHtml'
+import removeHtml from '@/mixins/removeHtml';
+
 export default {
   auth: false,
   mixins: [removeHtml],
-  asyncData ({ $axios }) {
-    return $axios.get('/about').then((response) => {
-      return {
-        user: response.data
-      }
-    })
+  asyncData({ $axios }) {
+    return $axios.get('/about').then((response) => ({
+      user: response.data,
+    }));
   },
-  head () {
+  head() {
     return {
       title: this.user.name,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.removeHtml(this.user.description)
-        }
-      ]
-    }
-  }
-}
+          content: this.removeHtml(this.user.description),
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style>

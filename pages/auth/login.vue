@@ -6,10 +6,10 @@
     >
       <v-form>
         <v-text-field
-          v-model="username"
+          v-model="email"
           placeholder="Email"
           filled
-          autocomplete="username"
+          autocomplete="email"
         />
         <v-text-field
           v-model="password"
@@ -30,43 +30,44 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
+
 export default {
-  data () {
+  data() {
     return {
-      username: '',
-      password: ''
-    }
+      email: '',
+      password: '',
+    };
   },
   computed: mapGetters({
     logged: 'auth/getLogged',
-    user: 'auth/getUser'
+    user: 'auth/getUser',
   }),
   methods: {
-    login () {
+    login() {
       this.$auth
         .loginWith('local', {
           data: {
-            username: this.username,
-            password: this.password
-          }
+            email: this.email,
+            password: this.password,
+          },
         })
         .then(
           () => {
-            this.$toast.show(`Bem-vindo ${this.username}`, {
+            this.$toast.show(`Bem-vindo ${this.email}`, {
               duration: 5000,
-              icon: 'weekend'
-            })
+              icon: 'weekend',
+            });
           },
           () => {
             this.$toast.error('Email ou senha inválidos', {
-              icon: 'error_outline'
-            })
-          }
-        )
-    }
-  }
-}
+              icon: 'error_outline',
+            });
+          },
+        );
+    },
+  },
+};
 </script>
 
 <style>

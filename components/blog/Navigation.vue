@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer app clipped right>
     <v-list>
-      <v-list-item v-for="post in posts" :key="post._id" :to="`/blog/post/${post.url}`">
+      <v-list-item v-for="post in posts" :key="post.id" :to="`/blog/post/${post.url}`">
         <v-list-item-content>
           <v-list-item-title>
             {{ post.title }}
@@ -14,17 +14,17 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      posts: null
-    }
+      posts: null,
+    };
   },
-  created () {
+  created() {
     this.$axios.get('/blog/post').then((response) => {
-      this.posts = response.data
-    })
-  }
-}
+      this.posts = response.data;
+    });
+  },
+};
 </script>
 
 <style>

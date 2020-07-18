@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "baseUrl": ".",
+    "rootDir": ".",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "outDir": "dist/",
+    "strict": true,
+    "sourceMap": true,
+    "paths": {
+      "~/*": [
+        "./*",
+        "./dist/*"
+      ],
+      "@/*": [
+        "./*",
+        "./dist/*"
+      ]
+    },
+    "types": [
+      "@types/node",
+      "@nuxt/types"
+    ],
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

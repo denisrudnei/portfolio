@@ -22,40 +22,41 @@
 </template>
 
 <script>
-import removeHtml from '@/mixins/removeHtml'
-import ProjectCard from '@/components/ProjectCard'
+import removeHtml from '@/mixins/removeHtml';
+import ProjectCard from '@/components/ProjectCard';
+
 export default {
   auth: false,
   components: {
-    ProjectCard
+    ProjectCard,
   },
   mixins: [removeHtml],
-  async asyncData ({ $axios }) {
-    const { data: projects } = await $axios.get('/project')
-    const { data: about } = await $axios.get('/about')
+  async asyncData({ $axios }) {
+    const { data: projects } = await $axios.get('/project');
+    const { data: about } = await $axios.get('/about');
     return {
       projects,
       description: about.description,
-      title: about.name
-    }
+      title: about.name,
+    };
   },
-  data () {
+  data() {
     return {
       title: '',
-      description: ''
-    }
+      description: '',
+    };
   },
-  head () {
+  head() {
     return {
       title: this.title,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.removeHtml(this.description)
-        }
-      ]
-    }
-  }
-}
+          content: this.removeHtml(this.description),
+        },
+      ],
+    };
+  },
+};
 </script>

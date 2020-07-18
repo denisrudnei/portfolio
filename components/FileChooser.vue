@@ -14,14 +14,14 @@
 export default {
   props: ['value'],
   methods: {
-    chooseFile () {
-      this.$refs.file.click()
+    chooseFile() {
+      this.$refs.file.click();
     },
-    updateFile () {
-      this.$emit('input', this.$refs.file.files)
-    }
-  }
-}
+    updateFile() {
+      this.$emit('input', this.$refs.file.files);
+    },
+  },
+};
 </script>
 
 <style>
