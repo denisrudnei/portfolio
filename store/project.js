@@ -1,7 +1,5 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-shadow */
-import ggl from 'graphql-tag';
-import list from '@/graphql/query/project/list.graphql';
 
 export const state = () => ({
   projects: [],
@@ -21,15 +19,5 @@ export const mutations = {
   },
   removeProject(state, project) {
     state.projects = state.projects.filter((p) => p.id !== project.id);
-  },
-};
-
-export const actions = {
-  getProjects({ commit }) {
-    this.app.$apollo.query({
-      query: ggl(list),
-    }).then((response) => {
-      commit('setProjects', response.data.Project);
-    });
   },
 };

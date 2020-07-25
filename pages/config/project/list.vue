@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import remove from '@/graphql/mutation/project/remove.graphql';
 import list from '@/graphql/query/project/list.graphql';
 import ggl from 'graphql-tag';
@@ -56,9 +55,6 @@ export default {
       ],
     };
   },
-  computed: mapGetters({
-    items: 'project/getProjects',
-  }),
   asyncData({ app }) {
     return app.$apollo.query({
       query: ggl(list),

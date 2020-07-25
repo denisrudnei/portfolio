@@ -24,6 +24,7 @@ export default ({ app, req }: any, inject: any) => {
   const apolloClient = new ApolloClient({
     link: httpLink,
     cache,
+    ssrMode: process.server,
   });
 
   const apolloProvider = new VueApollo({
