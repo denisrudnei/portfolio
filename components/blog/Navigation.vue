@@ -13,6 +13,9 @@
 </template>
 
 <script>
+import ggl from 'graphql-tag';
+import list from '@/graphql/query/post/list.graphql';
+
 export default {
   data() {
     return {
@@ -20,8 +23,10 @@ export default {
     };
   },
   created() {
-    this.$axios.get('/blog/post').then((response) => {
-      this.posts = response.data;
+    this.$apollo.query({
+      query: ggl(list),
+    }).then((response) => {
+      this.posts = response.data.Post;
     });
   },
 };

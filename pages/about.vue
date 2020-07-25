@@ -26,13 +26,17 @@
 
 <script>
 import removeHtml from '@/mixins/removeHtml';
+import ggl from 'graphql-tag';
+import about from '@/graphql/query/about/list.graphql';
 
 export default {
   auth: false,
   mixins: [removeHtml],
-  asyncData({ $axios }) {
-    return $axios.get('/about').then((response) => ({
-      user: response.data,
+  asyncData({ app }) {
+    return app.$apollo.query({
+      query: ggl(about),
+    }).then((response) => ({
+      user: response.data.User,
     }));
   },
   head() {

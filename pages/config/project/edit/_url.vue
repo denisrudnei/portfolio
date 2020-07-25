@@ -25,7 +25,7 @@
           cols="12"
           pa-2
         >
-          <v-file-input v-model="files" label="Incluir imagem" @input="changeFile()" />
+          <v-file-input v-model="files" filled label="Incluir imagem" @change="changeFile" />
         </v-col>
         <v-col
           cols="12"
@@ -56,14 +56,23 @@
 
 <script>
 import ProjectCard from '@/components/ProjectCard';
+import edit from '@/graphql/mutation/project/edit.graphql';
+import list from '@/graphql/query/project/list.graphql';
+import projectByUrl from '@/graphql/query/project/getByUrl.graphql';
+import ggl from 'graphql-tag';
 
 export default {
   components: {
     ProjectCard,
   },
-  asyncData({ $axios, params }) {
-    return $axios.get(`/project/${params.url}`).then((response) => ({
-      project: response.data,
+  asyncData({ app, params }) {
+    return app.$apollo.query({
+      query: ggl(projectByUrl),
+      variables: {
+        url: params.url,
+      },
+    }).then((response) => ({
+      project: response.data.GetOneProject,
     }));
   },
   data() {
@@ -93,14 +102,28 @@ export default {
     this.editor = require('@ckeditor/ckeditor5-build-classic');
   },
   methods: {
+    changeFile() {
+      if (this.files) {
+        this.project.images = [...Array.of(this.files)].map((file) => file.name);
+      }
+    },
     update() {
-      const { id } = this.project;
-      this.$axios.put(`/project/${id}`, this.project).then(
+      const { id, ...properties } = this.project;
+      const projectToEdit = properties;
+      this.$apollo.mutate({
+        mutation: ggl(edit),
+        variables: {
+          id,
+          project: projectToEdit,
+        },
+        awaitRefetchQueries: true,
+        refetchQueries: [{ query: ggl(list) }],
+      }).then(
         () => {
           this.$toast.show('Projeto atualizado', {
             duration: 1000,
           });
-          if (this.files !== null) {
+          if (this.files !== null && this.files.length > 0) {
             this.$toast.show('Iniciando processo de upload de imagem', {
               icon: 'hourglass_empty',
               duration: 1000,

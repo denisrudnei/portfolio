@@ -36,10 +36,16 @@
 </template>
 
 <script>
+import edit from '@/graphql/mutation/about/edit.graphql';
+import ggl from 'graphql-tag';
+import about from '@/graphql/query/about/list.graphql';
+
 export default {
-  asyncData({ $axios }) {
-    return $axios.get('/about').then((response) => ({
-      user: response.data,
+  asyncData({ app }) {
+    return app.$apollo.query({
+      query: ggl(about),
+    }).then((response) => ({
+      user: response.data.User,
     }));
   },
   data() {
@@ -53,7 +59,14 @@ export default {
   },
   methods: {
     save() {
-      this.$axios.put('/about', this.user).then(() => {
+      this.$apollo.mutate({
+        mutation: ggl(edit),
+        variables: {
+          user: this.user,
+        },
+        refetchQueries: [{ query: ggl(about) }],
+        awaitRefetchQueries: true,
+      }).then(() => {
         this.$toast.show('Usuário atualizado', {
           duration: 1000,
         });

@@ -6,7 +6,7 @@
     >
       <v-card tile>
         <nuxt-link :to="`/project/${projectComputed.url}`">
-          <v-img :aspect-ratio="21/9" :src="getImage(projectComputed.images[0])">
+          <v-img :aspect-ratio="21/9" :src="getFirstImage()">
             <template v-slot:placeholder>
               <v-row align="center" justify="center" class="fill-height ma-0">
                 <v-progress-circular indeterminate />
@@ -59,12 +59,19 @@ export default {
       return Object.assign(this.projectData, this.project);
     },
     getImages() {
-      return this.projectComputed.images.map((name) => this.getImage(name));
+      return this.projectComputed.images;
     },
   },
   methods: {
     getImage(name) {
-      return `/api/project/file/${this.projectComputed.id}/${name}`;
+      return `/api/project/file/${this.projectComputed.name}/${name}`;
+    },
+
+    getFirstImage() {
+      if (this.projectComputed.images.length > 0) {
+        return this.getImage(this.projectComputed.images[0]);
+      }
+      return '/project.jpg';
     },
   },
 };

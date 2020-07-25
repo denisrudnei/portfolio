@@ -1,23 +1,18 @@
 import Post from '../models/Post';
 
 class PostService {
-  public static getAll() {
-    return new Promise((resolve, reject) => {
-      Post.find({}).then((posts) => resolve(posts)).catch((err) => {
-        reject(err);
-      });
-    });
+  public static getAll(): Promise<Post[]> {
+    return Post.find({});
   }
 
-  public static getOne(url: string) {
-    return new Promise((resolve, reject) => {
-      Post.findOne({
-        url: decodeURIComponent(url),
-      }).then((post) => resolve(post)).catch((err) => reject(err));
+  public static async getOne(url: string): Promise<Post> {
+    const post = await Post.findOne({
+      url: decodeURIComponent(url),
     });
+    return post!;
   }
 
-  public static create(post: Post) {
+  public static create(post: Post): Promise<Post> {
     const newPost = Post.create();
 
     newPost.title = post.title;
@@ -26,10 +21,11 @@ class PostService {
     return Post.save(newPost);
   }
 
-  public static remove(postId: Post['id']) {
-    return Post.delete({
+  public static async remove(postId: Post['id']): Promise<boolean> {
+    await Post.delete({
       id: postId,
     });
+    return !(await Post.findOne(postId));
   }
 }
 

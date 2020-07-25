@@ -1,5 +1,8 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-shadow */
+import ggl from 'graphql-tag';
+import list from '@/graphql/query/project/list.graphql';
+
 export const state = () => ({
   projects: [],
 });
@@ -23,8 +26,10 @@ export const mutations = {
 
 export const actions = {
   getProjects({ commit }) {
-    this.$axios.get('/project/').then((response) => {
-      commit('setProjects', response.data);
+    this.app.$apollo.query({
+      query: ggl(list),
+    }).then((response) => {
+      commit('setProjects', response.data.Project);
     });
   },
 };

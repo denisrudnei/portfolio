@@ -1,0 +1,8 @@
+query GetOneProject($url: String!) {
+  GetOneProject(url: $url) {
+    id
+    name
+    description
+    images
+  }
+}

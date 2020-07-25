@@ -7,14 +7,13 @@ class ProjectService {
     return Project.find({});
   }
 
-  public static getOne(url: string) {
-    return Project.findOne(
-      {
-        where: {
-          url,
-        },
+  public static async getOne(url: string): Promise<Project> {
+    const project = await Project.findOne({
+      where: {
+        url,
       },
-    );
+    });
+    return project!;
   }
 
   public static create(project: Project) {
@@ -37,28 +36,23 @@ class ProjectService {
     });
   }
 
-  public static createFile(id: Project['id'], file: UploadedFile) {
-    return new Promise((resolve, reject) => {
-      S3.createBucket(() => {
-        const params = {
-          Bucket: process.env.BUCKET as string,
-          Key: `${id}/${file.name}`,
-          Body: file.data,
-        };
+  public static async createFile(id: Project['id'], file: UploadedFile) {
+    const project = await Project.findOne(id);
 
-        S3.upload(params, (err: Error, data: AWS.S3.Types.UploadPartOutput) => {
-          if (err) return reject(err);
-          return resolve(data);
-        });
-      });
-    });
+    const params = {
+      Bucket: process.env.BUCKET as string,
+      Key: `project/${project!.name}/${file.name}`,
+      Body: file.data,
+    };
+
+    const result = await S3.upload(params).promise();
+    return result;
   }
 
   public static async edit(projectId: Project['id'], project: Project): Promise<Project> {
-    const projectIdDb = await Project.findOne(projectId);
-    projectIdDb!.name = project.name;
-    projectIdDb!.description = project.description;
-    return projectIdDb!.save();
+    const projectInDb = await Project.findOne(projectId);
+    Object.assign(projectInDb, project);
+    return projectInDb!.save();
   }
 
   public static async remove(projectId: Project['id']) {
@@ -70,7 +64,7 @@ class ProjectService {
       S3.deleteObject(
         {
           Bucket: process.env.BUCKET as string,
-          Key: `${projectId}/${image}`,
+          Key: `project/${project!.name}/${image}`,
         },
         (err: Error, data) => {
           if (err) return reject(err);
@@ -78,12 +72,12 @@ class ProjectService {
         },
       );
     }));
-    Promise.all(deleteImages).then(() => {
+    await Promise.all(deleteImages).then(() => {
       Project.delete({
         id: projectId,
-      }).then(() => {
       });
     });
+    return true;
   }
 }
 

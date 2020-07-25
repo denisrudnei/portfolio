@@ -13,15 +13,19 @@
 
 <script>
 import Post from '@/components/blog/Post';
+import list from '@/graphql/query/post/list.graphql';
+import ggl from 'graphql-tag';
 
 export default {
   auth: false,
   components: {
     Post,
   },
-  asyncData({ $axios }) {
-    return $axios.get('/blog/post').then((response) => ({
-      posts: response.data,
+  asyncData({ app }) {
+    return app.$apollo.query({
+      query: ggl(list),
+    }).then((response) => ({
+      posts: response.data.Post,
     }));
   },
 };

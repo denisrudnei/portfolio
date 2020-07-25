@@ -7,8 +7,13 @@ import fileUploader from 'express-fileupload';
 import compression from 'compression';
 import session from 'express-session';
 import { redirectToHTTPS } from 'express-http-to-https';
-import controllers from './controllers';
+import path from 'path';
+import { buildSchema } from 'type-graphql';
+import { ApolloServer } from 'apollo-server-express';
+import http from 'http';
 import createConnection from './db/connection';
+import controllers from './controllers';
+import CustomAuthChecker from './CustomAuthChecker';
 
 const { Nuxt, Builder } = require('nuxt');
 
@@ -33,7 +38,6 @@ async function start() {
     port = process.env.PORT || 3000,
   } = nuxt.options.server;
 
-  // // Build only in dev mode
   if (config.dev) {
     const builder = new Builder(nuxt);
     await builder.build();
@@ -43,6 +47,19 @@ async function start() {
     }
     await nuxt.ready();
   }
+
+  const server = new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [path.resolve(__dirname, 'resolvers/**/*')],
+      authChecker: CustomAuthChecker,
+    }),
+    playground: {
+      endpoint: '/graphql',
+    },
+    context: (context) => ({
+      req: context.req,
+    }),
+  });
 
   app.use(compression());
 
@@ -71,13 +88,17 @@ async function start() {
 
   app.use('/api', apiRouter);
 
+  const httpServer = http.createServer(app);
+  server.installSubscriptionHandlers(httpServer);
+  server.applyMiddleware({ app });
+
   app.use(nuxt.render);
 
-  // Listen the server
-  app.listen(port, host);
-  consola.ready({
-    message: `Server listening on http://${host}:${port}`,
-    badge: true,
+  httpServer.listen(port, () => {
+    consola.ready({
+      message: `Server listening on http://${host}:${port}`,
+      badge: true,
+    });
   });
 }
 start();

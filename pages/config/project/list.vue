@@ -37,6 +37,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import remove from '@/graphql/mutation/project/remove.graphql';
+import list from '@/graphql/query/project/list.graphql';
+import ggl from 'graphql-tag';
 
 export default {
   data() {
@@ -56,12 +59,23 @@ export default {
   computed: mapGetters({
     items: 'project/getProjects',
   }),
-  mounted() {
-    this.$store.dispatch('project/getProjects');
+  asyncData({ app }) {
+    return app.$apollo.query({
+      query: ggl(list),
+    }).then((response) => ({
+      items: response.data.Project,
+    }));
   },
   methods: {
     removeProject(item) {
-      this.$axios.delete(`/project/${item.id}`).then(() => {
+      this.$apollo.mutate({
+        mutation: ggl(remove),
+        variables: {
+          id: item.id,
+        },
+        refetchQueries: [{ query: ggl(list) }],
+        awaitRefetchQueries: true,
+      }).then(() => {
         this.$store.commit('project/removeProject', item);
         this.$toast.show('Apagado com sucesso', {
           duration: 1000,

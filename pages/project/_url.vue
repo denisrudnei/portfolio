@@ -65,18 +65,25 @@
 
 <script>
 import removeHtml from '@/mixins/removeHtml';
+import ggl from 'graphql-tag';
+import getByUrl from '@/graphql/query/project/getByUrl.graphql';
 
 export default {
   auth: false,
   mixins: [removeHtml],
-  asyncData({ $axios, params, req }) {
-    const name = params.url;
-    return $axios.get(`/project/${name}`).then((response) => {
+  asyncData({ app, params, req }) {
+    const { url } = params;
+    return app.$apollo.query({
+      query: ggl(getByUrl),
+      variables: {
+        url,
+      },
+    }).then((response) => {
       const base = process.client
         ? `${window.location.protocol}//${window.location.host}`
         : `${req.protocol}://${req.headers.host}`;
       return {
-        project: response.data,
+        project: response.data.GetOneProject,
         base,
       };
     });
@@ -95,7 +102,7 @@ export default {
   },
   methods: {
     getImage(name) {
-      return `/api/project/file/${this.project.id}/${name}`;
+      return `/api/project/file/${this.project.name}/${name}`;
     },
     getOgImage(name) {
       return `${this.base}${this.getImage(name)}`;

@@ -51,6 +51,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import ggl from 'graphql-tag';
+import about from '@/graphql/query/about/list.graphql';
 
 export default {
   data() {
@@ -89,12 +91,13 @@ export default {
       ],
     };
   },
-
   computed: mapGetters({
     logged: 'auth/getLogged',
   }),
   created() {
-    this.$axios.get('/about').then((response) => {
+    this.$apollo.query({
+      query: ggl(about),
+    }).then((response) => {
       this.user = response.data;
     });
   },

@@ -29,11 +29,14 @@
 </template>
 
 <script>
+import ggl from 'graphql-tag';
+import create from '@/graphql/mutation/project/create.graphql';
+
 export default {
   data() {
     return {
       editor: null,
-      files: null,
+      files: [],
       project: {
         name: '',
         description: '',
@@ -46,7 +49,12 @@ export default {
   methods: {
     save() {
       this.project.images = this.files.map((file) => file.name);
-      this.$axios.post('/project', this.project).then(
+      this.$apollo.mutate({
+        mutation: ggl(create),
+        variables: {
+          project: this.project,
+        },
+      }).then(
         (response) => {
           this.$toast.show('Projeto criado', {
             duration: 1000,
@@ -59,7 +67,7 @@ export default {
                 duration: 1000,
               },
             );
-            const { id } = response.data;
+            const { id } = response.data.CreateProject;
             Object.keys(this.files).forEach((index) => {
               const file = this.files[index];
               const formData = new FormData();

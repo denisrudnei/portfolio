@@ -1,0 +1,9 @@
+query {
+  Post {
+    id
+    title
+    url
+    content
+    created
+  }
+}

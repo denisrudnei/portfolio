@@ -22,6 +22,10 @@
 </template>
 
 <script>
+import ggl from 'graphql-tag';
+import create from '@/graphql/mutation/post/create.graphql';
+import list from '@/graphql/query/post/list.graphql';
+
 export default {
   data() {
     return {
@@ -39,10 +43,23 @@ export default {
   },
   methods: {
     save() {
-      this.$axios.post('/blog/post', this.post).then(() => {
+      this.$apollo.mutate({
+        mutation: ggl(create),
+        variables: {
+          post: this.post,
+        },
+        refetchQueries: [{ query: ggl(list) }],
+        awaitRefetchQueries: true,
+      }).then(() => {
         this.$toast.show('Cadastrado com sucesso', {
           duration: 5000,
           icon: 'done_outline',
+        });
+        this.$router.push('/config/blog/post/list');
+      }).catch(() => {
+        this.$toast.error('Falha ao cadastrar', {
+          duration: 5000,
+          icon: 'error',
         });
       });
     },

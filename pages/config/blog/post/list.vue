@@ -10,7 +10,7 @@
             <v-btn icon :to="`/config/blog/post/edit/${item.id}`">
               <v-icon>edit</v-icon>
             </v-btn>
-            <v-btn icon @click="remove(item.id)">
+            <v-btn icon @click="remove(item.id)" class="red--text">
               <v-icon>delete</v-icon>
             </v-btn>
           </td>
@@ -21,10 +21,16 @@
 </template>
 
 <script>
+import ggl from 'graphql-tag';
+import list from '@/graphql/query/post/list.graphql';
+import remove from '@/graphql/mutation/post/remove.graphql';
+
 export default {
-  asyncData({ $axios }) {
-    return $axios.get('/blog/post').then((response) => ({
-      posts: response.data,
+  asyncData({ app }) {
+    return app.$apollo.query({
+      query: ggl(list),
+    }).then((response) => ({
+      posts: response.data.Post,
     }));
   },
   data() {
@@ -43,7 +49,12 @@ export default {
   },
   methods: {
     remove(id) {
-      this.$axios.delete(`/blog/post/${id}`).then(() => {
+      this.$apollo.mutate({
+        mutation: ggl(remove),
+        variables: {
+          id,
+        },
+      }).then(() => {
         this.posts = this.posts.filter((post) => post.id !== id);
         this.$toast.show('Deletado', {
           duration: 5000,

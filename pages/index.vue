@@ -24,6 +24,8 @@
 <script>
 import removeHtml from '@/mixins/removeHtml';
 import ProjectCard from '@/components/ProjectCard';
+import list from '@/graphql/query/project/list.graphql';
+import ggl from 'graphql-tag';
 
 export default {
   auth: false,
@@ -31,17 +33,18 @@ export default {
     ProjectCard,
   },
   mixins: [removeHtml],
-  async asyncData({ $axios }) {
-    const { data: projects } = await $axios.get('/project');
-    const { data: about } = await $axios.get('/about');
-    return {
-      projects,
-      description: about.description,
-      title: about.name,
-    };
+  asyncData({ app }) {
+    return app.$apollo.query({
+      query: ggl(list),
+    }).then((response) => ({
+      projects: response.data.Project,
+      title: '',
+      description: '',
+    }));
   },
   data() {
     return {
+      projects: [],
       title: '',
       description: '',
     };

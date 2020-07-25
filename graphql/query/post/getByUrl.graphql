@@ -1,0 +1,9 @@
+query GetOnePost($url: String!) {
+  GetOnePost(url: $url) {
+    id
+    title
+    content
+    created
+    url
+  }
+}

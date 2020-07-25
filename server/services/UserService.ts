@@ -3,30 +3,22 @@ import S3 from '../../plugins/S3';
 import User from '../models/User';
 
 class UserService {
-  public static get(): Promise<User> {
-    return new Promise((resolve, reject) => {
-      User.findOne()
-        .then((user) => resolve(user))
-        .catch((err) => reject(err));
-    });
+  public static async get(): Promise<User> {
+    const user = await User.findOne();
+    return user!;
   }
 
-  public static setProfilePicture(file: UploadedFile) {
-    return new Promise((resolve, reject) => {
-      User.findOne({}).then((user) => {
-        const params = {
-          Bucket: process.env.BUCKET as string,
-          Key: user!.id.toString(),
-          Body: file.data,
-        };
-        S3.createBucket(() => {
-          S3.upload(params, (err: Error) => {
-            if (err) return reject(err);
-            return resolve();
-          });
-        });
-      });
-    });
+  public static async setProfilePicture(file: UploadedFile): Promise<User> {
+    const user = await User.findOne({});
+    const params = {
+      Bucket: process.env.BUCKET as string,
+      Key: `about/${user!.id.toString()}`,
+      Body: file.data,
+    };
+
+    const uploadResult = await S3.upload(params).promise();
+    user!.image = uploadResult.Location;
+    return user!.save();
   }
 
   public static async edit(user: User): Promise<User> {
@@ -44,7 +36,7 @@ class UserService {
     const result = await S3.getObject(
       {
         Bucket: process.env.BUCKET as string,
-        Key: id.toString(),
+        Key: `about/${id.toString()}`,
       },
     ).promise();
     return result.Body!;
