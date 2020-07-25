@@ -4,6 +4,9 @@
   "description": "Portfolio",
   "author": "Denis Rudnei de Souza",
   "private": true,
+  "engines": {
+    "node": ">=13.x"
+  },
   "scripts": {
     "dev": "cross-env NODE_ENV=development ts-node-dev -r tsconfig-paths/register server/index.ts -w server",
     "build": "nuxt build && tsc -p tsconfig-build.json",
