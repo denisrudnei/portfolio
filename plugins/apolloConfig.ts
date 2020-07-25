@@ -17,6 +17,7 @@ export default ({ app, req }: any, inject: any) => {
 
   const httpLink = createHttpLink({
     fetch,
+    credentials: 'include',
     uri: `${url.protocol}://${url.host}/graphql`,
   });
 

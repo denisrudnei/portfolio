@@ -93,7 +93,6 @@ async function start() {
   app.use('/api', apiRouter);
 
   const httpServer = http.createServer(app);
-  server.installSubscriptionHandlers(httpServer);
   server.applyMiddleware({ app });
 
   app.use(nuxt.render);
