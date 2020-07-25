@@ -5,12 +5,15 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
 import 'cross-fetch/polyfill';
+import consola from 'consola';
 
 export default ({ app, req }: any, inject: any) => {
   const url = {
     protocol: process.client ? window.location.protocol.replace(':', '') : req.protocol,
     host: process.client ? window.location.host : req.headers.host,
   };
+
+  consola.info(`url for graphql: ${url.protocol}://${url.host}/graphql`);
 
   const httpLink = createHttpLink({
     fetch,
