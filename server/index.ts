@@ -56,6 +56,7 @@ async function start() {
     playground: {
       endpoint: '/graphql',
     },
+    introspection: true,
     context: (context) => ({
       req: context.req,
     }),
