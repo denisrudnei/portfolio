@@ -1,0 +1,13 @@
+query {
+  Project {
+    id
+    name
+    description
+    url
+    images
+  }
+  User {
+    name
+    description
+  }
+}

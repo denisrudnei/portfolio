@@ -53,8 +53,6 @@
     "nuxt": "^2.13.3",
     "pg": "^8.3.0",
     "reflect-metadata": "^0.1.13",
-    "sass": "^1.26.10",
-    "sass-loader": "^9.0.2",
     "sitemap": "^6.2.0",
     "slugify": "^1.4.4",
     "type-graphql": "^1.0.0-rc.3",

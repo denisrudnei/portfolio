@@ -98,7 +98,7 @@ export default {
     this.$apollo.query({
       query: ggl(about),
     }).then((response) => {
-      this.user = response.data;
+      this.user = response.data.User;
     });
   },
 };
