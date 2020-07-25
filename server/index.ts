@@ -11,6 +11,7 @@ import path from 'path';
 import { buildSchema } from 'type-graphql';
 import { ApolloServer } from 'apollo-server-express';
 import http from 'http';
+import morgan from 'morgan';
 import createConnection from './db/connection';
 import controllers from './controllers';
 import CustomAuthChecker from './CustomAuthChecker';
@@ -61,6 +62,8 @@ async function start() {
       req: context.req,
     }),
   });
+
+  app.use(morgan('dev'));
 
   app.use(compression());
 
