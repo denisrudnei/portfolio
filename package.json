@@ -57,9 +57,7 @@
     "slugify": "^1.4.4",
     "type-graphql": "^1.0.0-rc.3",
     "typeorm": "^0.2.25",
-    "vue": "^2.6.11",
     "vue-apollo": "^3.0.3",
-    "vuex": "^3.5.1",
     "webpack-graphql-loader": "^1.0.2"
   },
   "devDependencies": {

@@ -27,6 +27,7 @@ export default ({ app, req }: any, inject: any) => {
 
   const apolloClient = new ApolloClient({
     link: httpLink,
+    connectToDevTools: true,
     cache,
     ssrMode: process.server,
   });
