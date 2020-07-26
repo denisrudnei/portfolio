@@ -46,6 +46,7 @@ async function start() {
     schema: await buildSchema({
       resolvers: [path.resolve(__dirname, 'resolvers/**/*')],
       authChecker: CustomAuthChecker,
+      pubSub,
     }),
     playground: {
       endpoint: '/graphql',

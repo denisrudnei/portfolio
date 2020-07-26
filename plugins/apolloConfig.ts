@@ -7,7 +7,7 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
-import 'node-fetch';
+import 'cross-fetch/polyfill';
 import consola from 'consola';
 import ws from 'ws';
 
@@ -47,7 +47,9 @@ export default ({ app, req }: any, inject: any) => {
     httpLink,
   );
 
-  const cache = new InMemoryCache();
+  const cache = new InMemoryCache({
+    addTypename: false,
+  });
 
   const apolloClient = new ApolloClient({
     link,
