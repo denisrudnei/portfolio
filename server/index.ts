@@ -1,25 +1,16 @@
 import 'reflect-metadata';
 import mongoose from 'mongoose';
-import express from 'express';
 import consola from 'consola';
-import bodyParser from 'body-parser';
-import fileUploader from 'express-fileupload';
-import compression from 'compression';
-import session from 'express-session';
 import { redirectToHTTPS } from 'express-http-to-https';
 import path from 'path';
 import { buildSchema } from 'type-graphql';
 import { ApolloServer } from 'apollo-server-express';
 import http from 'http';
-import morgan from 'morgan';
 import createConnection from './db/connection';
-import controllers from './controllers';
 import CustomAuthChecker from './CustomAuthChecker';
+import app from './app';
 
 const { Nuxt, Builder } = require('nuxt');
-
-const app = express();
-const apiRouter = express.Router();
 
 const config = require('~/nuxt.config.js');
 
@@ -62,35 +53,6 @@ async function start() {
       req: context.req,
     }),
   });
-
-  app.use(morgan('dev'));
-
-  app.use(compression());
-
-  app.use(bodyParser.json());
-
-  app.use(
-    session({
-      secret: process.env.SESSION_KEY as string,
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        maxAge: 60000,
-      },
-    }),
-  );
-
-  app.use(
-    fileUploader({
-      limits: {
-        fileSize: 10 * 1024 * 1024,
-      },
-    }),
-  );
-
-  controllers(apiRouter);
-
-  app.use('/api', apiRouter);
 
   const httpServer = http.createServer(app);
   server.applyMiddleware({ app });
