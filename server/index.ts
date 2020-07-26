@@ -4,7 +4,7 @@ import consola from 'consola';
 import { redirectToHTTPS } from 'express-http-to-https';
 import path from 'path';
 import { buildSchema } from 'type-graphql';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, PubSub } from 'apollo-server-express';
 import http from 'http';
 import createConnection from './db/connection';
 import CustomAuthChecker from './CustomAuthChecker';
@@ -40,21 +40,29 @@ async function start() {
     await nuxt.ready();
   }
 
+  const pubSub = new PubSub();
+
   const server = new ApolloServer({
     schema: await buildSchema({
       resolvers: [path.resolve(__dirname, 'resolvers/**/*')],
       authChecker: CustomAuthChecker,
     }),
-    playground: false,
+    playground: {
+      endpoint: '/graphql',
+    },
+    subscriptions: {
+      path: '/subscriptions',
+    },
     introspection: true,
     context: (context) => ({
       req: context.req,
+      pubSub,
     }),
   });
 
   const httpServer = http.createServer(app);
-  server.applyMiddleware({ app });
   server.installSubscriptionHandlers(httpServer);
+  server.applyMiddleware({ app });
 
   app.use(nuxt.render);
 
