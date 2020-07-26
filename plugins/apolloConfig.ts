@@ -47,9 +47,7 @@ export default ({ app, req }: any, inject: any) => {
     httpLink,
   );
 
-  const cache = new InMemoryCache({
-    addTypename: false,
-  });
+  const cache = new InMemoryCache();
 
   const apolloClient = new ApolloClient({
     link,
