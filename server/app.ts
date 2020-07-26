@@ -39,16 +39,18 @@ controllers(apiRouter);
 
 app.use('/api', apiRouter);
 
-app.use(
-  (
-    err: Error,
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction,
-  ) => {
-    consola.error(err);
-    res.status(500).json(err.message);
-  },
-);
+app.use((
+  err: any,
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => {
+  consola.error(err);
+  if (res.headersSent) {
+    return next(err);
+  }
+  const { status } = err;
+  return res.status(status).json(err.message);
+});
 
 export default app;
