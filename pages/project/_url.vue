@@ -94,6 +94,7 @@ export default {
       error({
         statusCode: 400,
         message: 'Projeto não encontrado',
+        path: req.path,
       });
     });
   },

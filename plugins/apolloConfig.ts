@@ -4,7 +4,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
-import 'cross-fetch/polyfill';
+import 'node-fetch';
 import consola from 'consola';
 
 export default ({ app, req }: any, inject: any) => {

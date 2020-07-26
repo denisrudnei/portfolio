@@ -50,6 +50,7 @@
     "graphql-tag": "^2.10.4",
     "graphql-upload": "^11.0.0",
     "mongoose": "^5.9.25",
+    "node-fetch": "^2.6.0",
     "nuxt": "^2.13.3",
     "pg": "^8.3.0",
     "reflect-metadata": "^0.1.13",
