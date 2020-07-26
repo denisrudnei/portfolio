@@ -45,9 +45,7 @@ async function start() {
       resolvers: [path.resolve(__dirname, 'resolvers/**/*')],
       authChecker: CustomAuthChecker,
     }),
-    playground: {
-      endpoint: '/graphql',
-    },
+    playground: false,
     introspection: true,
     context: (context) => ({
       req: context.req,
@@ -56,6 +54,7 @@ async function start() {
 
   const httpServer = http.createServer(app);
   server.applyMiddleware({ app });
+  server.installSubscriptionHandlers(httpServer);
 
   app.use(nuxt.render);
 
