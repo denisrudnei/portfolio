@@ -35,7 +35,7 @@ app.use(
   }),
 );
 
-controllers(apiRouter);
+apiRouter.use(controllers);
 
 app.use('/api', apiRouter);
 
