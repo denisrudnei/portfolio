@@ -67,11 +67,14 @@
 import removeHtml from '@/mixins/removeHtml';
 import ggl from 'graphql-tag';
 import getByUrl from '@/graphql/query/project/getByUrl.graphql';
+import consola from 'consola';
 
 export default {
   auth: false,
   mixins: [removeHtml],
-  asyncData({ app, params, req }) {
+  asyncData({
+    app, params, req, error,
+  }) {
     const { url } = params;
     return app.$apollo.query({
       query: ggl(getByUrl),
@@ -86,6 +89,12 @@ export default {
         project: response.data.GetOneProject,
         base,
       };
+    }).catch((e) => {
+      consola.error(e.message);
+      error({
+        statusCode: 400,
+        message: 'Projeto não encontrado',
+      });
     });
   },
   data() {

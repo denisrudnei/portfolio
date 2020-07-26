@@ -15,6 +15,16 @@
           </nuxt-link> para voltar
         </h3>
       </template>
+       <template v-else>
+        <h1>
+          {{ error.message }}
+        </h1>
+        <h3>
+          Caminho acessado: {{ error.path }}, clique <nuxt-link to="/">
+            aqui
+          </nuxt-link> para voltar
+        </h3>
+      </template>
     </v-col>
   </v-row>
 </template>
