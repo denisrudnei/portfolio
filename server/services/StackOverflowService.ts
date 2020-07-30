@@ -41,7 +41,7 @@ class StackOverflowService {
   private static async downloadFromSite() {
     const info = await this.getInfo();
     if (!info) return [];
-    const { userId, siteUrl } = info[0];
+    const { userId, siteUrl } = info;
     const { data } = await axios.get(`https://api.stackexchange.com/users/${userId}/questions?site=${siteUrl}&filter=unsafe`);
     return data.items;
   }

@@ -8,7 +8,7 @@
     "node": ">=13.x"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development ts-node-dev -r tsconfig-paths/register server/index.ts -w server",
+    "dev": "cross-env NODE_ENV=development ts-node-dev -r tsconfig-paths/register --transpile-only --respawn --ignore-watch node_modules server/index.ts",
     "build": "nuxt build && tsc -p tsconfig-build.json",
     "tsc": "tsc -p tsconfig-build.json",
     "start": "cross-env NODE_ENV=production node -r tsconfig-paths/register dist/server/index.js",
