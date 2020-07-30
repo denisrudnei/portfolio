@@ -12,30 +12,36 @@ class StackOverflowService {
     }
     stackInfo.userId = info.userId;
     stackInfo.siteUrl = info.siteUrl;
-    return stackInfo.save();
+    const result = await stackInfo.save();
+    await this.invalidateCache();
+    return result;
   }
 
   public static getInfo() {
-    return StackOverflowInfo.findOne({});
+    return StackOverflowInfo.findOne();
   }
 
   public static async getQuestions(): Promise<any[]> {
     const cache = await StackOverflowCache.findOne({}).exec();
-
+    const items = await this.downloadFromSite();
     if (!cache) {
-      const items = await this.downloadFromSite();
       const newCache = await StackOverflowCache.create({
-        ...items,
+        items,
+        lastModifiedDate: new Date(),
       });
       return newCache.items;
     } if (differenceInDays(cache.lastModifiedDate, Date.now()) > 14) {
-      const items = await this.downloadFromSite();
       cache.lastModifiedDate = new Date();
       cache.items = items;
       await cache.save();
       return cache.items;
     }
     return cache.items;
+  }
+
+  public static async invalidateCache() {
+    await StackOverflowCache.deleteMany({}).exec();
+    await this.downloadFromSite();
   }
 
   private static async downloadFromSite() {
