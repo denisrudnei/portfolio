@@ -16,7 +16,7 @@ class StackOverflowService {
   }
 
   public static getInfo() {
-    return StackOverflowInfo.find({});
+    return StackOverflowInfo.findOne({});
   }
 
   public static async getQuestions(): Promise<any[]> {
