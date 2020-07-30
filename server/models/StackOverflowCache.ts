@@ -1,21 +1,19 @@
-import mongoose, { Document } from 'mongoose';
+/* eslint-disable no-shadow */
+import {
+  Entity, Column, BaseEntity, PrimaryGeneratedColumn, OneToMany,
+} from 'typeorm';
+import Question from './stackTypes/Question';
 
-const { Schema } = mongoose;
+@Entity()
+class StackOverflowCache extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  public id!: number
 
-interface IStackOverflowCache extends Document {
-  lastModifiedDate: Date;
-  items: any[]
+  @Column()
+  public lastModifiedDate!: Date
+
+  @OneToMany(() => Question, (Question) => Question.cache, { eager: true, cascade: true })
+  public items!: Question[]
 }
 
-const StackOverflowCache = new Schema({
-  lastModifiedDate: {
-    type: Schema.Types.Date,
-    default: Date.now,
-  },
-  items: {
-    type: Schema.Types.Mixed,
-    default: [],
-  },
-});
-
-export default mongoose.model<IStackOverflowCache>('StackOverflowCache', StackOverflowCache);
+export default StackOverflowCache;

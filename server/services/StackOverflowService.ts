@@ -2,6 +2,7 @@ import { differenceInDays } from 'date-fns';
 import axios from 'axios';
 import StackOverflowInfo from '../models/StackOverflowInfo';
 import StackOverflowCache from '../models/StackOverflowCache';
+import Question from '../models/stackTypes/Question';
 
 class StackOverflowService {
   public static async create(info: StackOverflowInfo): Promise<StackOverflowInfo> {
@@ -21,16 +22,20 @@ class StackOverflowService {
     return StackOverflowInfo.findOne();
   }
 
-  public static async getQuestions(): Promise<any[]> {
-    const cache = await StackOverflowCache.findOne({}).exec();
-    const items = await this.downloadFromSite();
+  public static async getQuestions(): Promise<Question[]> {
+    const cache = await StackOverflowCache.findOne({});
+
     if (!cache) {
+      const items = await this.downloadFromSite();
+
       const newCache = await StackOverflowCache.create({
         items,
         lastModifiedDate: new Date(),
       });
+      await newCache.save();
       return newCache.items;
     } if (differenceInDays(cache.lastModifiedDate, Date.now()) > 14) {
+      const items = await this.downloadFromSite();
       cache.lastModifiedDate = new Date();
       cache.items = items;
       await cache.save();
@@ -40,11 +45,11 @@ class StackOverflowService {
   }
 
   public static async invalidateCache() {
-    await StackOverflowCache.deleteMany({}).exec();
+    await StackOverflowCache.delete({});
     await this.downloadFromSite();
   }
 
-  private static async downloadFromSite() {
+  private static async downloadFromSite(): Promise<Question[]> {
     const info = await this.getInfo();
     if (!info) return [];
     const { userId, siteUrl } = info;
