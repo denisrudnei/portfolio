@@ -33,14 +33,19 @@ export default {
     ProjectCard,
   },
   mixins: [removeHtml],
-  asyncData({ app }) {
+  asyncData({ app, error }) {
     return app.$apollo.query({
       query: ggl(index),
     }).then((response) => ({
       projects: response.data.Project,
       title: response.data.User.name,
       description: response.data.User.description,
-    }));
+    })).catch(() => {
+      error({
+        message: 'Usuário principal ainda não cadastrado',
+        path: '/',
+      });
+    });
   },
   data() {
     return {
