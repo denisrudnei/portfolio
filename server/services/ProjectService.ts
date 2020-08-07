@@ -21,19 +21,14 @@ class ProjectService {
     return newProject.save();
   }
 
-  public static getFile(id: string) {
-    return new Promise((resolve, reject) => {
-      S3.getObject(
-        {
-          Bucket: process.env.BUCKET!,
-          Key: id,
-        },
-        (err: Error, result: AWS.S3.Types.GetObjectOutput) => {
-          if (err) return reject(err);
-          return resolve(result.Body);
-        },
-      );
-    });
+  public static async getFile(id: string) {
+    const { Body } = await S3.getObject(
+      {
+        Bucket: process.env.BUCKET!,
+        Key: id,
+      },
+    ).promise();
+    return Body;
   }
 
   public static async createFile(id: Project['id'], file: UploadedFile) {
@@ -60,18 +55,12 @@ class ProjectService {
       id: projectId,
     });
 
-    const deleteImages = project!.images.map((image) => new Promise((resolve, reject) => {
-      S3.deleteObject(
-        {
-          Bucket: process.env.BUCKET as string,
-          Key: `project/${project!.name}/${image}`,
-        },
-        (err: Error, data) => {
-          if (err) return reject(err);
-          return resolve(data);
-        },
-      );
-    }));
+    const deleteImages = project!.images.map((image) => S3.deleteObject(
+      {
+        Bucket: process.env.BUCKET as string,
+        Key: `project/${project!.name}/${image}`,
+      },
+    ).promise());
     await Promise.all(deleteImages).then(() => {
       Project.delete({
         id: projectId,

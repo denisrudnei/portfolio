@@ -30,16 +30,10 @@ class User extends BaseEntity {
   @Column({ nullable: true })
   public image!: string
 
-  public verifyPassword(password: string): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      bcrypt.compare(password, this.password, (err, result) => {
-        if (err) return reject(err);
-        if (!result) {
-          return reject(new Error('bad credentials'));
-        }
-        return resolve(result);
-      });
-    });
+  public async verifyPassword(password: string): Promise<boolean> {
+    const result = bcrypt.compareSync(password, this.password);
+    if (!result) throw new Error('bad credentials');
+    return result;
   }
 
   @BeforeInsert()
