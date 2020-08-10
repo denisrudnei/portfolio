@@ -21,9 +21,6 @@ app.use(
     secret: process.env.SESSION_KEY as string,
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      maxAge: 60000,
-    },
   }),
 );
 
