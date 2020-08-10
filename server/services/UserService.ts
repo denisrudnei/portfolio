@@ -14,6 +14,8 @@ class UserService {
       Bucket: process.env.BUCKET as string,
       Key: `about/${user!.id.toString()}`,
       Body: file.data,
+      ContentType: file.mimetype,
+      ACL: 'public-read',
     };
 
     const uploadResult = await S3.upload(params).promise();

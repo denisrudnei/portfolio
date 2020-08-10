@@ -38,6 +38,8 @@ class ProjectService {
       Bucket: process.env.BUCKET as string,
       Key: `project/${project!.name}/${file.name}`,
       Body: file.data,
+      ContentType: file.mimetype,
+      ACL: 'public-read',
     };
 
     const result = await S3.upload(params).promise();
