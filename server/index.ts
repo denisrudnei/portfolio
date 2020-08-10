@@ -53,6 +53,7 @@ async function start() {
     },
     subscriptions: {
       path: '/subscriptions',
+      keepAlive: 10000,
     },
     introspection: true,
     context: (context) => ({
