@@ -9,7 +9,7 @@ router.post('/auth/login', (req, res) => {
         req.session!.authUser = user;
         return res.status(201).json(user);
     })
-    .catch(() => res.sendStatus(400));
+    .catch((e) => res.status(400).json(e.message));
 });
 
 router.post('/auth/user', (req, res) => {
@@ -26,7 +26,7 @@ router.post('/auth/logout', (req, res) => {
 router.post('/auth/register', (req, res) => {
   AuthService.create(req.body)
     .then(() => res.sendStatus(201))
-    .catch((e) => res.status(400).json(e));
+    .catch((e) => res.status(400).json(e.message));
 });
 
 export default router;

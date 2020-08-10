@@ -18,7 +18,7 @@ class AuthService {
     user.email = toRegister.email;
     user.name = toRegister.name;
     user.password = toRegister.password;
-    const inDb = User.findOne();
+    const inDb = await User.findOne();
     if (inDb) throw new Error('primary user already registered');
     return user.save();
   }
