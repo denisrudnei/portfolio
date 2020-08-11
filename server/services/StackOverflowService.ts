@@ -1,7 +1,8 @@
-import { differenceInDays } from 'date-fns';
 import axios from 'axios';
-import StackOverflowInfo from '../models/StackOverflowInfo';
+import { differenceInDays } from 'date-fns';
+
 import StackOverflowCache from '../models/StackOverflowCache';
+import StackOverflowInfo from '../models/StackOverflowInfo';
 import Question from '../models/stackTypes/Question';
 
 class StackOverflowService {

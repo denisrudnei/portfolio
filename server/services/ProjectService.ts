@@ -1,6 +1,7 @@
 import { UploadedFile } from 'express-fileupload';
-import Project from '../models/Project';
+
 import S3 from '../../plugins/S3';
+import Project from '../models/Project';
 
 class ProjectService {
   public static getAll(): Promise<Project[]> {

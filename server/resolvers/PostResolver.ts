@@ -1,10 +1,11 @@
 /* eslint-disable class-methods-use-this */
 import {
-  Resolver, Query, Mutation, ID, Arg, Authorized,
+  Arg, Authorized, ID, Mutation, Query, Resolver,
 } from 'type-graphql';
+
+import PostCreateInput from '../inputs/PostCreateInput';
 import Post from '../models/Post';
 import PostService from '../services/PostService';
-import PostCreateInput from '../inputs/PostCreateInput';
 
 @Resolver(() => Post)
 class PostResolver {

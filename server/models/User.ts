@@ -1,8 +1,8 @@
-import {
-  Entity, BaseEntity, Column, BeforeInsert, PrimaryGeneratedColumn,
-} from 'typeorm';
-import { ObjectType, ID, Field } from 'type-graphql';
 import bcrypt from 'bcrypt';
+import { Field, ID, ObjectType } from 'type-graphql';
+import {
+  BaseEntity, BeforeInsert, Column, Entity, PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 @ObjectType()

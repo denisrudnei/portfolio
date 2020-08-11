@@ -1,10 +1,11 @@
-import express from 'express';
-import morgan from 'morgan';
 import bodyParser from 'body-parser';
-import fileUploader from 'express-fileupload';
 import compression from 'compression';
-import session from 'express-session';
 import consola from 'consola';
+import express from 'express';
+import fileUploader from 'express-fileupload';
+import session from 'express-session';
+import morgan from 'morgan';
+
 import controllers from './controllers';
 
 const app = express();

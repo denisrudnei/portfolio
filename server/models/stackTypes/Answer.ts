@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
-import { ObjectType, Field, Int } from 'type-graphql';
+import { Field, Int, ObjectType } from 'type-graphql';
 import {
-  Entity, Column, OneToOne, PrimaryColumn, ManyToOne, BaseEntity,
+  BaseEntity, Column, Entity, ManyToOne, PrimaryColumn,
 } from 'typeorm';
+
 import Owner from './Owner';
 import Question from './Question';
 

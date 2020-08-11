@@ -1,9 +1,10 @@
 import { Router } from 'express';
+
 import AuthController from './AuthController';
 import ProjectController from './ProjectController';
-import UserController from './UserController';
-import StackOverFlowController from './StackOverflowController';
 import SitemapController from './SitemapController';
+import StackOverFlowController from './StackOverflowController';
+import UserController from './UserController';
 
 const router = Router();
 

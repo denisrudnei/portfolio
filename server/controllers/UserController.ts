@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { UploadedFile } from 'express-fileupload';
+
 import UserService from '../services/UserService';
 
 const router = Router();

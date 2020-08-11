@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import StackOverflowService from '../services/StackOverflowService';
 
 const router = Router();

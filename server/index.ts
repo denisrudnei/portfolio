@@ -1,25 +1,21 @@
 import 'reflect-metadata';
-import mongoose from 'mongoose';
+
+import { ApolloServer, PubSub } from 'apollo-server-express';
 import consola from 'consola';
 import { redirectToHTTPS } from 'express-http-to-https';
+import http from 'http';
 import path from 'path';
 import { buildSchema } from 'type-graphql';
-import { ApolloServer, PubSub } from 'apollo-server-express';
-import http from 'http';
-import createConnection from './db/connection';
-import CustomAuthChecker from './CustomAuthChecker';
+
 import app from './app';
+import CustomAuthChecker from './CustomAuthChecker';
+import createConnection from './db/connection';
 
 const { Nuxt, Builder } = require('nuxt');
 
 const config = require('~/nuxt.config.js');
 
 config.dev = !(process.env.NODE_ENV === 'production');
-
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/test', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
 
 async function start() {
   await createConnection;

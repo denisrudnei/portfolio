@@ -1,5 +1,6 @@
-import { SitemapStream, streamToPromise } from 'sitemap';
 import { Router } from 'express';
+import { SitemapStream, streamToPromise } from 'sitemap';
+
 import sitemapGen from '../services/SitemapService';
 
 const router = Router();

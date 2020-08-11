@@ -1,11 +1,12 @@
 /* eslint-disable class-methods-use-this */
 import {
-  Resolver, Query, Mutation, ID, Arg, Authorized,
+  Arg, Authorized, ID, Mutation, Query, Resolver,
 } from 'type-graphql';
+
+import ProjectCreateInput from '../inputs/ProjectCreateInput';
+import ProjectEditInput from '../inputs/ProjectEditInput';
 import Project from '../models/Project';
 import ProjectService from '../services/ProjectService';
-import ProjectEditInput from '../inputs/ProjectEditInput';
-import ProjectCreateInput from '../inputs/ProjectCreateInput';
 
 @Resolver(() => Project)
 class ProjectResolver {

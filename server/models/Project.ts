@@ -1,8 +1,8 @@
-import {
-  BaseEntity, Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate,
-} from 'typeorm';
-import { ObjectType, Field, ID } from 'type-graphql';
 import slugify from 'slugify';
+import { Field, ID, ObjectType } from 'type-graphql';
+import {
+  BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @ObjectType()
 @Entity()

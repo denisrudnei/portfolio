@@ -1,14 +1,15 @@
 /* eslint-disable no-param-reassign */
-import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
+import 'cross-fetch/polyfill';
+
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient } from 'apollo-client';
 import { split } from 'apollo-link';
+import { createHttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
+import consola from 'consola';
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
-import 'cross-fetch/polyfill';
-import consola from 'consola';
 import ws from 'ws';
 
 export default ({ app, req }: any, inject: any) => {

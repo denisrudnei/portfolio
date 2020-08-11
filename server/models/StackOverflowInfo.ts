@@ -1,7 +1,7 @@
+import { Field, ID, ObjectType } from 'type-graphql';
 import {
-  BaseEntity, Entity, Column, PrimaryGeneratedColumn,
+  BaseEntity, Column, Entity, PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ObjectType, Field, ID } from 'type-graphql';
 
 @ObjectType()
 @Entity()

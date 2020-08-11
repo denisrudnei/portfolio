@@ -1,7 +1,8 @@
 /* eslint-disable class-methods-use-this */
-import { Resolver, Mutation, Arg } from 'type-graphql';
-import AuthService from '../services/AuthService';
+import { Arg, Mutation, Resolver } from 'type-graphql';
+
 import User from '../models/User';
+import AuthService from '../services/AuthService';
 
 @Resolver(() => User)
 class AuthResolver {

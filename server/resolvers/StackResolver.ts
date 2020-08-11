@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
-import { Resolver, Query } from 'type-graphql';
+import { Query, Resolver } from 'type-graphql';
+
 import Question from '../models/stackTypes/Question';
 import StackOverflowService from '../services/StackOverflowService';
 

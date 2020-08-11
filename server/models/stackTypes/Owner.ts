@@ -1,12 +1,13 @@
 /* eslint-disable no-shadow */
 /* eslint-disable camelcase */
-import { ObjectType, Field, Int } from 'type-graphql';
+import { Field, Int, ObjectType } from 'type-graphql';
 import {
-  Entity, Column, PrimaryColumn, BaseEntity, OneToMany,
+  BaseEntity, Column, Entity, OneToMany, PrimaryColumn,
 } from 'typeorm';
+
+import Answer from './Answer';
 import Question from './Question';
 import StackComment from './StackComment';
-import Answer from './Answer';
 
 @ObjectType()
 @Entity()

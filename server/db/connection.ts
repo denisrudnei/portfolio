@@ -1,5 +1,5 @@
-import { createConnection } from 'typeorm';
 import path from 'path';
+import { createConnection } from 'typeorm';
 
 export default createConnection({
   type: 'postgres',

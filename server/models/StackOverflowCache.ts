@@ -1,7 +1,8 @@
 /* eslint-disable no-shadow */
 import {
-  Entity, Column, BaseEntity, PrimaryGeneratedColumn, OneToMany,
+  BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm';
+
 import Question from './stackTypes/Question';
 
 @Entity()
