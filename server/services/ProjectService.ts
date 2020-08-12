@@ -35,10 +35,10 @@ class ProjectService {
     return Body;
   }
 
-  public static async createFiles(id: Project['id'], files: UploadedFile[]) {
+  public static async createFiles(id: Project['id'], files: UploadedFile[] | UploadedFile) {
     const project = await Project.findOne(id);
     if (!project) throw new Error('Project not found');
-    const locations = await Promise.all(files.map(async (file) => {
+    const upload = async (file: UploadedFile) => {
       const params = {
         Bucket: process.env.BUCKET as string,
         Key: `project/${project.name}/${file.name}`,
@@ -49,7 +49,15 @@ class ProjectService {
 
       const { Location } = await S3.upload(params).promise();
       return Location;
-    }));
+    };
+
+    let locations: string[] = [];
+
+    if (Array.isArray(files)) {
+      locations = await Promise.all(files.map((file) => upload(file)));
+    } else {
+      locations = [await upload(files)];
+    }
 
     project.images = locations;
 

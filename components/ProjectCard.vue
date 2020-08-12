@@ -69,7 +69,7 @@ export default {
 
     getFirstImage() {
       if (this.projectComputed.images.length > 0) {
-        return this.getImage(this.projectComputed.images[0]);
+        return this.projectComputed.images[0];
       }
       return '/project.jpg';
     },

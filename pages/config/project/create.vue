@@ -41,6 +41,7 @@
 <script>
 import ggl from 'graphql-tag';
 import create from '@/graphql/mutation/project/create.graphql';
+import list from '@/graphql/query/project/list.graphql';
 
 export default {
   data() {
@@ -65,6 +66,9 @@ export default {
         variables: {
           project: this.project,
         },
+        refetchQueries: [{ query: ggl(list) }],
+        awaitRefetchQueries: true,
+
       }).then(
         (response) => {
           this.$toast.show('Projeto criado', {
@@ -93,6 +97,7 @@ export default {
             const { id } = response.data.CreateProject;
 
             const formData = new FormData();
+
             this.files.forEach((file) => {
               formData.append('files', file);
             });
