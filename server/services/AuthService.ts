@@ -33,6 +33,7 @@ class AuthService {
         user.unBlockToken = token;
 
         EmailService.sendEmailToken(user, token, req);
+        await user.save();
         throw new Error('User blocked by many incorrect password tries');
       }
       await user.save();

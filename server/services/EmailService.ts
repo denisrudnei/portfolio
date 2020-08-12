@@ -1,9 +1,7 @@
-import Email from 'email-templates';
+import consola from 'consola';
 import { Request } from 'express';
 import nodemailer from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import path from 'path';
-import consola from 'consola';
 
 import User from '../models/User';
 
@@ -16,34 +14,14 @@ const transport = nodemailer.createTransport(new SMTPTransport({
   },
 }));
 
-const emailSender = new Email({
-  juice: true,
-  juiceResources: {
-    preserveImportant: true,
-    webResources: {
-      relativeTo: path.join(__dirname, '..', '..', 'assets', 'mail'),
-    },
-  },
-  preview: true,
-  message: {
-    from: process.env.MAIL_USER,
-  },
-  transport,
-});
-
 class EmailService {
   public static async sendEmailToken(user: User, token: string, req: Request) {
-    emailSender.send({
-      template: path.join(__dirname, '..', 'mails', 'reset'),
-      locals: {
-        name: user.name,
-        url: `${req.protocol}://${req.hostname}/auth/unblock/${token}`,
-        token,
-      },
-      message: {
-        to: user.email,
-        subject: 'Password reset',
-      },
+    const url = `${req.protocol}://${req.hostname}/auth/unblock/${token}`;
+    transport.sendMail({
+      to: user.email,
+      from: process.env.MAIL_USER,
+      subject: 'Desbloquear conta',
+      html: `Clique <a href="${url}">aqui</a> para desbloquear a conta`,
     }).then((message) => {
       consola.info(message);
     });
