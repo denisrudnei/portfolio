@@ -23,7 +23,7 @@ const emailSender = new Email({
       relativeTo: path.join(__dirname, '..', '..', 'assets', 'mail'),
     },
   },
-  preview: false,
+  preview: true,
   message: {
     from: process.env.MAIL_USER,
   },
@@ -36,7 +36,7 @@ class EmailService {
       template: path.join(__dirname, '..', 'mails', 'reset'),
       locals: {
         name: user.name,
-        url: `${req.protocol}://${req.hostname}/auth/unlock/${token}`,
+        url: `${req.protocol}://${req.hostname}/auth/unblock/${token}`,
         token,
       },
       message: {
