@@ -3,6 +3,7 @@ import { Request } from 'express';
 import nodemailer from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import path from 'path';
+import consola from 'consola';
 
 import User from '../models/User';
 
@@ -32,7 +33,7 @@ const emailSender = new Email({
 
 class EmailService {
   public static async sendEmailToken(user: User, token: string, req: Request) {
-    await emailSender.send({
+    emailSender.send({
       template: path.join(__dirname, '..', 'mails', 'reset'),
       locals: {
         name: user.name,
@@ -43,6 +44,8 @@ class EmailService {
         to: user.email,
         subject: 'Password reset',
       },
+    }).then((message) => {
+      consola.info(message);
     });
   }
 }

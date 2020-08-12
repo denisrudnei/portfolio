@@ -32,7 +32,8 @@ class AuthService {
         const token = await this.setUnBlockToken(user.email);
         user.unBlockToken = token;
 
-        await EmailService.sendEmailToken(user, token, req);
+        EmailService.sendEmailToken(user, token, req);
+        throw new Error('User blocked by many incorrect password tries');
       }
       await user.save();
       throw new Error('Invalid password');
