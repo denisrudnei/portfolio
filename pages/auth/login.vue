@@ -59,12 +59,11 @@ export default {
               icon: 'weekend',
             });
           },
-          () => {
-            this.$toast.error('Email ou senha inválidos', {
-              icon: 'error_outline',
-            });
-          },
-        );
+        ).catch(() => {
+          this.$toast.error('Email ou senha inválidos', {
+            icon: 'error_outline',
+          });
+        });
     },
   },
 };

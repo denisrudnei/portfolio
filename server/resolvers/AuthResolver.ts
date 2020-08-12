@@ -1,14 +1,17 @@
 /* eslint-disable class-methods-use-this */
-import { Arg, Mutation, Resolver } from 'type-graphql';
+import {
+  Arg, Mutation, Resolver, Ctx,
+} from 'type-graphql';
 
+import { ExpressContext } from 'apollo-server-express/dist/ApolloServer';
 import User from '../models/User';
 import AuthService from '../services/AuthService';
 
 @Resolver(() => User)
 class AuthResolver {
   @Mutation(() => User)
-  public Login(@Arg('email') email: string, @Arg('password') password: string): Promise<User> {
-    return AuthService.login(email, password);
+  public Login(@Arg('email') email: string, @Arg('password') password: string, @Ctx() context: ExpressContext): Promise<User> {
+    return AuthService.login(email, password, context.req);
   }
 
   @Mutation(() => User)
@@ -19,6 +22,11 @@ class AuthResolver {
       password,
     });
     return AuthService.create(user);
+  }
+
+  @Mutation(() => User)
+  public Unblock(@Arg('token') token: string) {
+    return AuthService.unBlock(token);
   }
 }
 

@@ -5,7 +5,7 @@ import AuthService from '../services/AuthService';
 const router = Router();
 
 router.post('/auth/login', (req, res) => {
-  AuthService.login(req.body.email, req.body.password)
+  AuthService.login(req.body.email, req.body.password, req)
     .then((user) => {
         req.session!.authUser = user;
         return res.status(201).json(user);

@@ -30,9 +30,17 @@ class User extends BaseEntity {
   @Column({ nullable: true })
   public image!: string
 
+  @Column()
+  public incorrectTries: number = 0
+
+  @Column()
+  public blocked: boolean = false;
+
+  @Column()
+  public unBlockToken: string = ''
+
   public async verifyPassword(password: string): Promise<boolean> {
     const result = bcrypt.compareSync(password, this.password);
-    if (!result) throw new Error('bad credentials');
     return result;
   }
 

@@ -1,0 +1,7 @@
+mutation Unblock($token: String!) {
+  Unblock(token: $token) {
+    id
+    name
+    email
+  }
+}
