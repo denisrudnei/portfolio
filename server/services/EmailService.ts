@@ -8,7 +8,7 @@ import User from '../models/User';
 
 const transport = nodemailer.createTransport(new SMTPTransport({
   host: process.env.MAIL_HOST as string,
-  port: parseInt(process.env.MAIL_PORT!, 10),
+  port: parseInt(process.env.MAIL_PORT as string, 10),
   auth: {
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASSWORD,
@@ -23,7 +23,7 @@ const emailSender = new Email({
       relativeTo: path.join(__dirname, '..', '..', 'assets', 'mail'),
     },
   },
-  preview: true,
+  preview: false,
   message: {
     from: process.env.MAIL_USER,
   },
