@@ -25,6 +25,16 @@
         Salvar
       </v-btn>
     </v-col>
+    <v-dialog v-model="upload" width="75%">
+      <v-card>
+        <v-card-title>
+          Upload de arquivo
+        </v-card-title>
+        <v-card-text>
+          <v-progress-linear :value="progress"></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-row>
 </template>
 
@@ -36,7 +46,9 @@ export default {
   data() {
     return {
       editor: null,
-      files: [],
+      upload: false,
+      progress: 0,
+      files: null,
       project: {
         name: '',
         description: '',
@@ -48,7 +60,6 @@ export default {
   },
   methods: {
     save() {
-      this.project.images = this.files.map((file) => file.name);
       this.$apollo.mutate({
         mutation: ggl(create),
         variables: {
@@ -59,7 +70,18 @@ export default {
           this.$toast.show('Projeto criado', {
             duration: 1000,
           });
-          if (this.files !== null && this.files.length > 0) {
+          if (this.files !== null) {
+            this.upload = true;
+
+            const config = {
+              onprogress: (progressEvent) => {
+                this.progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                if (progressEvent.loaded === progressEvent.total) {
+                  this.upload = false;
+                }
+              },
+            };
+
             this.$toast.info(
               'Iniciando processo de upload de imagem do projeto',
               {
@@ -67,25 +89,27 @@ export default {
                 duration: 1000,
               },
             );
+
             const { id } = response.data.CreateProject;
-            Object.keys(this.files).forEach((index) => {
-              const file = this.files[index];
-              const formData = new FormData();
-              formData.append('file', file);
-              this.$axios.post(`/project/${id}/file`, formData).then(
-                () => {
-                  this.$toast.show('Imagem enviada com sucesso', {
-                    duration: 1000,
-                  });
-                },
-                () => {
-                  this.$toast.error('Falha ao processar imagem');
-                },
-              );
+
+            const formData = new FormData();
+            this.files.forEach((file) => {
+              formData.append('files', file);
             });
+
+            this.$axios.post(`/project/${id}/file`, formData, config).then(() => {
+              this.$toast.show('Imagem enviada com sucesso', {
+                duration: 1000,
+              });
+              this.$router.push('/config/project/list');
+            }).catch(() => {
+              this.$toast.error('Falha ao processar imagem');
+            });
+          } else {
+            this.$router.push('/config/project/list');
           }
-          this.$router.push('/config/project/list');
         },
+      ).catch(
         () => {
           this.$toast.error('Falha ao enviar projeto');
         },

@@ -12,7 +12,7 @@
           md="3"
           @mouseenter="setActual(img)"
         >
-          <v-img :aspect-ratio="1" :src="getImage(img)" @click="dialog = true">
+          <v-img :aspect-ratio="1" :src="img" @click="dialog = true">
             <template v-slot:placeholder>
               <v-row align="center" justify="center" class="fill-height ma-0">
                 <v-progress-circular indeterminate />
@@ -24,7 +24,7 @@
     </v-col>
     <v-col cols="12" md="5">
       <v-card>
-        <v-img v-if="actual !== ''" :src="getImage(actual)" @click="dialog = true" />
+        <v-img v-if="actual !== ''" :src="actual" @click="dialog = true" />
         <v-card-title>
           {{ project.name }}
         </v-card-title>
@@ -54,7 +54,7 @@
         <v-card-text>
           <v-row>
             <v-col cols="12">
-              <v-img v-if="actual !== ''" :src="getImage(actual)" />
+              <v-img v-if="actual !== ''" :src="actual" />
             </v-col>
           </v-row>
         </v-card-text>
@@ -111,12 +111,6 @@ export default {
     }
   },
   methods: {
-    getImage(name) {
-      return `/api/project/file/${this.project.name}/${name}`;
-    },
-    getOgImage(name) {
-      return `${this.base}${this.getImage(name)}`;
-    },
     setActual(name) {
       this.actual = name;
     },
@@ -156,7 +150,7 @@ export default {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: this.getOgImage(this.actual || ''),
+          content: this.actual || '',
         },
         {
           hid: 'og:description',

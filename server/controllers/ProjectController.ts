@@ -17,7 +17,7 @@ router.get('/project/file/:id/:name', (req, res) => {
 });
 
 router.post('/project/:id/file', (req, res) => {
-  ProjectService.createFile(parseInt(req.params.id, 10), req.files!.file as UploadedFile)
+  ProjectService.createFiles(parseInt(req.params.id, 10), req.files!.files as UploadedFile[])
     .then(() => res.sendStatus(201))
     .catch((e) => res.status(500).json(e.message));
 });

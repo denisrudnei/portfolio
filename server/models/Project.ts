@@ -34,7 +34,7 @@ class Project extends BaseEntity {
 
   @Field(() => [String])
   @Column('text', { array: true })
-  public images!: string[]
+  public images: string[] = []
 }
 
 export default Project;

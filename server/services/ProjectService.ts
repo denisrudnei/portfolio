@@ -14,7 +14,10 @@ class ProjectService {
         url,
       },
     });
-    return project!;
+
+    if (!project) throw new Error('Project not found');
+
+    return project;
   }
 
   public static create(project: Project) {
@@ -32,25 +35,33 @@ class ProjectService {
     return Body;
   }
 
-  public static async createFile(id: Project['id'], file: UploadedFile) {
+  public static async createFiles(id: Project['id'], files: UploadedFile[]) {
     const project = await Project.findOne(id);
+    if (!project) throw new Error('Project not found');
+    const locations = await Promise.all(files.map(async (file) => {
+      const params = {
+        Bucket: process.env.BUCKET as string,
+        Key: `project/${project.name}/${file.name}`,
+        Body: file.data,
+        ContentType: file.mimetype,
+        ACL: 'public-read',
+      };
 
-    const params = {
-      Bucket: process.env.BUCKET as string,
-      Key: `project/${project!.name}/${file.name}`,
-      Body: file.data,
-      ContentType: file.mimetype,
-      ACL: 'public-read',
-    };
+      const { Location } = await S3.upload(params).promise();
+      return Location;
+    }));
 
-    const result = await S3.upload(params).promise();
-    return result;
+    project.images = locations;
+
+    await project.save();
+    return project.images;
   }
 
   public static async edit(projectId: Project['id'], project: Project): Promise<Project> {
     const projectInDb = await Project.findOne(projectId);
+    if (!projectInDb) throw new Error('Project not found');
     Object.assign(projectInDb, project);
-    return projectInDb!.save();
+    return projectInDb.save();
   }
 
   public static async remove(projectId: Project['id']) {
@@ -58,17 +69,32 @@ class ProjectService {
       id: projectId,
     });
 
-    const deleteImages = project!.images.map((image) => S3.deleteObject(
-      {
-        Bucket: process.env.BUCKET as string,
-        Key: `project/${project!.name}/${image}`,
-      },
-    ).promise());
-    await Promise.all(deleteImages).then(() => {
-      Project.delete({
-        id: projectId,
-      });
+    if (!project) throw new Error('Project not found');
+
+    const deleteImages = project.images.map((image) => {
+      // image = https://bucket-name.amazonaws.com/project/projectName/fileName
+      // nameAndFile = projectName/fileName
+      // name = projectName
+      // file = fileName
+
+      const [, nameAndFile] = image.split('/project/');
+      const [name, file] = nameAndFile.split('/');
+      const key = `project/${name}/${file}`;
+
+      return S3.deleteObject(
+        {
+          Bucket: process.env.BUCKET as string,
+          Key: key,
+        },
+      ).promise();
     });
+
+    await Promise.all(deleteImages);
+
+    await Project.delete({
+      id: projectId,
+    });
+
     return true;
   }
 }
