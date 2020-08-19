@@ -72,6 +72,16 @@ class ProjectService {
     return projectInDb.save();
   }
 
+  /**
+   * @param url format: 'https://bucket-name.amazonaws.com/project/projectName/fileName'
+   * @returns string format: `project/name/fileName`
+   */
+  private static getFileName(url: string) {
+    const [, nameAndFile] = url.split('/project/');
+    const [name, file] = nameAndFile.split('/');
+    return `project/${name}/${file}`;
+  }
+
   public static async remove(projectId: Project['id']) {
     const project = await Project.findOne({
       id: projectId,
@@ -80,15 +90,7 @@ class ProjectService {
     if (!project) throw new Error('Project not found');
 
     const deleteImages = project.images.map((image) => {
-      // image = https://bucket-name.amazonaws.com/project/projectName/fileName
-      // nameAndFile = projectName/fileName
-      // name = projectName
-      // file = fileName
-
-      const [, nameAndFile] = image.split('/project/');
-      const [name, file] = nameAndFile.split('/');
-      const key = `project/${name}/${file}`;
-
+      const key = this.getFileName(image);
       return S3.deleteObject(
         {
           Bucket: process.env.BUCKET as string,

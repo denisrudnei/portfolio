@@ -47,7 +47,7 @@ class StackComment extends BaseEntity {
   @Column()
   public body!: string
 
-  @ManyToOne(() => Question, (Question) => Question.comments)
+  @ManyToOne(() => Question, (Question) => Question.comments, { onDelete: 'CASCADE' })
   public question!: Question
 }
 

@@ -18,7 +18,7 @@ class Answer extends BaseEntity {
   @ManyToOne(() => Owner, { eager: true, cascade: true })
   public owner!: Owner
 
-  @ManyToOne(() => Question)
+  @ManyToOne(() => Question, { onDelete: 'CASCADE' })
   public question!: Question
 
   @Field(() => Int)

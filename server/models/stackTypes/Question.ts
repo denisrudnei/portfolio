@@ -21,7 +21,9 @@ class Question extends BaseEntity {
   @OneToMany(
     () => StackComment,
     (StackComment) => StackComment.question,
-    { eager: true, cascade: true, nullable: true },
+    {
+      eager: true, cascade: true, nullable: true,
+    },
   )
   public comments?: StackComment[]
 
@@ -101,7 +103,7 @@ class Question extends BaseEntity {
   @Column()
   public body!: string
 
-  @ManyToOne(() => StackOverflowCache)
+  @ManyToOne(() => StackOverflowCache, { onDelete: 'CASCADE' })
   public cache!: StackOverflowCache
 }
 

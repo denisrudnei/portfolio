@@ -46,7 +46,9 @@ class StackOverflowService {
   }
 
   public static async invalidateCache() {
-    await StackOverflowCache.delete({});
+    const cache = await StackOverflowCache.findOne();
+    if (!cache) return;
+    await StackOverflowCache.remove(cache);
     await this.downloadFromSite();
   }
 
