@@ -71,4 +71,7 @@ async function start() {
     });
   });
 }
-start();
+
+start().catch((e) => {
+  consola.error(e);
+});

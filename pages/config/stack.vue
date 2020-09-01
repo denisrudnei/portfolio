@@ -1,13 +1,24 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <v-text-field v-model="userInfo.userId" filled placeholder="Id do usuário" />
+      <v-text-field
+        v-model="userInfo.userId"
+        filled
+        placeholder="Id do usuário"
+      />
     </v-col>
     <v-col cols="12">
-      <v-text-field v-model="userInfo.siteUrl" filled placeholder="Endereço da comunidade" />
+      <v-text-field
+        v-model="userInfo.siteUrl"
+        filled
+        placeholder="Endereço da comunidade"
+      />
     </v-col>
     <v-col cols="12">
-      <v-btn class="primary white--text" @click="save">
+      <v-btn
+        class="primary white--text"
+        @click="save"
+      >
         Salvar
       </v-btn>
     </v-col>

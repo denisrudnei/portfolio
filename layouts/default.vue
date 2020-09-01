@@ -1,18 +1,28 @@
 <template>
   <v-app>
-    <v-navigation-drawer app clipped>
+    <v-navigation-drawer
+      app
+      clipped
+    >
       <v-list>
         <v-list-item to="/about">
           <v-list-item-avatar>
             <v-avatar>
-              <v-img src="/api/about/image" :aspect-ratio="16/9" />
+              <v-img
+                src="/api/about/image"
+                :aspect-ratio="16/9"
+              />
             </v-avatar>
           </v-list-item-avatar>
           <v-list-item-content>
             <h1>{{ user.name }}</h1>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item v-for="item in items" :key="item.title" :to="item.to">
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          :to="item.to"
+        >
           <v-list-item-icon>
             <v-icon>
               {{ item.icon }}
@@ -22,7 +32,10 @@
             {{ item.title }}
           </v-list-item-content>
         </v-list-item>
-        <v-list-item v-if="logged" to="/config/project/create">
+        <v-list-item
+          v-if="logged"
+          to="/config/project/create"
+        >
           <v-list-item-icon>
             <v-icon>
               settings

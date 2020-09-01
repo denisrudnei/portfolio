@@ -41,6 +41,13 @@ import list from '@/graphql/query/project/list.graphql';
 import ggl from 'graphql-tag';
 
 export default {
+  asyncData({ app }) {
+    return app.$apollo.query({
+      query: ggl(list),
+    }).then((response) => ({
+      items: response.data.Project,
+    }));
+  },
   data() {
     return {
       headers: [
@@ -54,13 +61,6 @@ export default {
         },
       ],
     };
-  },
-  asyncData({ app }) {
-    return app.$apollo.query({
-      query: ggl(list),
-    }).then((response) => ({
-      items: response.data.Project,
-    }));
   },
   methods: {
     removeProject(item) {

@@ -1,7 +1,10 @@
 <template>
   <v-card>
     <nuxt-link :to="`/blog/post/${ post.url }`">
-      <v-img :aspect-ratio="21/9" src="/post.jpg" />
+      <v-img
+        :aspect-ratio="21/9"
+        src="/post.jpg"
+      />
     </nuxt-link>
     <v-card-title primary-title>
       {{ post.title }}

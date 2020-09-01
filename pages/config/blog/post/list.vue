@@ -1,16 +1,26 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <v-data-table :items="posts" :headers="headers">
+      <v-data-table
+        :items="posts"
+        :headers="headers"
+      >
         <template v-slot:item.title="{ item }">
           <td>{{ item.title }}</td>
         </template>
         <template v-slot:item.actions="{ item }">
           <td>
-            <v-btn icon :to="`/config/blog/post/edit/${item.id}`">
+            <v-btn
+              icon
+              :to="`/config/blog/post/edit/${item.id}`"
+            >
               <v-icon>edit</v-icon>
             </v-btn>
-            <v-btn icon @click="remove(item.id)" class="red--text">
+            <v-btn
+              icon
+              class="red--text"
+              @click="remove(item.id)"
+            >
               <v-icon>delete</v-icon>
             </v-btn>
           </td>

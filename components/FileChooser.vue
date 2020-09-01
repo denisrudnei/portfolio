@@ -1,6 +1,11 @@
 <template>
   <div>
-    <input ref="file" type="file" style="display: none" @change="updateFile()">
+    <input
+      ref="file"
+      type="file"
+      style="display: none"
+      @change="updateFile()"
+    >
     <v-btn @click="chooseFile()">
       <v-icon>
         attach_file
@@ -12,7 +17,12 @@
 
 <script>
 export default {
-  props: ['value'],
+  props: {
+    value: {
+      type: String,
+      default: '',
+    },
+  },
   methods: {
     chooseFile() {
       this.$refs.file.click();

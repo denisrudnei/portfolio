@@ -3,17 +3,11 @@ module.exports = {
     browser: true,
     node: true,
   },
-  extends: [
-    'plugin:vue/essential',
-    'airbnb-base',
-  ],
+  extends: ['plugin:vue/recommended', 'airbnb-base'],
   parserOptions: {
     parser: '@typescript-eslint/parser',
   },
-  plugins: [
-    'vuetify',
-    '@typescript-eslint/eslint-plugin',
-  ],
+  plugins: ['vuetify', 'vue', '@typescript-eslint/eslint-plugin'],
   rules: {
     'import/extensions': 'off',
     'import/no-unresolved': 'off',

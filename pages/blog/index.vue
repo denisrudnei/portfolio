@@ -1,7 +1,15 @@
 <template>
   <v-row>
-    <v-col v-for="post in posts" :key="post.id" cols="12" class="pa-2">
-      <Post :post="post" resume />
+    <v-col
+      v-for="post in posts"
+      :key="post.id"
+      cols="12"
+      class="pa-2"
+    >
+      <Post
+        :post="post"
+        resume
+      />
     </v-col>
     <template v-if="posts.length === 0">
       <h1 class="primary--text">

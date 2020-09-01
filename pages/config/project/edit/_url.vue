@@ -19,13 +19,21 @@
           cols="12"
           pa-2
         >
-          <ckeditor v-model="project.description" :editor="editor" />
+          <ckeditor
+            v-model="project.description"
+            :editor="editor"
+          />
         </v-col>
         <v-col
           cols="12"
           pa-2
         >
-          <v-file-input v-model="files" filled label="Incluir imagem" @change="changeFile" />
+          <v-file-input
+            v-model="files"
+            filled
+            label="Incluir imagem"
+            @change="changeFile"
+          />
         </v-col>
         <v-col
           cols="12"
@@ -49,7 +57,10 @@
       cols="4"
       pa-2
     >
-      <ProjectCard ref="card" :project="project" />
+      <ProjectCard
+        ref="card"
+        :project="project"
+      />
     </v-col>
   </v-row>
 </template>

@@ -1,5 +1,6 @@
 import { UploadedFile } from 'express-fileupload';
 
+import AWS from 'aws-sdk';
 import S3 from '../../plugins/S3';
 import User from '../models/User';
 

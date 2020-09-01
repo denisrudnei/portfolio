@@ -1,17 +1,32 @@
 <template>
   <v-row>
-    <v-col cols="12" pa-2>
+    <v-col
+      cols="12"
+      pa-2
+    >
       <v-text-field
         v-model="post.title"
         filled
         label="Titulo"
       />
     </v-col>
-    <v-col cols="12" pa-2>
-      <ckeditor v-model="post.content" :editor="editor" />
+    <v-col
+      cols="12"
+      pa-2
+    >
+      <ckeditor
+        v-model="post.content"
+        :editor="editor"
+      />
     </v-col>
-    <v-col cols="12" pa-2>
-      <v-btn class="primary white--text" @click="save()">
+    <v-col
+      cols="12"
+      pa-2
+    >
+      <v-btn
+        class="primary white--text"
+        @click="save()"
+      >
         <v-icon left>
           save
         </v-icon>

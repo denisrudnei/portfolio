@@ -5,15 +5,18 @@
       pa-2
     >
       <v-card tile>
-        <nuxt-link :to="`/project/${projectComputed.url}`">
-          <v-img :aspect-ratio="21/9" :src="getFirstImage()">
-            <template v-slot:placeholder>
-              <v-row align="center" justify="center" class="fill-height ma-0">
-                <v-progress-circular indeterminate />
-              </v-row>
-            </template>
-          </v-img>
-        </nuxt-link>
+        <v-carousel
+          cycle
+        >
+          <v-carousel-item
+            v-for="imageLink in projectComputed.images"
+            :key="imageLink"
+            :src="imageLink"
+            :to="`/project/${projectComputed.url}`"
+            transition="fade-transition"
+            reverse-transition="fade-transition"
+          />
+        </v-carousel>
         <v-card-title>{{ projectComputed.name }}</v-card-title>
         <v-card-text v-html="projectComputed.description" />
         <v-card-actions>
@@ -77,5 +80,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

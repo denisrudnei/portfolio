@@ -15,7 +15,7 @@
           </nuxt-link> para voltar
         </h3>
       </template>
-       <template v-else>
+      <template v-else>
         <h1>
           {{ error.message }}
         </h1>

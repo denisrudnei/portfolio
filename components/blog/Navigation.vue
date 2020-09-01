@@ -1,7 +1,15 @@
 <template>
-  <v-navigation-drawer app clipped right>
+  <v-navigation-drawer
+    app
+    clipped
+    right
+  >
     <v-list>
-      <v-list-item v-for="post in posts" :key="post.id" :to="`/blog/post/${post.url}`">
+      <v-list-item
+        v-for="post in posts"
+        :key="post.id"
+        :to="`/blog/post/${post.url}`"
+      >
         <v-list-item-content>
           <v-list-item-title>
             {{ post.title }}

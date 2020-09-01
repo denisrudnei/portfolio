@@ -11,11 +11,22 @@
     </v-col>
     <v-col cols="12">
       <client-only>
-        <ckeditor v-model="project.description" :editor="editor" />
+        <ckeditor
+          v-model="project.description"
+          :editor="editor"
+        />
       </client-only>
     </v-col>
-    <v-col cols="12" pa-2>
-      <v-file-input v-model="files" filled multiple label="Selecione uma imagem" />
+    <v-col
+      cols="12"
+      pa-2
+    >
+      <v-file-input
+        v-model="files"
+        filled
+        multiple
+        label="Selecione uma imagem"
+      />
     </v-col>
     <v-col cols="12">
       <v-btn
@@ -25,13 +36,16 @@
         Salvar
       </v-btn>
     </v-col>
-    <v-dialog v-model="upload" width="75%">
+    <v-dialog
+      v-model="upload"
+      width="75%"
+    >
       <v-card>
         <v-card-title>
           Upload de arquivo
         </v-card-title>
         <v-card-text>
-          <v-progress-linear :value="progress"></v-progress-linear>
+          <v-progress-linear :value="progress" />
         </v-card-text>
       </v-card>
     </v-dialog>

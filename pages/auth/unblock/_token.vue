@@ -7,11 +7,15 @@
         </v-card-title>
         <v-card-text>
           Nome: {{ user.name }}
-          <br/>
+          <br>
           Email: {{ user.email }}
         </v-card-text>
         <v-card-actions>
-          <v-btn class="primary white--text" to="/auth/login" tile>
+          <v-btn
+            class="primary white--text"
+            to="/auth/login"
+            tile
+          >
             Ir para a página de login
           </v-btn>
         </v-card-actions>

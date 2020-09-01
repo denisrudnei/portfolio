@@ -1,6 +1,9 @@
 <template>
   <v-row>
-    <v-col cols="12" pa-2>
+    <v-col
+      cols="12"
+      pa-2
+    >
       <Post :post="post" />
     </v-col>
   </v-row>

@@ -15,13 +15,25 @@
       pa-2
     >
       <client-only>
-        <ckeditor v-model="user.description" :editor="editor" />
+        <ckeditor
+          v-model="user.description"
+          :editor="editor"
+        />
       </client-only>
     </v-col>
-    <v-col cols="12" pa-2>
-      <v-file-input v-model="files" label="Selecione a imagem" />
+    <v-col
+      cols="12"
+      pa-2
+    >
+      <v-file-input
+        v-model="files"
+        label="Selecione a imagem"
+      />
     </v-col>
-    <v-col cols="12" pa-2>
+    <v-col
+      cols="12"
+      pa-2
+    >
       <v-btn
         class="primary white--text"
         @click="save()"
