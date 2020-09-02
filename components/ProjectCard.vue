@@ -7,6 +7,7 @@
       <v-card tile>
         <v-carousel
           cycle
+          height="30vh"
         >
           <v-carousel-item
             v-for="imageLink in projectComputed.images"
