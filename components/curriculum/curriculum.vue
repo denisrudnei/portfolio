@@ -45,15 +45,20 @@
     <v-col cols="12">
       <professional-experience @update="updateProfessionalExperience" />
     </v-col>
+    <v-col cols="12">
+      <sites />
+    </v-col>
   </v-row>
 </template>
 
 <script>
 import professionalExperience from '@/components/curriculum/professionalExperience';
+import sites from '@/components/curriculum/sites';
 
 export default {
   components: {
     professionalExperience,
+    sites,
   },
   data() {
     return {

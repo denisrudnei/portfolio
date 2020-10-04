@@ -92,7 +92,7 @@
             @click="add"
           >
             <v-icon>add</v-icon>
-            Adicionar
+            {{ exist(local) ? 'Atualizar': 'Adicionar' }}
           </v-btn>
         </v-col>
         <v-col
@@ -165,12 +165,21 @@ export default {
   },
   methods: {
     add() {
-      this.professionalExperience.push({
+      const index = this.professionalExperience.findIndex(
+        (experience) => experience.local === this.local,
+      );
+      const experience = {
         local: this.local,
         role: this.role,
         mainActivities: this.mainActivities,
-        period: this.period,
-      });
+        period: { ...this.period },
+      };
+      if (index !== -1) {
+        this.professionalExperience[index] = experience;
+      } else {
+        this.professionalExperience.push(experience);
+      }
+
       this.local = '';
       this.role = '';
       this.mainActivities = '';
@@ -206,6 +215,12 @@ export default {
       this.menuFinish = false;
       this.finishField = format(parse(value, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
       this.period.finish = parse(value, 'yyyy-MM-dd', new Date());
+    },
+    exist(local) {
+      const index = this.professionalExperience.findIndex(
+        (experience) => experience.local === local,
+      );
+      return index !== -1;
     },
     date(value) {
       return format(value, 'dd/MM/yyyy');
