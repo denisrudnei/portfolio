@@ -32,7 +32,7 @@
                   <v-row>
                     <v-col cols="6">
                       <v-menu
-                        v-model="data.menuStart"
+                        v-model="menuStart"
                         min-width="290px"
                         :close-on-content-click="false"
                         offset-y
@@ -51,7 +51,7 @@
                     </v-col>
                     <v-col cols="6">
                       <v-menu
-                        v-model="data.menuFinish"
+                        v-model="menuFinish"
                         min-width="290px"
                         :close-on-content-click="false"
                         offset-y
@@ -226,7 +226,7 @@ export default {
     saveFinish(value) {
       this.menuFinish = false;
       this.finishField = format(parse(value, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
-      this.period.finish = parse(value, 'yyyy-MM-dd', new Date());
+      this.data.period.finish = parse(value, 'yyyy-MM-dd', new Date());
     },
     exist(local) {
       const index = this.data.professionalExperience.findIndex(
