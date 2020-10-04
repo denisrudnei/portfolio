@@ -31,11 +31,8 @@ class UserService {
     inDb!.name = user.name;
     inDb!.description = user.description;
     if (user.curriculum) {
-      let curriculum = await Curriculum.findOne();
-      if (!curriculum) curriculum = new Curriculum(user.curriculum);
-      Object.assign(curriculum, user.curriculum);
-      inDb!.curriculum = curriculum;
-      inDb!.curriculum.save();
+      inDb!.curriculum = new Curriculum(user.curriculum);
+      await inDb!.curriculum!.save();
     }
     return inDb!.save();
   }
