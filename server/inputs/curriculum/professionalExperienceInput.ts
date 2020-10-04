@@ -1,16 +1,20 @@
-import { Field, InputType, ID } from 'type-graphql';
-import Period from '../../models/curriculum/Period';
+import { Field, ID, InputType } from 'type-graphql';
+
+import PeriodInput from './periodInput';
 
 @InputType()
 class ProfessionalExperienceInput {
+  @Field()
+  public local!: string
+
   @Field()
   public role!: string
 
   @Field()
   public mainActivities!: string
 
-  @Field(() => ID)
-  public period!: Period['id']
+  @Field(() => PeriodInput)
+  public period!: PeriodInput
 }
 
 export default ProfessionalExperienceInput;

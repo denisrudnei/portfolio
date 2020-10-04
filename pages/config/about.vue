@@ -22,7 +22,7 @@
       </client-only>
     </v-col>
     <v-col cols="12">
-      <curriculum />
+      <curriculum @update="updateCurriculum" />
     </v-col>
     <v-col
       cols="12"
@@ -77,6 +77,9 @@ export default {
     this.editor = require('@ckeditor/ckeditor5-build-classic');
   },
   methods: {
+    updateCurriculum(value) {
+      this.user.curriculum = value;
+    },
     save() {
       this.$apollo.mutate({
         mutation: ggl(edit),

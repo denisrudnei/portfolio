@@ -3,6 +3,7 @@ import { UploadedFile } from 'express-fileupload';
 import AWS from 'aws-sdk';
 import S3 from '../../plugins/S3';
 import User from '../models/User';
+import Curriculum from '../models/curriculum/Curriculum';
 
 class UserService {
   public static async get(): Promise<User> {
@@ -29,6 +30,13 @@ class UserService {
     const inDb = await User.findOne();
     inDb!.name = user.name;
     inDb!.description = user.description;
+    if (user.curriculum) {
+      let curriculum = await Curriculum.findOne();
+      if (!curriculum) curriculum = new Curriculum(user.curriculum);
+      Object.assign(curriculum, user.curriculum);
+      inDb!.curriculum = curriculum;
+      inDb!.curriculum.save();
+    }
     return inDb!.save();
   }
 

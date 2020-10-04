@@ -1,6 +1,7 @@
-import { Field, InputType, ID } from 'type-graphql';
-import User from '../../models/User';
-import Site from '../../models/curriculum/Site';
+import { Field, InputType } from 'type-graphql';
+
+import ProfessionalExperienceInput from './professionalExperienceInput';
+import SiteInput from './SiteInput';
 
 @InputType()
 class CurriculumInput {
@@ -22,11 +23,11 @@ class CurriculumInput {
   @Field()
   public email!: string
 
-  @Field(() => ID)
-  public sites!: Site['id'][]
+  @Field(() => [SiteInput])
+  public sites!: SiteInput[]
 
-  @Field(() => ID)
-  public user!: User['id']
+  @Field(() => [ProfessionalExperienceInput])
+  public professionalExperience!: ProfessionalExperienceInput[]
 }
 
 export default CurriculumInput;

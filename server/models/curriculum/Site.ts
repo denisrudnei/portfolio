@@ -1,10 +1,13 @@
-import { ObjectType, Field } from 'type-graphql';
-import { PrimaryGeneratedColumn, Entity, Column } from 'typeorm';
+import { ObjectType, Field, ID } from 'type-graphql';
+import {
+  PrimaryGeneratedColumn, Entity, Column, ManyToOne,
+} from 'typeorm';
+import Curriculum from './Curriculum';
 
 @ObjectType()
 @Entity()
 class Site {
-  @Field()
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   public id!: number;
 
@@ -15,6 +18,9 @@ class Site {
   @Field()
   @Column()
   public url!: string
+
+  @ManyToOne(() => Curriculum, (curriculum) => curriculum.sites)
+  public curriculum!: Curriculum
 }
 
 export default Site;

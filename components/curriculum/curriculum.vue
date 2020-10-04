@@ -2,7 +2,7 @@
   <v-row>
     <v-col cols="4">
       <v-text-field
-        v-model="nationallity"
+        v-model="nationality"
         filled
         placeholder="Nacionalidade"
       />
@@ -87,8 +87,9 @@ export default {
     return {
       mask: '(##) #####-####',
       menuBirthday: false,
+      birthday: null,
       birthdayField: '',
-      nationallity: '',
+      nationality: '',
       email: '',
       cellPhone: '',
       maritalStatus: '',
@@ -100,7 +101,8 @@ export default {
   computed: {
     curriculum() {
       const data = {
-        nationallity: this.nationallity,
+        birthday: this.birthday,
+        nationality: this.nationality,
         email: this.email,
         cellPhone: this.cellPhone,
         maritalStatus: this.maritalStatus,
@@ -125,6 +127,7 @@ export default {
     },
     updateBirthday(value) {
       this.menuBirthday = false;
+      this.birthday = parse(value, 'yyyy-MM-dd', new Date());
       this.birthdayField = format(parse(value, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
     },
   },

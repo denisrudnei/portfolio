@@ -1,4 +1,4 @@
-import { Field, ObjectType } from 'type-graphql';
+import { Field, ObjectType, ID } from 'type-graphql';
 import {
   Column, Entity, OneToOne, PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -7,6 +7,7 @@ import ProfessionalExperience from './ProfessionalExperience';
 @ObjectType()
 @Entity()
 class Period {
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   public id!: number;
 
