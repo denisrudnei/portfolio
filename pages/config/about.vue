@@ -21,6 +21,9 @@
         />
       </client-only>
     </v-col>
+    <v-col cols="12">
+      <curriculum />
+    </v-col>
     <v-col
       cols="12"
       pa-2
@@ -48,11 +51,15 @@
 </template>
 
 <script>
+import curriculum from '@/components/curriculum/curriculum';
 import edit from '@/graphql/mutation/about/edit.graphql';
 import ggl from 'graphql-tag';
 import about from '@/graphql/query/about/list.graphql';
 
 export default {
+  components: {
+    curriculum,
+  },
   asyncData({ app }) {
     return app.$apollo.query({
       query: ggl(about),

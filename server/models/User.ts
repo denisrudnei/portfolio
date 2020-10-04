@@ -1,8 +1,9 @@
 import bcrypt from 'bcrypt';
 import { Field, ID, ObjectType } from 'type-graphql';
 import {
-  BaseEntity, BeforeInsert, Column, Entity, PrimaryGeneratedColumn,
+  BaseEntity, BeforeInsert, Column, Entity, PrimaryGeneratedColumn, OneToOne,
 } from 'typeorm';
+import Curriculum from './curriculum/Curriculum';
 
 @Entity()
 @ObjectType()
@@ -18,6 +19,10 @@ class User extends BaseEntity {
   @Field({ nullable: true })
   @Column({ nullable: true })
   public description!: string
+
+  @Field(() => Curriculum, { nullable: true })
+  @OneToOne(() => Curriculum, (curriculum) => curriculum.user)
+  public curriculum?: Curriculum
 
   @Field()
   @Column()
