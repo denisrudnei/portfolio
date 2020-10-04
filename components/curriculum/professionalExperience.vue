@@ -11,14 +11,14 @@
           <v-row>
             <v-col cols="6">
               <v-text-field
-                v-model="local"
+                v-model="data.local"
                 placeholder="Local"
                 filled
               />
             </v-col>
             <v-col cols="6">
               <v-text-field
-                v-model="role"
+                v-model="data.role"
                 placeholder="Cargo"
                 filled
               />
@@ -32,7 +32,7 @@
                   <v-row>
                     <v-col cols="6">
                       <v-menu
-                        v-model="menuStart"
+                        v-model="data.menuStart"
                         min-width="290px"
                         :close-on-content-click="false"
                         offset-y
@@ -51,7 +51,7 @@
                     </v-col>
                     <v-col cols="6">
                       <v-menu
-                        v-model="menuFinish"
+                        v-model="data.menuFinish"
                         min-width="290px"
                         :close-on-content-click="false"
                         offset-y
@@ -70,7 +70,7 @@
                     </v-col>
                     <v-col>
                       <v-checkbox
-                        v-model="period.actual"
+                        v-model="data.period.actual"
                         label="Atual?"
                       />
                     </v-col>
@@ -80,7 +80,7 @@
             </v-col>
             <v-col cols="12">
               <v-textarea
-                v-model="mainActivities"
+                v-model="data.mainActivities"
                 placeholder="Atividades"
                 filled
               />
@@ -90,15 +90,15 @@
         <v-col cols="12">
           <v-btn
             class="primary white--text"
-            :disabled="local === ''"
+            :disabled="data.local === ''"
             @click="add"
           >
             <v-icon>add</v-icon>
-            {{ exist(local) ? 'Atualizar': 'Adicionar' }}
+            {{ exist(data.local) ? 'Atualizar': 'Adicionar' }}
           </v-btn>
         </v-col>
         <v-col
-          v-for="experience in professionalExperience"
+          v-for="experience in data.professionalExperience"
           :key="experience.local"
           cols="6"
         >
@@ -145,73 +145,83 @@
 
 <script>
 import { format, parse } from 'date-fns';
-import { ApolloClient } from 'apollo-client';
 
 export default {
+  props: {
+    value: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       menuStart: false,
       menuFinish: false,
       startField: '',
       finishField: '',
-      local: '',
-      role: '',
-      mainActivities: '',
-      period: {
-        start: null,
-        finish: null,
-        actual: false,
+      data: {
+        local: '',
+        role: '',
+        mainActivities: '',
+        period: {
+          start: null,
+          finish: null,
+          actual: false,
+        },
+        professionalExperience: [],
       },
-      professionalExperience: [],
     };
+  },
+  created() {
+    Object.assign(this.data.professionalExperience, this.value);
   },
   methods: {
     add() {
-      const index = this.professionalExperience.findIndex(
+      const index = this.data.professionalExperience.findIndex(
         (experience) => experience.local === this.local,
       );
       const experience = {
-        local: this.local,
-        role: this.role,
-        mainActivities: this.mainActivities,
-        period: { ...this.period },
+        local: this.data.local,
+        role: this.data.role,
+        mainActivities: this.data.mainActivities,
+        period: { ...this.data.period },
       };
       if (index !== -1) {
-        this.professionalExperience[index] = experience;
+        this.data.professionalExperience[index] = experience;
       } else {
-        this.professionalExperience.push(experience);
+        this.data.professionalExperience.push(experience);
       }
 
-      this.local = '';
-      this.role = '';
-      this.mainActivities = '';
-      this.period = {
+      this.data.local = '';
+      this.data.role = '';
+      this.data.mainActivities = '';
+      this.data.period = {
         actual: false,
         start: null,
         finish: null,
       };
       this.startField = '';
       this.finishField = '';
-      this.$emit('update', this.professionalExperience);
+      this.$emit('update', this.data.professionalExperience);
     },
     edit(experience) {
-      this.local = experience.local;
-      this.role = experience.role;
-      this.mainActivities = experience.mainActivities;
-      this.period = experience.period;
-      this.startField = format(this.period.start, 'dd/MM/yyyy');
-      this.finishField = format(this.period.finish, 'dd/MM/yyyy');
+      this.data.local = experience.local;
+      this.data.role = experience.role;
+      this.data.mainActivities = experience.mainActivities;
+      this.data.period = experience.period;
+      this.startField = format(new Date(this.data.period.start), 'dd/MM/yyyy');
+      this.finishField = format(new Date(this.data.period.finish), 'dd/MM/yyyy');
     },
     remove(local) {
-      this.professionalExperience = this.professionalExperience.filter(
+      this.data.professionalExperience = this.data.professionalExperience.filter(
         (experience) => experience.local !== local,
       );
-      this.$emit('update', this.professionalExperience);
+      this.$emit('update', this.data.professionalExperience);
     },
     saveStart(value) {
       this.menuStart = false;
       this.startField = format(parse(value, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
-      this.period.start = parse(value, 'yyyy-MM-dd', new Date());
+      this.data.period.start = parse(value, 'yyyy-MM-dd', new Date());
     },
     saveFinish(value) {
       this.menuFinish = false;
@@ -219,13 +229,13 @@ export default {
       this.period.finish = parse(value, 'yyyy-MM-dd', new Date());
     },
     exist(local) {
-      const index = this.professionalExperience.findIndex(
+      const index = this.data.professionalExperience.findIndex(
         (experience) => experience.local === local,
       );
       return index !== -1;
     },
     date(value) {
-      return format(value, 'dd/MM/yyyy');
+      return format(new Date(value), 'dd/MM/yyyy');
     },
   },
 };

@@ -2,5 +2,28 @@ query {
   User {
     name
     description
+    curriculum {
+      id
+      birthday
+      nationality
+      sites {
+        name
+        url
+      }
+      maritalStatus
+      cellPhone
+      address
+      email
+      professionalExperience {
+        local
+        role
+        period {
+          start
+          finish
+          actual
+        }
+        mainActivities
+      }
+    }
   }
 }

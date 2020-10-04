@@ -1,10 +1,14 @@
-import { Field, InputType } from 'type-graphql';
+import { Field, InputType, ID } from 'type-graphql';
 
 import ProfessionalExperienceInput from './professionalExperienceInput';
 import SiteInput from './SiteInput';
+import Curriculum from '../../models/curriculum/Curriculum';
 
 @InputType()
 class CurriculumInput {
+  @Field(() => ID)
+  public id!: Curriculum['id']
+
   @Field()
   public nationality!: string
 

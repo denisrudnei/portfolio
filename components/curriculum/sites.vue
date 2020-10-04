@@ -9,14 +9,14 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="name"
+                v-model="data.name"
                 filled
                 placeholder="Nome"
               />
             </v-col>
             <v-col>
               <v-text-field
-                v-model="url"
+                v-model="data.url"
                 filled
                 placeholder="Endereço"
               />
@@ -24,19 +24,19 @@
             <v-col cols="12">
               <v-btn
                 class="primary white--text"
-                :disabled="name === '' || url === ''"
+                :disabled="data.name === '' || data.url === ''"
                 @click="add"
               >
                 <v-icon>
                   add
                 </v-icon>
-                {{ exist(name) ? 'Atualizar' : 'Adicionar' }}
+                {{ exist(data.name) ? 'Atualizar' : 'Adicionar' }}
               </v-btn>
             </v-col>
           </v-row>
         </v-col>
         <v-col
-          v-for="site in sites"
+          v-for="site in data.sites"
           :key="site.name"
         >
           <v-card>
@@ -75,41 +75,52 @@
 
 <script>
 export default {
+  props: {
+    value: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
-      name: '',
-      url: '',
-      sites: [],
+      data: {
+        name: '',
+        url: '',
+        sites: [],
+      },
     };
+  },
+  created() {
+    Object.assign(this.data.sites, this.value);
   },
   methods: {
     add() {
-      const index = this.sites.findIndex((site) => site.name === this.name);
+      const index = this.data.sites.findIndex((site) => site.name === this.name);
       const site = {
-        name: this.name,
-        url: this.url,
+        name: this.data.name,
+        url: this.data.url,
       };
 
       if (index !== -1) {
-        this.sites[index] = site;
+        this.data.sites[index] = site;
       } else {
-        this.sites.push(site);
+        this.data.sites.push(site);
       }
 
-      this.name = '';
-      this.url = '';
-      this.$emit('update', this.sites);
+      this.data.name = '';
+      this.data.url = '';
+      this.$emit('update', this.data.sites);
     },
     edit(site) {
-      this.name = site.name;
-      this.url = site.url;
+      this.data.name = site.name;
+      this.data.url = site.url;
     },
     remove(name) {
-      this.sites = this.sites.filter((site) => site.name !== name);
-      this.$emit('update', this.sites);
+      this.data.sites = this.data.sites.filter((site) => site.name !== name);
+      this.$emit('update', this.data.sites);
     },
     exist(name) {
-      const index = this.sites.findIndex((site) => site.name === name);
+      const index = this.data.sites.findIndex((site) => site.name === name);
       return index !== -1;
     },
   },

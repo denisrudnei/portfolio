@@ -2,14 +2,14 @@
   <v-row>
     <v-col cols="4">
       <v-text-field
-        v-model="nationality"
+        v-model="curriculumData.nationality"
         filled
         placeholder="Nacionalidade"
       />
     </v-col>
     <v-col cols="4">
       <v-text-field
-        v-model="maritalStatus"
+        v-model="curriculumData.maritalStatus"
         filled
         placeholder="Estado civil"
       />
@@ -34,14 +34,14 @@
     </v-col>
     <v-col cols="12">
       <v-text-field
-        v-model="address"
+        v-model="curriculumData.address"
         filled
         placeholder="Endereço"
       />
     </v-col>
     <v-col cols="12">
       <v-text-field
-        v-model="cellPhone"
+        v-model="curriculumData.cellPhone"
         v-mask="mask"
         filled
         placeholder="Telefone"
@@ -49,16 +49,22 @@
     </v-col>
     <v-col cols="12">
       <v-text-field
-        v-model="email"
+        v-model="curriculumData.email"
         filled
         placeholder="Email"
       />
     </v-col>
     <v-col cols="12">
-      <professional-experience @update="updateProfessionalExperience" />
+      <professional-experience
+        v-model="curriculumData.professionalExperience"
+        @update="updateProfessionalExperience"
+      />
     </v-col>
     <v-col cols="12">
-      <sites @update="updateSites" />
+      <sites
+        v-model="curriculumData.sites"
+        @update="updateSites"
+      />
     </v-col>
   </v-row>
 </template>
@@ -87,47 +93,42 @@ export default {
     return {
       mask: '(##) #####-####',
       menuBirthday: false,
-      birthday: null,
       birthdayField: '',
-      nationality: '',
-      email: '',
-      cellPhone: '',
-      maritalStatus: '',
-      address: '',
-      sites: [],
-      professionalExperience: [],
+      curriculumData: {
+        birthday: null,
+        nationality: '',
+        email: '',
+        cellPhone: '',
+        maritalStatus: '',
+        address: '',
+        sites: [],
+        professionalExperience: [],
+      },
     };
   },
   computed: {
     curriculum() {
-      const data = {
-        birthday: this.birthday,
-        nationality: this.nationality,
-        email: this.email,
-        cellPhone: this.cellPhone,
-        maritalStatus: this.maritalStatus,
-        address: this.address,
-        sites: this.sites,
-        professionalExperience: this.professionalExperience,
-      };
-      return Object.assign(data, this.value);
+      return Object.assign(this.curriculumData, this.value);
     },
   },
   watch: {
-    curriculum(value) {
-      this.$emit('update', value);
+    curriculum: {
+      deep: true,
+      handler(value) {
+        this.$emit('update', value);
+      },
     },
   },
   methods: {
     updateProfessionalExperience(value) {
-      this.professionalExperience = value;
+      this.curriculumData.professionalExperience = value;
     },
     updateSites(value) {
-      this.sites = value;
+      this.curriculumData.sites = value;
     },
     updateBirthday(value) {
       this.menuBirthday = false;
-      this.birthday = parse(value, 'yyyy-MM-dd', new Date());
+      this.curriculumData.birthday = parse(value, 'yyyy-MM-dd', new Date());
       this.birthdayField = format(parse(value, 'yyyy-MM-dd', new Date()), 'dd/MM/yyyy');
     },
   },

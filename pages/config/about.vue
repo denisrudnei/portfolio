@@ -22,7 +22,10 @@
       </client-only>
     </v-col>
     <v-col cols="12">
-      <curriculum @update="updateCurriculum" />
+      <curriculum
+        :value="user.curriculum"
+        @update="updateCurriculum"
+      />
     </v-col>
     <v-col
       cols="12"
