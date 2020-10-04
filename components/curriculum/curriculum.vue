@@ -22,6 +22,7 @@
       >
         <template v-slot:activator="{on}">
           <v-text-field
+            readonly
             filled
             placeholder="Data de nascimento"
             :value="birthdayField"

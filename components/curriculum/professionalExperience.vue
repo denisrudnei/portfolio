@@ -41,6 +41,7 @@
                           <v-text-field
                             placeholder="Inicio"
                             filled
+                            readonly
                             :value="startField"
                             v-on="on"
                           />
@@ -58,6 +59,7 @@
                         <template v-slot:activator="{on}">
                           <v-text-field
                             placeholder="Fim"
+                            readonly
                             filled
                             :value="finishField"
                             v-on="on"
