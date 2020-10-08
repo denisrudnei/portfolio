@@ -32,20 +32,22 @@
             {{ item.title }}
           </v-list-item-content>
         </v-list-item>
-        <v-list-item
-          v-if="logged"
-          to="/config/project/create"
-        >
-          <v-list-item-icon>
-            <v-icon>
-              settings
-            </v-icon>
-          </v-list-item-icon>
+        <client-only>
+          <v-list-item
+            v-if="logged"
+            to="/config/project/create"
+          >
+            <v-list-item-icon>
+              <v-icon>
+                settings
+              </v-icon>
+            </v-list-item-icon>
 
-          <v-list-item-content>
-            Configurações
-          </v-list-item-content>
-        </v-list-item>
+            <v-list-item-content>
+              Configurações
+            </v-list-item-content>
+          </v-list-item>
+        </client-only>
       </v-list>
     </v-navigation-drawer>
     <v-main>

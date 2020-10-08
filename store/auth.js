@@ -1,13 +1,11 @@
-/* eslint-disable no-param-reassign */
 /* eslint-disable no-shadow */
+/* eslint-disable import/prefer-default-export */
 
 export const getters = {
-  getLogged: (state) => state.loggedIn,
-  getUser: (state) => state.user,
-};
-
-export const mutations = {
-  SET_USER: (state, user) => {
-    state.user = user;
+  getLogged(state) {
+    return state.loggedIn;
+  },
+  getUser(state) {
+    return state.user;
   },
 };

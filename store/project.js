@@ -4,6 +4,7 @@
 export const state = () => ({
   projects: [],
 });
+
 export const getters = {
   getProjects(state) {
     return state.projects;

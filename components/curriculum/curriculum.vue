@@ -4,14 +4,14 @@
       <v-text-field
         v-model="curriculumData.nationality"
         filled
-        placeholder="Nacionalidade"
+        label="Nacionalidade"
       />
     </v-col>
     <v-col cols="4">
       <v-text-field
         v-model="curriculumData.maritalStatus"
         filled
-        placeholder="Estado civil"
+        label="Estado civil"
       />
     </v-col>
     <v-col cols="4">
@@ -24,7 +24,7 @@
           <v-text-field
             readonly
             filled
-            placeholder="Data de nascimento"
+            label="Data de nascimento"
             :value="birthdayField"
             v-on="on"
           />
@@ -36,7 +36,7 @@
       <v-text-field
         v-model="curriculumData.address"
         filled
-        placeholder="Endereço"
+        label="Endereço"
       />
     </v-col>
     <v-col cols="12">
@@ -44,14 +44,14 @@
         v-model="curriculumData.cellPhone"
         v-mask="mask"
         filled
-        placeholder="Telefone"
+        label="Telefone"
       />
     </v-col>
     <v-col cols="12">
       <v-text-field
         v-model="curriculumData.email"
         filled
-        placeholder="Email"
+        label="Email"
       />
     </v-col>
     <v-col cols="12">

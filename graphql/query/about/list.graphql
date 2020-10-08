@@ -5,6 +5,7 @@ query {
     curriculum {
       id
       birthday
+      age
       nationality
       sites {
         name

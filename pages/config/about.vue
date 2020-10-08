@@ -10,17 +10,6 @@
         placeholder="Nome de exibição"
       />
     </v-col>
-    <v-col
-      cols="12"
-      pa-2
-    >
-      <client-only>
-        <ckeditor
-          v-model="user.description"
-          :editor="editor"
-        />
-      </client-only>
-    </v-col>
     <v-col cols="12">
       <curriculum
         :value="user.curriculum"
@@ -84,10 +73,13 @@ export default {
       this.user.curriculum = value;
     },
     save() {
+      const { age, ...rest } = this.user.curriculum;
+      const user = { ...this.user };
+      user.curriculum = rest;
       this.$apollo.mutate({
         mutation: ggl(edit),
         variables: {
-          user: this.user,
+          user,
         },
         refetchQueries: [{ query: ggl(about) }],
         awaitRefetchQueries: true,

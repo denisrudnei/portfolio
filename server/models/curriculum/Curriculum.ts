@@ -32,7 +32,7 @@ class Curriculum extends BaseEntity {
   public get age(): number {
     const actualDate = new Date();
     const years = differenceInYears(this.birthday, actualDate);
-    return years;
+    return Math.abs(years);
   }
 
   @Field(() => Date, { nullable: true })
