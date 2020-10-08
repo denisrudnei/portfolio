@@ -32,9 +32,8 @@
             {{ item.title }}
           </v-list-item-content>
         </v-list-item>
-        <client-only>
+        <template v-if="logged">
           <v-list-item
-            v-if="logged"
             to="/config/project/create"
           >
             <v-list-item-icon>
@@ -42,12 +41,23 @@
                 settings
               </v-icon>
             </v-list-item-icon>
-
             <v-list-item-content>
               Configurações
             </v-list-item-content>
           </v-list-item>
-        </client-only>
+          <v-list-item
+            to="/auth/logout"
+          >
+            <v-list-item-icon>
+              <v-icon>
+                exit_to_app
+              </v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              Deslogar
+            </v-list-item-content>
+          </v-list-item>
+        </template>
       </v-list>
     </v-navigation-drawer>
     <v-main>
