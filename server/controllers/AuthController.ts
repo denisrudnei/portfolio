@@ -1,11 +1,11 @@
-import { Router } from 'express';
-
+import express, { Router } from 'express';
 import jwt from 'jsonwebtoken';
+
 import AuthService from '../services/AuthService';
 
 const router = Router();
 
-router.post('/auth/login', (req, res) => {
+router.post('/auth/login', (req: express.Request, res: express.Response) => {
   AuthService.login(req.body.email, req.body.password, req)
     .then((user) => {
         req.session!.authUser = user;
@@ -31,8 +31,8 @@ router.post('/auth/user', (req, res) => {
   }
 });
 
-router.post('/auth/logout', (req, res) => {
-  delete req.session!.user;
+router.post('/auth/logout', (req: express.Request, res: express.Response) => {
+  delete req.session!.authUser;
   return res.sendStatus(201);
 });
 

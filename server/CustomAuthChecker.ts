@@ -1,7 +1,8 @@
-import { ExpressContext } from 'apollo-server-express/dist/ApolloServer';
 import { AuthChecker } from 'type-graphql';
 
-const customAuthChecker: AuthChecker<ExpressContext> = ({
+import { CustomExpressContext } from './types/CustomSession';
+
+const customAuthChecker: AuthChecker<CustomExpressContext> = ({
   root, args, context, info,
 }) => {
   const { req } = context;
