@@ -84,4 +84,4 @@ dist
 sw.*
 
 # NPM
-package-lock.json
+#package-lock.json
