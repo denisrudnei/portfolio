@@ -61,7 +61,7 @@
       pa-2
     >
       <v-img
-        :src="`/api/about/image`"
+        :src="`${url}/about/image`"
       />
     </v-col>
   </v-row>
@@ -94,6 +94,11 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    url() {
+      return process.env.url;
+    },
   },
   methods: {
     date(value) {
