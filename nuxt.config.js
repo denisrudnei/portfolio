@@ -5,7 +5,7 @@ module.exports = {
 
   telemetry: false,
 
-  target: 'server',
+  target: 'static',
 
   generate: {
     fallback: true,
