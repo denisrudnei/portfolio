@@ -1,8 +1,17 @@
 import bcrypt from 'bcrypt';
 import { Field, ID, ObjectType } from 'type-graphql';
 import {
-  BaseEntity, BeforeInsert, Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn,
+  AfterLoad,
+  BaseEntity,
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
+
 import Curriculum from './curriculum/Curriculum';
 
 @Entity()
@@ -11,6 +20,8 @@ class User extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   public id!: number
+
+  private tempPassword!: string;
 
   @Column()
   @Field()
@@ -21,7 +32,7 @@ class User extends BaseEntity {
   public description!: string
 
   @Field(() => Curriculum, { nullable: true })
-  @OneToOne(() => Curriculum, (curriculum) => curriculum.user)
+  @OneToOne(() => Curriculum, (curriculum) => curriculum.user, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'curriculum' })
   public curriculum?: Curriculum
 
@@ -50,10 +61,19 @@ class User extends BaseEntity {
     return result;
   }
 
+  @AfterLoad()
+  checkPasswordChanged() {
+    this.tempPassword = this.password;
+  }
+
   @BeforeInsert()
+  @BeforeUpdate()
   hashPassword() {
-    const salt = bcrypt.genSaltSync(12);
-    this.password = bcrypt.hashSync(this.password, salt);
+    if (this.password && this.password !== this.tempPassword) {
+      const salt = bcrypt.genSaltSync(12);
+      this.password = bcrypt.hashSync(this.password, salt);
+    }
+    this.tempPassword = '';
   }
 }
 

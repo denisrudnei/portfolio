@@ -1,12 +1,13 @@
 import { ObjectType, Field, ID } from 'type-graphql';
 import {
-  PrimaryGeneratedColumn, Entity, Column, ManyToOne,
+  PrimaryGeneratedColumn, Entity, Column, ManyToOne, BaseEntity,
 } from 'typeorm';
+
 import Curriculum from './Curriculum';
 
 @ObjectType()
 @Entity()
-class Site {
+class Site extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   public id!: number;
@@ -19,7 +20,7 @@ class Site {
   @Column()
   public url!: string
 
-  @ManyToOne(() => Curriculum, (curriculum) => curriculum.sites)
+  @ManyToOne(() => Curriculum, (curriculum) => curriculum.sites, { onDelete: 'CASCADE' })
   public curriculum!: Curriculum
 }
 
