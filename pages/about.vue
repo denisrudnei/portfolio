@@ -25,6 +25,7 @@
             <template v-for="site in user.curriculum.sites">
               <a
                 :key="site.name"
+                target="_blank"
                 :href="site.url"
               >{{ site.name }}</a>
               &nbsp;
