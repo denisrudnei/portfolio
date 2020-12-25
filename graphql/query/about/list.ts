@@ -11,6 +11,7 @@ query {
       age
       nationality
       sites {
+        id
         name
         url
       }
@@ -19,6 +20,7 @@ query {
       address
       email
       professionalExperience {
+        id
         local
         role
         period {
