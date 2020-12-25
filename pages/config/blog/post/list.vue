@@ -5,10 +5,10 @@
         :items="posts"
         :headers="headers"
       >
-        <template v-slot:item.title="{ item }">
+        <template #item.title="{ item }">
           <td>{{ item.title }}</td>
         </template>
-        <template v-slot:item.actions="{ item }">
+        <template #item.actions="{ item }">
           <td>
             <v-btn
               icon
@@ -31,14 +31,13 @@
 </template>
 
 <script>
-import ggl from 'graphql-tag';
-import list from '@/graphql/query/post/list.graphql';
-import remove from '@/graphql/mutation/post/remove.graphql';
+import { Posts } from '@/graphql/query/post/list';
+import { RemovePost } from '@/graphql/mutation/post/remove';
 
 export default {
   asyncData({ app }) {
-    return app.$apollo.query({
-      query: ggl(list),
+    return app.apolloProvider.defaultClient.query({
+      query: Posts,
     }).then((response) => ({
       posts: response.data.Post,
     }));
@@ -60,7 +59,7 @@ export default {
   methods: {
     remove(id) {
       this.$apollo.mutate({
-        mutation: ggl(remove),
+        mutation: RemovePost,
         variables: {
           id,
         },

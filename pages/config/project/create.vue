@@ -53,9 +53,8 @@
 </template>
 
 <script>
-import ggl from 'graphql-tag';
-import create from '@/graphql/mutation/project/create.graphql';
-import list from '@/graphql/query/project/list.graphql';
+import { CreateProject } from '@/graphql/mutation/project/create';
+import { GetProjects } from '@/graphql/query/project/list';
 
 export default {
   data() {
@@ -76,11 +75,11 @@ export default {
   methods: {
     save() {
       this.$apollo.mutate({
-        mutation: ggl(create),
+        mutation: CreateProject,
         variables: {
           project: this.project,
         },
-        refetchQueries: [{ query: ggl(list) }],
+        refetchQueries: [{ query: GetProjects }],
         awaitRefetchQueries: true,
 
       }).then(

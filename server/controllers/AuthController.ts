@@ -13,7 +13,7 @@ router.post('/auth/login', (req: express.Request, res: express.Response) => {
           id: user.id,
           email: user.email,
           name: user.name,
-        }, process.env.JWT_KEY!);
+        }, process.env.JWT_TOKEN!);
         return res.status(201).json({
           user: token,
         });
@@ -23,11 +23,13 @@ router.post('/auth/login', (req: express.Request, res: express.Response) => {
 
 router.post('/auth/user', (req, res) => {
   if (req.headers.authorization) {
-    const token = req.headers.authorization.split('Bearer ')[1];
+    const token = req.headers.authorization.replace('Bearer ', '');
     const user = jwt.decode(token);
     res.json({
       user,
     });
+  } else {
+    res.sendStatus(401);
   }
 });
 

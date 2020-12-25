@@ -4,14 +4,23 @@ import {
 } from 'type-graphql';
 
 import { ExpressContext } from 'apollo-server-express/dist/ApolloServer';
+import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import AuthService from '../services/AuthService';
+import { CustomExpressContext } from '../types/CustomSession';
 
 @Resolver(() => User)
 class AuthResolver {
   @Mutation(() => User)
-  public Login(@Arg('email') email: string, @Arg('password') password: string, @Ctx() context: ExpressContext): Promise<User> {
-    return AuthService.login(email, password, context.req);
+  public async Login(@Arg('email') email: string, @Arg('password') password: string, @Ctx() context: CustomExpressContext): Promise<User> {
+    const user = await AuthService.login(email, password, context.req);
+    const token = jwt.sign({
+      email: user.email,
+      name: user.name,
+    }, process.env.JWT_TOKEN!);
+    context.req.session!.authUser = user;
+    context.res.setHeader('authorization', `Bearer ${token}`);
+    return user;
   }
 
   @Mutation(() => User)

@@ -26,14 +26,14 @@
 
 <script>
 import ggl from 'graphql-tag';
-import unblock from '@/graphql/mutation/auth/unblock.graphql';
+import { UnBlock } from '@/graphql/mutation/auth/unblock';
 
 export default {
   auth: false,
   asyncData({ params, app, error }) {
     const { token } = params;
-    return app.$apollo.mutate({
-      mutation: ggl(unblock),
+    return app.apolloProvider.defaultClient.mutate({
+      mutation: UnBlock,
       variables: {
         token,
       },

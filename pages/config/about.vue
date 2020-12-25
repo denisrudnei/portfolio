@@ -44,17 +44,17 @@
 
 <script>
 import curriculum from '@/components/curriculum/curriculum';
-import edit from '@/graphql/mutation/about/edit.graphql';
+import { EditUser } from '@/graphql/mutation/about/edit';
 import ggl from 'graphql-tag';
-import about from '@/graphql/query/about/list.graphql';
+import { About } from '@/graphql/query/about/list';
 
 export default {
   components: {
     curriculum,
   },
   asyncData({ app }) {
-    return app.$apollo.query({
-      query: ggl(about),
+    return app.apolloProvider.defaultClient.query({
+      query: About,
     }).then((response) => ({
       user: response.data.User,
     }));
@@ -74,14 +74,16 @@ export default {
     },
     save() {
       const { age, ...rest } = this.user.curriculum;
+      // eslint-disable-next-line no-underscore-dangle
       const user = { ...this.user };
+
       user.curriculum = rest;
       this.$apollo.mutate({
-        mutation: ggl(edit),
+        mutation: EditUser,
         variables: {
-          user,
+          user: this.removeFields(user, ['id', '__typename']),
         },
-        refetchQueries: [{ query: ggl(about) }],
+        refetchQueries: [{ query: About }],
         awaitRefetchQueries: true,
       }).then(() => {
         this.$toast.show('Usuário atualizado', {
@@ -101,6 +103,24 @@ export default {
           });
         }
       });
+    },
+    removeFields(object, fields) {
+      if (!object) return object;
+      Object.keys(object).forEach((key) => {
+        if (fields.includes(key)) {
+          // eslint-disable-next-line no-param-reassign
+          delete object[key];
+        } else {
+          const field = object[key];
+          if (Array.isArray(field)) {
+            field.forEach((item) => this.removeFields(item, fields));
+          }
+          if (typeof field === 'object') {
+            this.removeFields(field, fields);
+          }
+        }
+      });
+      return object;
     },
   },
 };

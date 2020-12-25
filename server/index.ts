@@ -11,29 +11,18 @@ import app from './app';
 import CustomAuthChecker from './CustomAuthChecker';
 import createConnection from './db/connection';
 
-const { Nuxt, Builder } = require('nuxt');
-
-const config = require('~/nuxt.config.js');
-
-config.dev = !(process.env.NODE_ENV === 'production');
+const dev = !(process.env.NODE_ENV === 'production');
 
 async function start() {
   await createConnection;
-  const nuxt = new Nuxt(config);
 
-  const {
-    host = process.env.HOST || '127.0.0.1',
-    port = process.env.PORT || 3000,
-  } = nuxt.options.server;
+  const host = process.env.HOST || '127.0.0.1';
+  const port = process.env.PORT || 3000;
 
-  if (config.dev) {
-    const builder = new Builder(nuxt);
-    await builder.build();
-  } else {
+  if (!dev) {
     if (process.env.SECURE_HTTP_CONNECTION) {
       app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301));
     }
-    await nuxt.ready();
   }
 
   const pubSub = new PubSub();
@@ -54,6 +43,7 @@ async function start() {
     introspection: true,
     context: (context) => ({
       req: context.req,
+      res: context.res,
       pubSub,
     }),
   });
@@ -61,8 +51,6 @@ async function start() {
   const httpServer = http.createServer(app);
   server.installSubscriptionHandlers(httpServer);
   server.applyMiddleware({ app });
-
-  app.use(nuxt.render);
 
   httpServer.listen(port, () => {
     consola.ready({

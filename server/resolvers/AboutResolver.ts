@@ -32,7 +32,7 @@ class AboutResolver {
 
   @Mutation(() => User)
   @Authorized('user')
-  public EditUser(@Arg('user', () => UserEditInput) user: User): Promise<User> {
+  public async EditUser(@Arg('user', () => UserEditInput) user: User): Promise<User> {
     return UserService.edit(user);
   }
 }

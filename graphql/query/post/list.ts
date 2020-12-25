@@ -1,3 +1,6 @@
+import ggl from 'graphql-tag';
+
+export const Posts = ggl`
 query {
   Post {
     id
@@ -7,3 +10,4 @@ query {
     created
   }
 }
+`;

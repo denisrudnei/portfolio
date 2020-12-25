@@ -38,8 +38,8 @@
 
 <script>
 import ggl from 'graphql-tag';
-import create from '@/graphql/mutation/post/create.graphql';
-import list from '@/graphql/query/post/list.graphql';
+import { CreatePost } from '@/graphql/mutation/post/create';
+import { Posts } from '@/graphql/query/post/list';
 
 export default {
   data() {
@@ -59,11 +59,11 @@ export default {
   methods: {
     save() {
       this.$apollo.mutate({
-        mutation: ggl(create),
+        mutation: CreatePost,
         variables: {
           post: this.post,
         },
-        refetchQueries: [{ query: ggl(list) }],
+        refetchQueries: [{ query: Posts }],
         awaitRefetchQueries: true,
       }).then(() => {
         this.$toast.show('Cadastrado com sucesso', {

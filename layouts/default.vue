@@ -32,7 +32,7 @@
             {{ item.title }}
           </v-list-item-content>
         </v-list-item>
-        <template v-if="logged">
+        <div v-if="logged">
           <v-list-item
             to="/config/project/create"
           >
@@ -57,7 +57,7 @@
               Deslogar
             </v-list-item-content>
           </v-list-item>
-        </template>
+        </div>
       </v-list>
     </v-navigation-drawer>
     <v-main>
@@ -77,7 +77,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import ggl from 'graphql-tag';
-import about from '@/graphql/query/about/list.graphql';
+import { About } from '@/graphql/query/about/list';
 
 export default {
   data() {
@@ -116,12 +116,14 @@ export default {
       ],
     };
   },
-  computed: mapGetters({
-    logged: 'auth/getLogged',
-  }),
+  computed: {
+    logged() {
+      return this.$auth.loggedIn;
+    },
+  },
   created() {
     this.$apollo.query({
-      query: ggl(about),
+      query: About,
     }).then((response) => {
       this.user = response.data.User;
     });

@@ -21,8 +21,7 @@
 </template>
 
 <script>
-import ggl from 'graphql-tag';
-import list from '@/graphql/query/post/list.graphql';
+import { Posts } from '@/graphql/query/post/list';
 
 export default {
   data() {
@@ -32,7 +31,7 @@ export default {
   },
   created() {
     this.$apollo.query({
-      query: ggl(list),
+      query: Posts,
     }).then((response) => {
       this.posts = response.data.Post;
     });

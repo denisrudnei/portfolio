@@ -11,7 +11,7 @@
 
 <script>
 import Post from '@/components/blog/Post';
-import postByUrl from '@/graphql/query/post/getByUrl.graphql';
+import { GetOnePost } from '@/graphql/query/post/getByUrl';
 import ggl from 'graphql-tag';
 
 export default {
@@ -23,8 +23,8 @@ export default {
     const query = encodeURIComponent(
       `${params.year}/${params.month}/${params.day}/${params.title}`,
     );
-    return app.$apollo.query({
-      query: ggl(postByUrl),
+    return app.apolloProvider.defaultClient.query({
+      query: GetOnePost,
       variables: {
         url: query,
       },

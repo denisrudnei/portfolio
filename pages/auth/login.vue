@@ -39,10 +39,15 @@ export default {
       password: '',
     };
   },
-  computed: mapGetters({
-    logged: 'auth/getLogged',
-    user: 'auth/getUser',
-  }),
+
+  computed: {
+    logged() {
+      return this.$auth.loggedIn;
+    },
+    user() {
+      return this.$auth.user;
+    },
+  },
   methods: {
     login() {
       this.$auth

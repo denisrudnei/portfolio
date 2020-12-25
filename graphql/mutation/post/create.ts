@@ -1,3 +1,6 @@
+import ggl from 'graphql-tag';
+
+export const CreatePost = ggl`
 mutation CreatePost($post: PostCreateInput!) {
   CreatePost(post: $post) {
     id
@@ -6,3 +9,4 @@ mutation CreatePost($post: PostCreateInput!) {
     created
   }
 }
+`;

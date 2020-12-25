@@ -5,11 +5,14 @@ import express from 'express';
 import fileUploader from 'express-fileupload';
 import session from 'express-session';
 import morgan from 'morgan';
+import cors from 'cors';
 
 import controllers from './controllers';
 
 const app = express();
 const apiRouter = express.Router();
+
+app.use(cors());
 
 app.use(morgan('dev'));
 
@@ -35,7 +38,7 @@ app.use(
 
 apiRouter.use(controllers);
 
-app.use('/api', apiRouter);
+app.use('/', apiRouter);
 
 app.use((
   err: any,

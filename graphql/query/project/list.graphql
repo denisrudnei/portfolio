@@ -1,9 +1,0 @@
-query {
-  Project {
-    id
-    name
-    description
-    url
-    images
-  }
-}

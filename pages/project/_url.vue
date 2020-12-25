@@ -17,7 +17,7 @@
             :src="img"
             @click="dialog = true"
           >
-            <template v-slot:placeholder>
+            <template #placeholder>
               <v-row
                 align="center"
                 justify="center"
@@ -105,8 +105,7 @@
 
 <script>
 import removeHtml from '@/mixins/removeHtml';
-import ggl from 'graphql-tag';
-import getByUrl from '@/graphql/query/project/getByUrl.graphql';
+import { GetOneProject } from '@/graphql/query/project/getByUrl';
 import consola from 'consola';
 
 export default {
@@ -116,8 +115,8 @@ export default {
     app, params, req, error,
   }) {
     const { url } = params;
-    return app.$apollo.query({
-      query: ggl(getByUrl),
+    return app.apolloProvider.defaultClient.query({
+      query: GetOneProject,
       variables: {
         url,
       },
@@ -142,6 +141,33 @@ export default {
     return {
       actual: null,
       dialog: false,
+    };
+  },
+  head() {
+    return {
+      title: this.project.name,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.removeHtml(this.project.description),
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: this.project.name,
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: this.actual || '',
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: this.removeHtml(this.project.description),
+        },
+      ],
     };
   },
   created() {
@@ -172,33 +198,6 @@ export default {
       const index = this.project.images.findIndex((img) => img === this.actual);
       this.actual = this.project.images[index + 1];
     },
-  },
-  head() {
-    return {
-      title: this.project.name,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.removeHtml(this.project.description),
-        },
-        {
-          hid: 'og:title',
-          property: 'og:title',
-          content: this.project.name,
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: this.actual || '',
-        },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: this.removeHtml(this.project.description),
-        },
-      ],
-    };
   },
 };
 </script>

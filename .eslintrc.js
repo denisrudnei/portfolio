@@ -13,6 +13,10 @@ module.exports = {
     'import/no-unresolved': 'off',
     'no-unused-vars': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'import/prefer-default-export': 'off',
     'global-require': 'off',
+    'vue/valid-v-slot': ['error', {
+      allowModifiers: true,
+    }],
   },
 };

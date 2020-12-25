@@ -67,18 +67,17 @@
 
 <script>
 import ProjectCard from '@/components/ProjectCard';
-import edit from '@/graphql/mutation/project/edit.graphql';
-import list from '@/graphql/query/project/list.graphql';
-import projectByUrl from '@/graphql/query/project/getByUrl.graphql';
-import ggl from 'graphql-tag';
+import { EditProject } from '@/graphql/mutation/project/edit';
+import { GetProjects } from '@/graphql/query/project/list';
+import { GetOneProject } from '@/graphql/query/project/getByUrl';
 
 export default {
   components: {
     ProjectCard,
   },
   asyncData({ app, params }) {
-    return app.$apollo.query({
-      query: ggl(projectByUrl),
+    return app.apolloProvider.defaultClient.query({
+      query: GetOneProject,
       variables: {
         url: params.url,
       },
@@ -122,13 +121,13 @@ export default {
       const { id, ...properties } = this.project;
       const projectToEdit = properties;
       this.$apollo.mutate({
-        mutation: ggl(edit),
+        mutation: EditProject,
         variables: {
           id,
           project: projectToEdit,
         },
         awaitRefetchQueries: true,
-        refetchQueries: [{ query: ggl(list) }],
+        refetchQueries: [{ query: GetProjects }],
       }).then(
         () => {
           this.$toast.show('Projeto atualizado', {

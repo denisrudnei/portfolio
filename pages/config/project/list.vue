@@ -7,10 +7,10 @@
         :items="items"
         :headers="headers"
       >
-        <template v-slot:items="{ item }">
+        <template #items="{ item }">
           <td>{{ item.name }}</td>
         </template>
-        <template v-slot:item.actions="{item}">
+        <template #item.actions="{item}">
           <v-btn
             icon
             :to="`/config/project/edit/${item.url}`"
@@ -36,14 +36,14 @@
 </template>
 
 <script>
-import remove from '@/graphql/mutation/project/remove.graphql';
-import list from '@/graphql/query/project/list.graphql';
-import ggl from 'graphql-tag';
+import { RemoveProject } from '@/graphql/mutation/project/remove';
+import { GetProjects } from '@/graphql/query/project/list';
+import { RemovePost } from '~/graphql/mutation/post/remove';
 
 export default {
   asyncData({ app }) {
-    return app.$apollo.query({
-      query: ggl(list),
+    return app.apolloProvider.defaultClient.query({
+      query: GetProjects,
     }).then((response) => ({
       items: response.data.Project,
     }));
@@ -65,11 +65,11 @@ export default {
   methods: {
     removeProject(item) {
       this.$apollo.mutate({
-        mutation: ggl(remove),
+        mutation: RemoveProject,
         variables: {
           id: item.id,
         },
-        refetchQueries: [{ query: ggl(list) }],
+        refetchQueries: [{ query: GetProjects }],
         awaitRefetchQueries: true,
       }).then(() => {
         this.$store.commit('project/removeProject', item);

@@ -21,7 +21,7 @@
 
 <script>
 import Post from '@/components/blog/Post';
-import list from '@/graphql/query/post/list.graphql';
+import { Posts } from '@/graphql/query/post/list';
 import ggl from 'graphql-tag';
 
 export default {
@@ -30,8 +30,8 @@ export default {
     Post,
   },
   asyncData({ app }) {
-    return app.$apollo.query({
-      query: ggl(list),
+    return app.apolloProvider.defaultClient.query({
+      query: Posts,
     }).then((response) => ({
       posts: response.data.Post,
     }));

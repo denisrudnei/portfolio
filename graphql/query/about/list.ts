@@ -1,3 +1,6 @@
+import ggl from 'graphql-tag';
+
+export const About = ggl`
 query {
   User {
     name
@@ -28,3 +31,4 @@ query {
     }
   }
 }
+`;

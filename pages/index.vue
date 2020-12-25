@@ -24,7 +24,7 @@
 <script>
 import removeHtml from '@/mixins/removeHtml';
 import ProjectCard from '@/components/ProjectCard';
-import index from '@/graphql/query/index.graphql';
+import { Index } from '@/graphql/query/index';
 import ggl from 'graphql-tag';
 
 export default {
@@ -34,8 +34,8 @@ export default {
   },
   mixins: [removeHtml],
   asyncData({ app, error }) {
-    return app.$apollo.query({
-      query: ggl(index),
+    return app.apolloProvider.defaultClient.query({
+      query: Index,
     }).then((response) => ({
       projects: response.data.Project,
       title: response.data.User.name,

@@ -4,6 +4,9 @@ const pkg = require('./package');
 module.exports = {
 
   telemetry: false,
+
+  target: 'static',
+
   /*
    ** Headers of the page
    */
@@ -42,10 +45,6 @@ module.exports = {
       src: '@/plugins/CKEditor',
       ssr: false,
     },
-    {
-      src: '@/plugins/apolloConfig',
-      ssr: true,
-    },
   ],
 
   /*
@@ -53,6 +52,7 @@ module.exports = {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/apollo',
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/toast',
@@ -70,8 +70,7 @@ module.exports = {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    prefix: '/api',
-    proxy: true,
+    baseURL: process.env.API,
   },
 
   router: {
@@ -86,23 +85,24 @@ module.exports = {
       local: {
         endpoints: {
           login: {
-            url: 'auth/login/',
+            url: '/auth/login/',
             method: 'post',
             propertyName: 'user',
           },
           user: {
-            url: 'auth/user',
+            url: '/auth/user',
             method: 'post',
             propertyName: 'user',
           },
           logout: {
-            url: 'auth/logout',
+            url: '/auth/logout',
             method: 'post',
           },
         },
       },
     },
   },
+
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
@@ -128,23 +128,24 @@ module.exports = {
       },
     },
   },
+
   googleAnalytics: {
     id: 'UA-38858408-4',
+  },
+
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: process.env.GRAPHQL || 'http://localhost:3000/graphql',
+        wsEndpoint: process.env.SUBSCRIPTIONS || 'ws://localhost:3000/subscriptions',
+      },
+    },
+    tokenName: 'auth._token.local',
+    authenticationType: 'Bearer',
   },
 
   /*
    ** Build configuration
    */
-  build: {
-    /*
-     ** You can extend webpack config here
-     */
-    extend(config, ctx) {
-      config.module.rules.push({
-        test: /\.graphql?$/,
-        exclude: /node_modules/,
-        loader: 'webpack-graphql-loader',
-      });
-    },
-  },
+  build: {},
 };

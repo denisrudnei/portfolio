@@ -10,7 +10,7 @@
             {{ user.name }}
           </div>
         </v-card-title>
-        <v-card-text>
+        <v-card-text v-if="user.curriculum">
           <p><strong>Nacionalidade</strong>: {{ user.curriculum.nationality }}</p>
           <p><strong>Estado civil</strong>: {{ user.curriculum.maritalStatus }}</p>
           <p><strong>Idade</strong>: {{ user.curriculum.age }}</p>
@@ -70,23 +70,18 @@
 <script>
 import removeHtml from '@/mixins/removeHtml';
 import ggl from 'graphql-tag';
-import about from '@/graphql/query/about/list.graphql';
+import { About } from '@/graphql/query/about/list';
 import { format } from 'date-fns';
 
 export default {
   auth: false,
   mixins: [removeHtml],
   asyncData({ app }) {
-    return app.$apollo.query({
-      query: ggl(about),
+    return app.apolloProvider.defaultClient.query({
+      query: About,
     }).then((response) => ({
       user: response.data.User,
     }));
-  },
-  methods: {
-    date(value) {
-      return format(new Date(value), 'dd/MM/yyyy');
-    },
   },
   head() {
     return {
@@ -99,6 +94,11 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    date(value) {
+      return format(new Date(value), 'dd/MM/yyyy');
+    },
   },
 };
 </script>
