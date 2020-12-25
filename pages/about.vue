@@ -4,7 +4,7 @@
       cols="8"
       pa-2
     >
-      <v-card>
+      <v-card v-if="user">
         <v-card-title>
           <div class="headline">
             {{ user.name }}
@@ -76,12 +76,13 @@ import { format } from 'date-fns';
 export default {
   auth: false,
   mixins: [removeHtml],
-  asyncData({ app }) {
-    return app.apolloProvider.defaultClient.query({
-      query: About,
-    }).then((response) => ({
-      user: response.data.User,
-    }));
+  data() {
+    return {
+      user: {
+        name: '',
+        description: '',
+      },
+    };
   },
   head() {
     return {
@@ -99,6 +100,13 @@ export default {
     url() {
       return process.env.url;
     },
+  },
+  created() {
+    this.$apollo.query({
+      query: About,
+    }).then((response) => {
+      this.user = response.data.User;
+    });
   },
   methods: {
     date(value) {
