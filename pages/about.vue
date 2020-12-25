@@ -48,7 +48,9 @@
                     <b>Período: </b> {{ date(experience.period.start) }} -
                     {{ experience.period.actual ? 'atual' : date(experience.period.finish) }}
                   </p>
-                  <p><strong>Cargo: </strong> {{ experience.mainActivities }}</p>
+                  <p v-if="experience.mainActivities">
+                    <strong>Atividades: </strong> {{ experience.mainActivities }}
+                  </p>
                 </v-card-text>
               </v-card>
             </v-col>
