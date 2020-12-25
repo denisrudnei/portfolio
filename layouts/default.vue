@@ -9,7 +9,7 @@
           <v-list-item-avatar>
             <v-avatar>
               <v-img
-                :src="`${url}/about/image`"
+                :src="`${url}about/image`"
                 :aspect-ratio="16/9"
               />
             </v-avatar>
