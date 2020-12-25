@@ -4,9 +4,6 @@
   "description": "Portfolio",
   "author": "Denis Rudnei de Souza",
   "private": true,
-  "engines": {
-    "node": ">=13.x"
-  },
   "scripts": {
     "dev:server": "cross-env NODE_ENV=development ts-node-dev -r tsconfig-paths/register --transpile-only --respawn --ignore-watch node_modules server/index.ts",
     "dev:client": "nuxt-ts dev --port 4000",
@@ -16,7 +13,7 @@
     "start": "nuxt-ts start",
     "start:server": "cross-env NODE_ENV=production node -r tsconfig-paths/register dist/server/index.js",
     "heroku-postbuild": "npm run build:server",
-    "generate": "nuxt generate",
+    "generate": "nuxt-ts generate",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
     "test": "jest"

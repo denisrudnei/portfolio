@@ -121,9 +121,7 @@ export default {
         url,
       },
     }).then((response) => {
-      const base = process.client
-        ? `${window.location.protocol}//${window.location.host}`
-        : `${req.protocol}://${req.headers.host}`;
+      const base = process.env.API;
       return {
         project: response.data.GetOneProject,
         base,
