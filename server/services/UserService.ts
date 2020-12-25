@@ -16,7 +16,7 @@ class UserService {
     const user = await User.findOne({});
     const params = {
       Bucket: process.env.BUCKET as string,
-      Key: `about/${user!.id.toString()}`,
+      Key: 'about',
       Body: file.data,
       ContentType: file.mimetype,
       ACL: 'public-read',
@@ -46,12 +46,11 @@ class UserService {
   public static async getImage(): Promise<AWS.S3.Types.Body> {
     const users = await User.find();
     if (users.length <= 0) throw new Error('no image');
-    const { id } = users[0];
 
     const result = await S3.getObject(
       {
         Bucket: process.env.BUCKET as string,
-        Key: `about/${id.toString()}`,
+        Key: 'about',
       },
     ).promise();
     return result.Body!;
