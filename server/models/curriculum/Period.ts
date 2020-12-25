@@ -1,12 +1,13 @@
 import { Field, ObjectType, ID } from 'type-graphql';
 import {
-  Column, Entity, OneToOne, PrimaryGeneratedColumn,
+  Column, Entity, OneToOne, PrimaryGeneratedColumn, BaseEntity, JoinColumn,
 } from 'typeorm';
+
 import ProfessionalExperience from './ProfessionalExperience';
 
 @ObjectType()
 @Entity()
-class Period {
+class Period extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   public id!: number;
@@ -23,7 +24,8 @@ class Period {
   @Column()
   public actual!: boolean
 
-  @OneToOne(() => ProfessionalExperience, (professionalExperience) => professionalExperience.period)
+  @OneToOne(() => ProfessionalExperience, (professionalExperience) => professionalExperience.period, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'professionalExperience' })
   public professionalExperience!: ProfessionalExperience
 }
 

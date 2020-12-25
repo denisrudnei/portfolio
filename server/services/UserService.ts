@@ -1,6 +1,5 @@
 import AWS from 'aws-sdk';
 import { UploadedFile } from 'express-fileupload';
-import { Not } from 'typeorm';
 
 import S3 from '../../plugins/S3';
 import Curriculum from '../models/curriculum/Curriculum';
@@ -29,7 +28,7 @@ class UserService {
 
   public static async edit(user: User): Promise<User> {
     const inDb = await User.findOne({}, {
-      relations: ['curriculum', 'curriculum.sites', 'curriculum.professionalExperience'],
+      relations: ['curriculum', 'curriculum.sites', 'curriculum.professionalExperience', 'curriculum.professionalExperience.period'],
     });
 
     Object.assign(inDb, user);

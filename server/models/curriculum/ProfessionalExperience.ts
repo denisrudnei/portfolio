@@ -27,10 +27,9 @@ class ProfessionalExperience extends BaseEntity {
 
   @Field(() => Period)
   @OneToOne(() => Period, (period) => period.professionalExperience, { cascade: true })
-  @JoinColumn({ name: 'period' })
   public period!: Period
 
-  @ManyToOne(() => Curriculum, (curriculum) => curriculum.professionalExperience, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Curriculum, (curriculum) => curriculum.professionalExperience, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   public curriculum!: Curriculum
 }
 
