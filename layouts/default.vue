@@ -9,7 +9,7 @@
           <v-list-item-avatar>
             <v-avatar>
               <v-img
-                src="/api/about/image"
+                :src="`${url}/about/image`"
                 :aspect-ratio="16/9"
               />
             </v-avatar>
@@ -119,6 +119,9 @@ export default {
   computed: {
     logged() {
       return this.$auth.loggedIn;
+    },
+    url() {
+      return process.env.url;
     },
   },
   created() {

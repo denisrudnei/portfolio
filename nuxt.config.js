@@ -11,6 +11,10 @@ module.exports = {
     fallback: true,
   },
 
+  env: {
+    url: process.env.API,
+  },
+
   /*
    ** Headers of the page
    */
