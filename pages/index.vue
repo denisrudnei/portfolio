@@ -33,20 +33,6 @@ export default {
     ProjectCard,
   },
   mixins: [removeHtml],
-  asyncData({ app, error }) {
-    return app.apolloProvider.defaultClient.query({
-      query: Index,
-    }).then((response) => ({
-      projects: response.data.Project,
-      title: response.data.User.name,
-      description: response.data.User.description,
-    })).catch(() => {
-      error({
-        message: 'Usuário principal ainda não cadastrado',
-        path: '/',
-      });
-    });
-  },
   data() {
     return {
       projects: [],
@@ -65,6 +51,17 @@ export default {
         },
       ],
     };
+  },
+  created(context) {
+    this.$apollo.query({
+      query: Index,
+    }).then((response) => {
+      this.projects = response.data.Project;
+      this.title = response.data.User.name;
+      this.description = response.data.User.description;
+    }).catch(() => {
+      this.$toast.error('Usuário principal ainda não cadastrado');
+    });
   },
 };
 </script>

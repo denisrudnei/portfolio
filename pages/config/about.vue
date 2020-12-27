@@ -47,11 +47,13 @@ import curriculum from '@/components/curriculum/curriculum';
 import { EditUser } from '@/graphql/mutation/about/edit';
 import ggl from 'graphql-tag';
 import { About } from '@/graphql/query/about/list';
+import removeFields from '@/mixins/removeFields';
 
 export default {
   components: {
     curriculum,
   },
+  mixins: [removeFields],
   asyncData({ app }) {
     return app.apolloProvider.defaultClient.query({
       query: About,
@@ -74,7 +76,6 @@ export default {
     },
     save() {
       const { age, ...rest } = this.user.curriculum;
-      // eslint-disable-next-line no-underscore-dangle
       const user = { ...this.user };
 
       user.curriculum = rest;
@@ -103,24 +104,6 @@ export default {
           });
         }
       });
-    },
-    removeFields(object, fields) {
-      if (!object) return object;
-      Object.keys(object).forEach((key) => {
-        if (fields.includes(key)) {
-          // eslint-disable-next-line no-param-reassign
-          delete object[key];
-        } else {
-          const field = object[key];
-          if (Array.isArray(field)) {
-            field.forEach((item) => this.removeFields(item, fields));
-          }
-          if (typeof field === 'object') {
-            this.removeFields(field, fields);
-          }
-        }
-      });
-      return object;
     },
   },
 };

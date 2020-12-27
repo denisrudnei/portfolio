@@ -19,18 +19,21 @@ export default {
   components: {
     Post,
   },
-  asyncData({ app, params }) {
+  created() {
+    const {
+      year, month, day, title,
+    } = this.$route.params;
     const query = encodeURIComponent(
-      `${params.year}/${params.month}/${params.day}/${params.title}`,
+      `${year}/${month}/${day}/${title}`,
     );
-    return app.apolloProvider.defaultClient.query({
+    this.$apollo.query({
       query: GetOnePost,
       variables: {
         url: query,
       },
-    }).then((response) => ({
-      post: response.data.GetOnePost,
-    }));
+    }).then((response) => {
+      this.post = response.data.GetOnePost;
+    });
   },
 };
 </script>

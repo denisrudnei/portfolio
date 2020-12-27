@@ -79,7 +79,7 @@
                       v-for="answer in item.answers"
                       :key="answer.answer_id"
                     >
-                      <template v-slot:activator="{ on }">
+                      <template #activator="{ on }">
                         <v-list-item v-on="on">
                           {{ answer.owner.display_name }}
                         </v-list-item>
@@ -148,16 +148,18 @@
 <script>
 export default {
   auth: false,
-  asyncData({ $axios }) {
-    return $axios.get('/questions').then((response) => ({
-      items: response.data,
-    }));
-  },
   data() {
     return {
+      items: [],
       activeAnswer: '',
     };
   },
+  created() {
+    this.$axios.get('/questions').then((response) => {
+      this.items = response.data;
+    });
+  },
+
 };
 </script>
 

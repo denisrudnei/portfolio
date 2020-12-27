@@ -70,11 +70,13 @@ import ProjectCard from '@/components/ProjectCard';
 import { EditProject } from '@/graphql/mutation/project/edit';
 import { GetProjects } from '@/graphql/query/project/list';
 import { GetOneProject } from '@/graphql/query/project/getByUrl';
+import removeFields from '~/mixins/removeFields';
 
 export default {
   components: {
     ProjectCard,
   },
+  mixins: [removeFields],
   asyncData({ app, params }) {
     return app.apolloProvider.defaultClient.query({
       query: GetOneProject,
@@ -124,7 +126,7 @@ export default {
         mutation: EditProject,
         variables: {
           id,
-          project: projectToEdit,
+          project: this.removeFields(projectToEdit, ['id', '__typename']),
         },
         awaitRefetchQueries: true,
         refetchQueries: [{ query: GetProjects }],
