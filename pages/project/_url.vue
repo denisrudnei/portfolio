@@ -13,7 +13,7 @@
           @mouseenter="setActual(img)"
         >
           <v-img
-            :aspect-ratio="1"
+            :aspect-ratio="16/9"
             :src="img"
             @click="dialog = true"
           >
