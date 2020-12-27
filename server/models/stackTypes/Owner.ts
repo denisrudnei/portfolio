@@ -12,11 +12,11 @@ import StackComment from './StackComment';
 @ObjectType()
 @Entity()
 class Owner extends BaseEntity {
-  @PrimaryColumn({ name: 'owner_id' })
-  @Field(() => Int)
-  public user_id!: number;
+  @PrimaryColumn({ name: 'owner_id', default: '' })
+  @Field(() => String)
+  public user_id!: string;
 
-  @Column()
+  @Column({ default: 0 })
   @Field(() => Int)
   public reputation!: number;
 
@@ -24,7 +24,7 @@ class Owner extends BaseEntity {
   @Field()
   public user_type!: string;
 
-  @Column()
+  @Column({ default: '' })
   @Field()
   public profile_image!: string;
 
@@ -32,7 +32,7 @@ class Owner extends BaseEntity {
   @Field()
   public display_name!: string;
 
-  @Column()
+  @Column({ default: '' })
   @Field()
   public link!: string;
 
