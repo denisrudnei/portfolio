@@ -32,32 +32,34 @@
             {{ item.title }}
           </v-list-item-content>
         </v-list-item>
-        <div v-if="logged">
-          <v-list-item
-            to="/config/project/create"
-          >
-            <v-list-item-icon>
-              <v-icon>
-                settings
-              </v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              Configurações
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item
-            to="/auth/logout"
-          >
-            <v-list-item-icon>
-              <v-icon>
-                exit_to_app
-              </v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              Deslogar
-            </v-list-item-content>
-          </v-list-item>
-        </div>
+        <client-only>
+          <template v-if="logged">
+            <v-list-item
+              to="/config/project/create"
+            >
+              <v-list-item-icon>
+                <v-icon>
+                  settings
+                </v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                Configurações
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              to="/auth/logout"
+            >
+              <v-list-item-icon>
+                <v-icon>
+                  exit_to_app
+                </v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                Deslogar
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+        </client-only>
       </v-list>
     </v-navigation-drawer>
     <v-main>
