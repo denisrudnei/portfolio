@@ -1,11 +1,20 @@
 <template>
   <v-row>
-    <h1
-      v-if="projects.length === 0"
-      class="primary--text"
-    >
-      Não há projetos cadastrados
-    </h1>
+    <v-col v-if="state === 'loaded' && projects.length === 0">
+      <h1 class="primary--text">
+        Não há projetos cadastrados
+      </h1>
+    </v-col>
+    <v-col v-if="state === 'loading'">
+      <h1 class="primary--text">
+        Carregando
+      </h1>
+    </v-col>
+    <v-col v-if="state === 'error'">
+      <h1 class="primary--text">
+        Falha ao carregar dados
+      </h1>
+    </v-col>
     <v-col
       v-for="project in projects"
       :key="project.name"
@@ -35,6 +44,7 @@ export default {
   mixins: [removeHtml],
   data() {
     return {
+      state: 'unload',
       projects: [],
       title: '',
       description: '',
@@ -53,13 +63,16 @@ export default {
     };
   },
   created(context) {
+    this.state = 'loading';
     this.$apollo.query({
       query: Index,
     }).then((response) => {
       this.projects = response.data.Project;
       this.title = response.data.User.name;
       this.description = response.data.User.description;
+      this.state = 'loaded';
     }).catch(() => {
+      this.state = 'error';
       this.$toast.error('Usuário principal ainda não cadastrado');
     });
   },
