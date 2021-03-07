@@ -7,4 +7,7 @@ export default createConnection({
   entities: [path.resolve(__dirname, '..', 'models/**/*')],
   synchronize: true,
   logging: ['error'],
+  extra: {
+    ssl: process.env.NODE_ENV === 'production',
+  },
 });
