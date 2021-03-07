@@ -14,7 +14,7 @@ const apiRouter = express.Router();
 
 app.use(cors());
 
-app.use(morgan('dev'));
+if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
 
 app.use(compression());
 
