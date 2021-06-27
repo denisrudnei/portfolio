@@ -5,17 +5,17 @@
       clipped
     >
       <v-list>
-        <v-list-item to="/about">
-          <v-list-item-avatar>
-            <v-avatar>
-              <v-img
-                :src="`${url}/about/image`"
-                :aspect-ratio="16/9"
-              />
-            </v-avatar>
-          </v-list-item-avatar>
+        <v-list-item>
           <v-list-item-content>
-            <h1>{{ user.name }}</h1>
+            <v-img
+              :src="`${url}/about/image`"
+              class="rounded-circle"
+            />
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item to="/about">
+          <v-list-item-content>
+            <span class="title">{{ user.name }}</span>
           </v-list-item-content>
         </v-list-item>
         <v-list-item
