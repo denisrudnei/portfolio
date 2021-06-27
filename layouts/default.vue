@@ -77,8 +77,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import ggl from 'graphql-tag';
 import { About } from '@/graphql/query/about/list';
 
 export default {
