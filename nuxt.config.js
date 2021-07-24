@@ -13,6 +13,7 @@ module.exports = {
 
   env: {
     url: process.env.API,
+    ADSENSE: process.env.ADSENSE,
   },
 
   /*
@@ -65,7 +66,9 @@ module.exports = {
     '@nuxtjs/auth',
     '@nuxtjs/toast',
     '@nuxtjs/google-analytics',
+    '@nuxtjs/google-adsense',
   ],
+
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
@@ -83,6 +86,10 @@ module.exports = {
 
   router: {
     middleware: ['auth'],
+  },
+
+  'google-adsense': {
+    id: process.env.ADSENSE,
   },
 
   auth: {

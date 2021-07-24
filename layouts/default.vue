@@ -61,6 +61,7 @@
           </template>
         </client-only>
       </v-list>
+      <adsbygoogle />
     </v-navigation-drawer>
     <v-main>
       <v-container fluid>
