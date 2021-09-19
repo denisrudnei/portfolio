@@ -1,11 +1,10 @@
-import bodyParser from 'body-parser';
 import compression from 'compression';
 import consola from 'consola';
+import cors from 'cors';
 import express from 'express';
 import fileUploader from 'express-fileupload';
 import session from 'express-session';
 import morgan from 'morgan';
-import cors from 'cors';
 
 import controllers from './controllers';
 
@@ -18,7 +17,7 @@ if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
 
 app.use(compression());
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use(
   session({
