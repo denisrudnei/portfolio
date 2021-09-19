@@ -10,9 +10,9 @@
 </template>
 
 <script>
+import ggl from 'graphql-tag';
 import Post from '@/components/blog/Post';
 import { GetOnePost } from '@/graphql/query/post/getByUrl';
-import ggl from 'graphql-tag';
 
 export default {
   auth: false,

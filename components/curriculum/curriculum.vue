@@ -20,7 +20,7 @@
         :close-on-content-click="false"
         min-width="290px"
       >
-        <template v-slot:activator="{on}">
+        <template #activator="{on}">
           <v-text-field
             readonly
             filled
@@ -71,9 +71,9 @@
 
 <script>
 import { format, parse } from 'date-fns';
+import { mask } from 'vue-the-mask';
 import professionalExperience from '@/components/curriculum/professionalExperience';
 import sites from '@/components/curriculum/sites';
-import { mask } from 'vue-the-mask';
 
 export default {
   directives: {

@@ -71,10 +71,10 @@
 </template>
 
 <script>
-import removeHtml from '@/mixins/removeHtml';
 import ggl from 'graphql-tag';
-import { About } from '@/graphql/query/about/list';
 import { format } from 'date-fns';
+import removeHtml from '@/mixins/removeHtml';
+import { About } from '@/graphql/query/about/list';
 
 export default {
   auth: false,

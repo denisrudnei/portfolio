@@ -34,7 +34,6 @@
 import removeHtml from '@/mixins/removeHtml';
 import ProjectCard from '@/components/ProjectCard';
 import { Index } from '@/graphql/query/index';
-import ggl from 'graphql-tag';
 
 export default {
   auth: false,

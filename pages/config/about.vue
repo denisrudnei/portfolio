@@ -43,9 +43,9 @@
 </template>
 
 <script>
+import ggl from 'graphql-tag';
 import curriculum from '@/components/curriculum/curriculum';
 import { EditUser } from '@/graphql/mutation/about/edit';
-import ggl from 'graphql-tag';
 import { About } from '@/graphql/query/about/list';
 import removeFields from '@/mixins/removeFields';
 

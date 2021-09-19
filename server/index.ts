@@ -1,10 +1,14 @@
 import 'reflect-metadata';
 
-import { ApolloServer, PubSub } from 'apollo-server-express';
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import { ApolloServer } from 'apollo-server-express';
 import consola from 'consola';
 import { redirectToHTTPS } from 'express-http-to-https';
+import { execute, subscribe } from 'graphql';
+import { PubSub } from 'graphql-subscriptions';
 import http from 'http';
 import path from 'path';
+import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { buildSchema } from 'type-graphql';
 
 import app from './app';
@@ -27,19 +31,37 @@ async function start() {
 
   const pubSub = new PubSub();
 
+  const schema = await buildSchema({
+    resolvers: [path.resolve(__dirname, 'resolvers/**/*')],
+    authChecker: CustomAuthChecker,
+    pubSub,
+  });
+
+  const httpServer = http.createServer(app);
+
+  const subscriptionServer = SubscriptionServer.create({
+    schema,
+    execute,
+    subscribe,
+  }, {
+    server: httpServer,
+    path: '/subscriptions',
+  });
+
   const server = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [path.resolve(__dirname, 'resolvers/**/*')],
-      authChecker: CustomAuthChecker,
-      pubSub,
-    }),
-    playground: {
-      endpoint: '/graphql',
-    },
-    subscriptions: {
-      path: '/subscriptions',
-      keepAlive: 10000,
-    },
+    schema,
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              subscriptionServer.close();
+            },
+          };
+        },
+      },
+    ],
     introspection: true,
     context: (context) => ({
       req: context.req,
@@ -48,9 +70,9 @@ async function start() {
     }),
   });
 
-  const httpServer = http.createServer(app);
-  server.installSubscriptionHandlers(httpServer);
-  server.applyMiddleware({ app });
+  await server.start();
+
+  server.applyMiddleware({ app, path: '/graphql', cors: false });
 
   httpServer.listen(port, () => {
     consola.ready({

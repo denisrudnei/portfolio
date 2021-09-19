@@ -37,7 +37,7 @@
                         :close-on-content-click="false"
                         offset-y
                       >
-                        <template v-slot:activator="{on}">
+                        <template #activator="{on}">
                           <v-text-field
                             placeholder="Inicio"
                             filled
@@ -56,7 +56,7 @@
                         :close-on-content-click="false"
                         offset-y
                       >
-                        <template v-slot:activator="{on}">
+                        <template #activator="{on}">
                           <v-text-field
                             placeholder="Fim"
                             readonly

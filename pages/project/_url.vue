@@ -104,9 +104,9 @@
 </template>
 
 <script>
+import consola from 'consola';
 import removeHtml from '@/mixins/removeHtml';
 import { GetOneProject } from '@/graphql/query/project/getByUrl';
-import consola from 'consola';
 
 export default {
   auth: false,
