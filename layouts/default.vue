@@ -1,13 +1,13 @@
 <template>
   <v-app>
     <v-app-bar
-      absolute
-      dark
+      app
+      fixed
       shrink-on-scroll
+      fade-img-on-scroll
+      dark
       prominent
       src="/images/background.jpg"
-      fade-img-on-scroll
-      scroll-target="#scrolling-techniques-4"
     >
       <v-img
         :src="`${url}/about/image`"
