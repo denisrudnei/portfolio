@@ -1,10 +1,8 @@
-<template>
+m<template>
   <v-app>
     <v-app-bar
       app
       fixed
-      shrink-on-scroll
-      fade-img-on-scroll
       dark
       prominent
       src="/images/background.jpg"
