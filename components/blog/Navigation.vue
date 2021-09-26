@@ -2,6 +2,7 @@
   <v-navigation-drawer
     app
     right
+    clipped
   >
     <v-list>
       <v-list-item

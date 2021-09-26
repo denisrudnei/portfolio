@@ -5,6 +5,7 @@
       fixed
       dark
       prominent
+      :clipped-right="true"
       src="/images/background.jpg"
     >
       <v-img
