@@ -1,68 +1,57 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      app
-      clipped
+    <v-app-bar
+      absolute
+      dark
+      shrink-on-scroll
+      prominent
+      src="/images/background.jpg"
+      fade-img-on-scroll
+      scroll-target="#scrolling-techniques-4"
     >
-      <v-list>
-        <v-list-item>
-          <v-list-item-content>
-            <v-img
-              :src="`${url}/about/image`"
-              class="rounded-circle"
-            />
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item to="/about">
-          <v-list-item-content>
-            <span class="title">{{ user.name }}</span>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          :to="item.to"
+      <v-img
+        :src="`${url}/about/image`"
+        max-height="160"
+        max-width="160"
+        class="rounded-circle"
+        contain
+      />
+      <v-toolbar-title>{{ user.name }}</v-toolbar-title>
+      <v-spacer />
+      <template #extension>
+        <v-tabs
+          align-with-title
+          show-arrows
         >
-          <v-list-item-icon>
-            <v-icon>
+          <v-tab
+            v-for="item in items"
+            :key="item.id"
+            :to="item.to"
+          >
+            <v-icon left>
               {{ item.icon }}
             </v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
             {{ item.title }}
-          </v-list-item-content>
-        </v-list-item>
-        <client-only>
-          <template v-if="logged">
-            <v-list-item
-              to="/config/project/create"
-            >
-              <v-list-item-icon>
-                <v-icon>
+          </v-tab>
+          <client-only>
+            <template v-if="logged">
+              <v-tab to="/config/project/create">
+                <v-icon left>
                   settings
                 </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
                 Configurações
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item
-              to="/auth/logout"
-            >
-              <v-list-item-icon>
-                <v-icon>
+              </v-tab>
+              <v-tab to="/auth/logout">
+                <v-icon left>
                   exit_to_app
                 </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
                 Deslogar
-              </v-list-item-content>
-            </v-list-item>
-          </template>
-        </client-only>
-      </v-list>
-      <adsbygoogle />
-    </v-navigation-drawer>
+              </v-tab>
+            </template>
+          </client-only>
+        </v-tabs>
+      </template>
+    </v-app-bar>
     <v-main>
       <v-container fluid>
         <nuxt />
