@@ -54,6 +54,7 @@ module.exports = {
       src: '@/plugins/CKEditor',
       ssr: false,
     },
+    '@/plugins/filters',
   ],
 
   /*

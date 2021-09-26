@@ -11,18 +11,13 @@
     </v-card-title>
     <v-card-text v-html="resumeContent" />
     <v-card-actions>
-      {{ post.created | date }}
+      {{ createdAt | dateAndTime }}
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
 export default {
-  filters: {
-    date(value) {
-      return new Date(value).toLocaleString();
-    },
-  },
   props: {
     resume: {
       type: Boolean,
@@ -37,6 +32,9 @@ export default {
     },
   },
   computed: {
+    createdAt() {
+      return this.post.created ? this.post.created : new Date();
+    },
     resumeContent() {
       if (this.resume) {
         return `${this.post.content.substring(0, 200)}...`;
