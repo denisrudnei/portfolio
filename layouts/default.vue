@@ -1,4 +1,4 @@
-m<template>
+<template>
   <v-app>
     <v-app-bar
       app
@@ -9,9 +9,9 @@ m<template>
     >
       <v-img
         :src="`${url}/about/image`"
-        max-height="160"
-        max-width="160"
-        class="rounded-circle"
+        max-height="120"
+        max-width="120"
+        class="rounded-circle mr-3 mt-2 mr-5"
         contain
       />
       <v-toolbar-title>{{ user.name }}</v-toolbar-title>
