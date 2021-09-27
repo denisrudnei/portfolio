@@ -23,6 +23,14 @@ class Project extends BaseEntity {
   @Column({ nullable: true })
   public url!: string
 
+  @Field(() => [String])
+  @Column({ type: 'simple-array', default: '' })
+  public frameworks!: string[]
+
+  @Field(() => [String])
+  @Column({ type: 'simple-array', default: '' })
+  public languages!: string[]
+
   @BeforeInsert()
   @BeforeUpdate()
   public setUrl() {

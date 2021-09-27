@@ -4,54 +4,12 @@
       cols="8"
       pa-2
     >
-      <v-form>
-        <v-col
-          cols="12"
-          pa-2
-        >
-          <v-text-field
-            v-model="project.name"
-            filled
-            placeholder="Nome do projeto"
-          />
-        </v-col>
-        <v-col
-          cols="12"
-          pa-2
-        >
-          <ckeditor
-            v-model="project.description"
-            :editor="editor"
-          />
-        </v-col>
-        <v-col
-          cols="12"
-          pa-2
-        >
-          <v-file-input
-            v-model="files"
-            filled
-            label="Incluir imagem"
-            @change="changeFile"
-          />
-        </v-col>
-        <v-col
-          cols="12"
-          pa-2
-        >
-          <v-btn
-            class="primary white--text"
-            @click="update()"
-          >
-            Salvar
-            <v-icon
-              right
-            >
-              attach_file
-            </v-icon>
-          </v-btn>
-        </v-col>
-      </v-form>
+      <project-create
+        v-if="project"
+        v-model="project"
+        @save="update"
+        @imageUpdate="imageUpdate"
+      />
     </v-col>
     <v-col
       cols="4"
@@ -66,6 +24,7 @@
 </template>
 
 <script>
+import projectCreate from '@/components/project/project-create';
 import ProjectCard from '@/components/ProjectCard';
 import { EditProject } from '@/graphql/mutation/project/edit';
 import { GetProjects } from '@/graphql/query/project/list';
@@ -75,38 +34,33 @@ import removeFields from '~/mixins/removeFields';
 export default {
   components: {
     ProjectCard,
+    projectCreate,
   },
   mixins: [removeFields],
-  asyncData({ app, params }) {
-    return app.apolloProvider.defaultClient.query({
-      query: GetOneProject,
-      variables: {
-        url: params.url,
-      },
-    }).then((response) => ({
-      project: response.data.GetOneProject,
-    }));
-  },
   data() {
     return {
       editor: null,
       files: null,
       image: '',
-      project: {
-        name: '',
-        description: '',
-      },
     };
   },
-  watch: {
-    files: {
-      deep: true,
-      handler(value) {
-        const fileReader = new FileReader();
-        fileReader.addEventListener('loadend', () => {
-          this.image = fileReader.result;
-        });
-        fileReader.readAsDataURL(value);
+  fetch({ app, params, store }) {
+    return app.apolloProvider.defaultClient.query({
+      query: GetOneProject,
+      variables: {
+        url: params.url,
+      },
+    }).then((response) => {
+      store.commit('project/setActualProject', response.data.GetOneProject);
+    });
+  },
+  computed: {
+    project: {
+      get() {
+        return this.$store.getters['project/getActualProject'];
+      },
+      set(value) {
+        this.$store.commit('project/setActualProject', value);
       },
     },
   },
@@ -114,19 +68,26 @@ export default {
     this.editor = require('@ckeditor/ckeditor5-build-classic');
   },
   methods: {
-    changeFile() {
-      if (this.files) {
-        this.project.images = [...Array.of(this.files)].map((file) => file.name);
-      }
+    imageUpdate(value) {
+      value.forEach((image) => {
+        const fileReader = new FileReader();
+        fileReader.addEventListener('loadend', () => {
+          this.project = {
+            ...this.project,
+            images: [...this.project.images, fileReader.result],
+          };
+        });
+        fileReader.readAsDataURL(image);
+      });
     },
-    update() {
-      const { id, ...properties } = this.project;
+    update({ project, files }) {
+      const { id, ...properties } = project;
       const projectToEdit = properties;
       this.$apollo.mutate({
         mutation: EditProject,
         variables: {
           id,
-          project: this.removeFields(projectToEdit, ['id', '__typename']),
+          project: this.removeFields(projectToEdit, ['id', '__typename', 'images']),
         },
         awaitRefetchQueries: true,
         refetchQueries: [{ query: GetProjects }],
@@ -135,23 +96,24 @@ export default {
           this.$toast.show('Projeto atualizado', {
             duration: 1000,
           });
-          if (this.files !== null && this.files.length > 0) {
+          if (files !== null && files.length > 0) {
             this.$toast.show('Iniciando processo de upload de imagem', {
               icon: 'hourglass_empty',
               duration: 1000,
             });
             const formData = new FormData();
-            formData.append('file', this.files);
+            files.forEach((file) => {
+              formData.append('files', file);
+            });
             this.$axios.post(`/project/${id}/file`, formData).then(
               () => {
                 this.$toast.show('Imagem atualizada com sucesso', {
                   duration: 1000,
                 });
               },
-              () => {
-                this.$toast.error('Erro ao upar imagem');
-              },
-            );
+            ).catch((e) => {
+              this.$toast.error(e.response.data);
+            });
           }
           this.$router.push('/config/project/list');
         },

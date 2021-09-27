@@ -2,16 +2,23 @@
 /* eslint-disable no-shadow */
 
 export const state = () => ({
+  actualProject: undefined,
   projects: [],
 });
 
 export const getters = {
+  getActualProject(state) {
+    return state.actualProject;
+  },
   getProjects(state) {
     return state.projects;
   },
 };
 
 export const mutations = {
+  setActualProject(state, project) {
+    state.actualProject = project;
+  },
   setProjects(state, projects) {
     state.projects = projects;
   },

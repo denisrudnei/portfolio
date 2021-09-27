@@ -4,7 +4,7 @@
       cols="12"
     >
       <v-data-table
-        :items="items"
+        :items="projects"
         :headers="headers"
       >
         <template #items="{ item }">
@@ -36,18 +36,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { RemoveProject } from '@/graphql/mutation/project/remove';
 import { GetProjects } from '@/graphql/query/project/list';
-import { RemovePost } from '~/graphql/mutation/post/remove';
 
 export default {
-  asyncData({ app }) {
-    return app.apolloProvider.defaultClient.query({
-      query: GetProjects,
-    }).then((response) => ({
-      items: response.data.Project,
-    }));
-  },
   data() {
     return {
       headers: [
@@ -62,17 +55,27 @@ export default {
       ],
     };
   },
+  fetch({ app, store }) {
+    return app.apolloProvider.defaultClient.query({
+      query: GetProjects,
+    }).then((response) => {
+      store.commit('project/setProjects', response.data.Project);
+    });
+  },
+  computed: mapGetters({
+    projects: 'project/getProjects',
+  }),
   methods: {
-    removeProject(item) {
+    removeProject(project) {
       this.$apollo.mutate({
         mutation: RemoveProject,
         variables: {
-          id: item.id,
+          id: project.id,
         },
         refetchQueries: [{ query: GetProjects }],
         awaitRefetchQueries: true,
       }).then(() => {
-        this.$store.commit('project/removeProject', item);
+        this.$store.commit('project/removeProject', project);
         this.$toast.show('Apagado com sucesso', {
           duration: 1000,
           icon: 'delete',

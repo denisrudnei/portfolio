@@ -30,8 +30,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
   data() {
     return {
@@ -64,8 +62,8 @@ export default {
               icon: 'weekend',
             });
           },
-        ).catch(() => {
-          this.$toast.error('Email ou senha inválidos', {
+        ).catch((e) => {
+          this.$toast.error(e.response.data, {
             icon: 'error_outline',
           });
         });

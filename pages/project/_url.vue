@@ -44,6 +44,12 @@
         <v-card-title>
           {{ project.name }}
         </v-card-title>
+        <v-card-text>
+          <frameworks-languages
+            :frameworks="project.frameworks"
+            :languages="project.languages"
+          />
+        </v-card-text>
         <v-card-text v-html="project.description" />
         <v-card-actions v-if="actual !== ''">
           <v-btn
@@ -104,12 +110,15 @@
 </template>
 
 <script>
-import consola from 'consola';
 import removeHtml from '@/mixins/removeHtml';
 import { GetOneProject } from '@/graphql/query/project/getByUrl';
+import frameworksLanguages from '@/components/frameworks-languages.vue';
 
 export default {
   auth: false,
+  components: {
+    frameworksLanguages,
+  },
   mixins: [removeHtml],
   asyncData({
     app, params, req, error,
@@ -127,7 +136,6 @@ export default {
         base,
       };
     }).catch((e) => {
-      consola.error(e.message);
       error({
         statusCode: 400,
         message: 'Projeto não encontrado',

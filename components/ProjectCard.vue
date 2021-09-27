@@ -19,10 +19,16 @@
           />
         </v-carousel>
         <v-card-title>{{ projectComputed.name }}</v-card-title>
-        <v-card-text v-html="projectComputed.description" />
+        <v-card-text>
+          <frameworks-languages
+            :frameworks="projectComputed.frameworks"
+            :languages="projectComputed.languages"
+          />
+        </v-card-text>
         <v-card-actions>
           <v-btn
             v-if="listing"
+            tile
             class="primary white--text"
             :to="`/project/${projectComputed.url}`"
           >
@@ -35,7 +41,12 @@
 </template>
 
 <script>
+import frameworksLanguages from '@/components/frameworks-languages.vue';
+
 export default {
+  components: {
+    frameworksLanguages,
+  },
   props: {
     image: {
       default: null,
@@ -55,6 +66,8 @@ export default {
       projectData: {
         name: '',
         description: '',
+        frameworks: [],
+        languages: [],
       },
     };
   },

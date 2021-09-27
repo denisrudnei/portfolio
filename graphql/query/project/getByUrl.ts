@@ -7,6 +7,8 @@ query GetOneProject($url: String!) {
     name
     description
     images
+    languages
+    frameworks
   }
 }
 `;

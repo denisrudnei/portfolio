@@ -50,11 +50,17 @@
     >
       <nuxt />
     </v-col>
+    <upload-progress />
   </v-row>
 </template>
 
 <script>
+import uploadProgress from '@/components/upload-progress.vue';
+
 export default {
+  components: {
+    uploadProgress,
+  },
   data() {
     return {};
   },

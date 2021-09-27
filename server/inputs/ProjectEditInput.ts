@@ -10,6 +10,12 @@ class ProjectEditInput {
 
   @Field(() => [String], { nullable: true })
   public images?: string[]
+
+  @Field(() => [String], { nullable: true })
+  public languages?: string[]
+
+  @Field(() => [String], { nullable: true })
+  public frameworks?: string[]
 }
 
 export default ProjectEditInput;

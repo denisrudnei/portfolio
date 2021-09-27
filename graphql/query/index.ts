@@ -8,6 +8,8 @@ query {
     description
     url
     images
+    frameworks
+    languages
   }
   User {
     name
