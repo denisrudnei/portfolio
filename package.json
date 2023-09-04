@@ -33,7 +33,7 @@
     "apollo-link-http": "^1.5.17",
     "apollo-link-ws": "^1.0.20",
     "apollo-server": "^3.4.1",
-    "apollo-server-core": "^3.3.0",
+    "apollo-server-core": "^3.12.1",
     "apollo-server-express": "^3.3.0",
     "aws-sdk": "^2.991.0",
     "axios": "^0.21.4",
