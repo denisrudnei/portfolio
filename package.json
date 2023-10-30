@@ -36,7 +36,7 @@
     "apollo-server-core": "^3.3.0",
     "apollo-server-express": "^3.3.0",
     "aws-sdk": "^2.991.0",
-    "axios": "^0.21.4",
+    "axios": "^1.6.0",
     "bcrypt": "^5.0.1",
     "class-validator": "^0.13.1",
     "compression": "^1.7.4",
